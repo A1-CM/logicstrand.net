@@ -20,15 +20,27 @@ class DocumentSearch
         }
 
         $query = implode(' OR ', array_map(fn (string $term) => '"'.$term.'"', $terms));
-        $ids = DB::table('document_chunks_fts')
-            ->join('document_chunks', 'document_chunks.id', '=', 'document_chunks_fts.rowid')
-            ->join('knowledge_documents', 'knowledge_documents.id', '=', 'document_chunks.knowledge_document_id')
-            ->where('knowledge_documents.user_id', $userId)
-            ->where('knowledge_documents.status', 'ready')
-            ->whereRaw('document_chunks_fts MATCH ?', [$query])
-            ->orderByRaw('bm25(document_chunks_fts)')
-            ->limit(6)
-            ->pluck('document_chunks.id');
+        if (DB::getDriverName() === 'mysql' || DB::getDriverName() === 'mariadb') {
+            $booleanQuery = implode(' ', $terms);
+            $ids = DB::table('document_chunks')
+                ->join('knowledge_documents', 'knowledge_documents.id', '=', 'document_chunks.knowledge_document_id')
+                ->where('knowledge_documents.user_id', $userId)
+                ->where('knowledge_documents.status', 'ready')
+                ->whereRaw('MATCH(document_chunks.body) AGAINST (? IN BOOLEAN MODE)', [$booleanQuery])
+                ->orderByRaw('MATCH(document_chunks.body) AGAINST (? IN BOOLEAN MODE) DESC', [$booleanQuery])
+                ->limit(6)
+                ->pluck('document_chunks.id');
+        } else {
+            $ids = DB::table('document_chunks_fts')
+                ->join('document_chunks', 'document_chunks.id', '=', 'document_chunks_fts.rowid')
+                ->join('knowledge_documents', 'knowledge_documents.id', '=', 'document_chunks.knowledge_document_id')
+                ->where('knowledge_documents.user_id', $userId)
+                ->where('knowledge_documents.status', 'ready')
+                ->whereRaw('document_chunks_fts MATCH ?', [$query])
+                ->orderByRaw('bm25(document_chunks_fts)')
+                ->limit(6)
+                ->pluck('document_chunks.id');
+        }
 
         $chunks = DocumentChunk::with('document')->whereIn('id', $ids)->get()->keyBy('id');
 

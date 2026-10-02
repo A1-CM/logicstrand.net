@@ -1,6 +1,6 @@
 # LogicStrand
 
-LogicStrand is a Laravel 13 site and private knowledge workspace. People can create an account, upload text-based PDF or UTF-8 text documents, ask questions, and inspect the passages behind saved answers. The AI model runs through Groq. Document search uses SQLite FTS5 locally; only selected passages are sent to Groq for a question.
+LogicStrand is a Laravel 13 site and private knowledge workspace. People can create an account, upload text-based PDF or UTF-8 text documents, ask questions, and inspect the passages behind saved answers. The AI model runs through Groq. Document search uses SQLite FTS5 locally and MySQL full-text search on cPanel; only selected passages are sent to Groq for a question.
 
 ## Requirements
 
@@ -54,7 +54,7 @@ Email verification is enabled. The default MAIL_MAILER=log writes local verifica
 - Personal workspaces; each account can access only its own documents and answers.
 - Files may be up to 10 MB each. Document and daily question limits depend on the selected plan.
 - UTF-8 text and PDFs with selectable text are supported. Scanned PDFs are marked **Failed** because OCR is not included.
-- Search is lexical SQLite FTS5 search. A question with no matching passages returns an insufficient-evidence answer without calling Groq.
+- Search is lexical: SQLite FTS5 locally and MySQL full-text search on cPanel. A question with no matching passages returns an insufficient-evidence answer without calling Groq.
 - Deleting a document also removes answers that cite it. Deleting an account removes its uploaded files and indexed text.
 - Source passages are sent to Groq when a matching question is asked. Avoid uploading material you are not allowed to process through that service.
 
@@ -66,3 +66,55 @@ npm run build
 ~~~
 
 The tests fake Groq responses. To verify live generation, supply GROQ_API_KEY, upload a document, wait for it to be ready, and ask a question about its contents.
+
+## Deploy through cPanel without shell access
+
+The [LogicStrand caller workflow](.github/workflows/deploy-cpanel.yml) runs on pushes to `main` or manually. It calls the published reusable Laravel deployment workflow in the public `A1-CM/.github` repository. GitHub Actions tests the app, builds browser assets and installs production Composer packages. The deployer uses HTTPS cPanel APIs to create the app's MySQL database, database user, and `no-reply@<domain>` mailbox, upload a private release, run migrations through a temporary protected PHP endpoint, and publish the site. The host needs no SSH, Composer, Node, or queue worker; the generated production configuration uses Laravel's synchronous queue.
+
+### One-time GitHub setup
+
+Add these **organization variables** (available to the repositories that deploy), or add them as repository variables:
+
+| Variable | Value |
+| --- | --- |
+| `CPANEL_HOST` | cPanel hostname, without `https://` or a port; HTTPS port 2083 must be reachable |
+| `CPANEL_USERNAME` | cPanel account username |
+| `CPANEL_HOME` | Absolute account home, such as `/home/username` |
+| `APP_URL` | LogicStrand HTTPS origin, such as `https://logicstrand.net` |
+
+Add `CPANEL_API_TOKEN` as an **organization secret** shared with the deploying repositories, or as a repository secret. It must be a cPanel API token with permissions to manage files, MySQL databases and users, and email accounts. Add `GROQ_API_KEY` as a LogicStrand repository secret for document answers. GitHub environment secrets alone are unsuitable unless the called workflow explicitly uses that environment; organization or repository secrets are simplest here.
+
+You do **not** need to create or store `APP_KEY`, `DB_PASSWORD`, or `MAIL_PASSWORD` in GitHub. On first deployment, the script generates a cryptographically random Laravel key and independent database and mailbox passwords. It saves them in `CPANEL_HOME/<project>-deploy-state.json` with owner-only `0600` permissions, then writes them to the private release `.env`. Later deployments read the same state and reuse the credentials. Back up this state file securely; do not delete or rename it while the deployment exists. If a database, user, or mailbox with the chosen names already exists but the state file does not, deployment stops rather than replacing its password. The deployment does not print generated secrets.
+
+`DB_HOST` defaults to `localhost` and `DB_PORT` to `3306`. SMTP defaults to `mail.<domain>` on port `465` with `smtps`. Override `DB_HOST`, `DB_PORT`, `MAIL_HOST`, `MAIL_PORT`, or `MAIL_SCHEME` with repository variables if your cPanel provider requires different values. `CPANEL_DB_NAME` and `CPANEL_DB_USER` may override generated names; otherwise the project slug is combined with cPanel's database prefix. `CPANEL_DOMAIN` overrides the hostname from `APP_URL` for cPanel domain lookup and the mailbox domain, useful when the site URL uses a `www` alias. `PROJECT_NAME` is provided by the caller. Other application-specific `.env` values may be supplied as newline-separated `KEY=value` entries in an `APP_ENV_EXTRA` repository secret; deployment-managed keys cannot be overridden this way.
+
+The `public_dir` manual input may be `auto`, `public_html`, or a path relative to `CPANEL_HOME`. `auto` asks cPanel for the document root of the deploying domain and works for primary and addon domains. The target directory must already exist and serve the HTTPS `APP_URL`, which must be a domain origin without a path. The deployment never deletes or empties existing folders. It copies current public assets, updates `index.php`, and inserts a project-marked, domain-scoped routing block into `.htaccess` while preserving existing rules. Files with the same names as deployed assets may be overwritten. An unrelated `index.php` blocks deployment unless `allow_index_replace` is explicitly enabled. Check the target site before enabling that option. **Deploy only when the selected domain has its own document root.** Addon domains in separate subdirectories under `public_html` are normally left intact, provided their paths do not overlap deployed asset paths; a domain sharing the exact target document root can be affected by the replaced entry point or assets. Check cPanel → Domains for each domain’s document root before the first run; `auto` selects a domain’s root but does not reject roots shared with another domain.
+
+Private code and `.env` live under `CPANEL_HOME/<project>-app/releases/`; uploads, sessions, cache, and logs live under `CPANEL_HOME/<project>-app/shared/`. Release ZIPs and old releases remain available and are not automatically deleted. The private app directory must be outside the selected document root. The release archive excludes local `.env` files, Git metadata, tests, and local storage. The host needs PHP 8.3 or newer with PDO MySQL, mbstring, fileinfo, and OpenSSL, and enough PHP request time for migrations. MySQL/MariaDB needs InnoDB full-text support. cPanel File Manager API 2 handles ZIP extraction; API transport verifies TLS. Schema migrations are forward-only, so retain a database backup before schema changes.
+
+### Reuse across an organization
+
+The public `A1-CM/.github` repository already contains `scripts/deploy_cpanel.py`, `scripts/cpanel_activate.php`, `scripts/tests/`, and `.github/workflows/laravel-cpanel-reusable.yml`. The shared repository must remain **public** for this public LogicStrand repository to call its reusable workflow. Keep only deployment code there; put the cPanel token and application keys in GitHub secrets. A private shared repository can serve private callers only. This public toolkit needs no `TOOLKIT_READ_TOKEN`. Pin `toolkit_ref` to a reviewed tag or commit for predictable deployments. In each Laravel repository, add a small caller workflow:
+
+```yaml
+name: Deploy to cPanel
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  deploy:
+    uses: A1-CM/.github/.github/workflows/laravel-cpanel-reusable.yml@87dffd171b476623768149422fb3324470f7fb5c
+    with:
+      toolkit_repository: A1-CM/.github
+      toolkit_ref: 87dffd171b476623768149422fb3324470f7fb5c
+      project_slug: yourproject
+      project_name: Your Project
+      app_url: https://your-domain.example
+      public_dir: auto
+    secrets: inherit
+```
+
+Each repository supplies its own `project_slug` and `app_url`; use a slug unique within the cPanel account. The same account-level cPanel variables and token can be shared across repositories through GitHub organization settings. The caller can set `public_dir: public_html` or another relative directory when needed. A project-specific `APP_ENV_EXTRA` secret supplies extra Laravel configuration. The shared workflow runs `php artisan test`, verifies the deployer, builds assets if a `package.json` exists, and installs production dependencies before deployment. When the toolkit changes, update both pinned commit references together after testing the new version.

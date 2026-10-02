@@ -30,7 +30,11 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement("CREATE VIRTUAL TABLE document_chunks_fts USING fts5(body, tokenize='porter unicode61')");
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement("CREATE VIRTUAL TABLE document_chunks_fts USING fts5(body, tokenize='porter unicode61')");
+        } else {
+            Schema::table('document_chunks', fn (Blueprint $table) => $table->fullText('body'));
+        }
 
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
@@ -52,7 +56,9 @@ return new class extends Migration
     {
         Schema::dropIfExists('answer_citations');
         Schema::dropIfExists('answers');
-        DB::statement('DROP TABLE IF EXISTS document_chunks_fts');
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement('DROP TABLE IF EXISTS document_chunks_fts');
+        }
         Schema::dropIfExists('document_chunks');
         Schema::dropIfExists('knowledge_documents');
     }
