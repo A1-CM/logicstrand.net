@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   deploy:
-    uses: A1-CM/.github/.github/workflows/laravel-cpanel-reusable.yml@laravel-v1.1
+    uses: A1-CM/.github/.github/workflows/laravel-cpanel-reusable.yml@laravel-v1
     with:
       toolkit_repository: A1-CM/.github
       toolkit_ref: laravel-v1.1
