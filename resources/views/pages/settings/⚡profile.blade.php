@@ -2,9 +2,7 @@
 
 use App\Concerns\ProfileValidationRules;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Flux\Flux;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -41,7 +39,7 @@ new #[Title('Profile settings')] class extends Component {
 
         $user->save();
 
-        Flux::toast(variant: 'success', text: __('Profile updated.'));
+        $this->dispatch('logicstrand:toast', type: 'success', message: __('Profile updated.'));
     }
 
     /**
@@ -59,7 +57,7 @@ new #[Title('Profile settings')] class extends Component {
 
         $user->sendEmailVerificationNotification();
 
-        Session::flash('status', 'verification-link-sent');
+        $this->dispatch('logicstrand:toast', type: 'success', message: __('Verification email sent. Please check your inbox.'));
     }
 
     #[Computed]
@@ -98,11 +96,6 @@ new #[Title('Profile settings')] class extends Component {
                             </flux:link>
                         </flux:text>
 
-                        @if (session('status') === 'verification-link-sent')
-                            <flux:text class="mt-2 font-medium !dark:text-green-400 !text-green-600">
-                                {{ __('A new verification link has been sent to your email address.') }}
-                            </flux:text>
-                        @endif
                     </div>
                 @endif
             </div>

@@ -4,7 +4,23 @@
             <div><span class="page-eyebrow">YOUR WORKSPACE / OVERVIEW</span><h1>Good to see you, {{ Str::before(auth()->user()->name, ' ') }}.</h1><p>Your knowledge is ready when you are.</p></div>
             <a href="{{ route('answers.create') }}" class="button button-blue">Ask a question <span aria-hidden="true">↗</span></a>
         </div>
-        @if (session('status')) <div class="notice">{{ session('status') }}</div> @endif
+        <section class="plan-status-card">
+            <div class="plan-status-icon">✳</div>
+            <div class="plan-status-copy">
+                <span class="page-eyebrow">YOUR ACCESS</span>
+                @if($access?->isActive())
+                    <h2>{{ config('plans.'.$access->plan.'.name') }} is ready.</h2>
+                    <p>{{ $access->daysRemaining() }} days remaining in this period · Access through {{ $access->access_ends_at->format('M j, Y') }}.</p>
+                @elseif($access)
+                    <h2>Your access period has ended.</h2>
+                    <p>Your saved work is still here. Choose a new period to keep exploring your documents.</p>
+                @else
+                    <h2>Start with seven days in Sandbox.</h2>
+                    <p>Choose a plan to add sources, ask questions, and trace each answer to its evidence.</p>
+                @endif
+            </div>
+            <a href="{{ $access?->isActive() ? route('sandbox.index') : route('pricing') }}" class="plan-status-link">{{ $access?->isActive() ? 'Open Sandbox' : 'Explore plans' }} <span aria-hidden="true">↗</span></a>
+        </section>
         <div class="dashboard-hero">
             <div><span class="dashboard-hero-kicker">WORK WITH CLARITY</span><h2>One place for the answers<br>behind your next move.</h2><p>Add sources, ask questions, and see the evidence that connects them.</p><div class="hero-mini-actions"><a href="{{ route('documents.index') }}">Add a document <span>↗</span></a><a href="{{ route('answers.create') }}">Explore a question <span>↗</span></a></div></div>
             <div class="dashboard-art" aria-hidden="true"><span class="art-line a"></span><span class="art-line b"></span><span class="art-line c"></span><i class="art-node n1"></i><i class="art-node n2"></i><i class="art-node n3"></i></div>

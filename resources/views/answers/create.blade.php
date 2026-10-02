@@ -9,7 +9,7 @@
             <form method="POST" action="{{ route('answers.store') }}" class="question-form">
                 @csrf
                 <label for="question">Your question</label>
-                <textarea name="question" id="question" rows="5" maxlength="1000" placeholder="For example: What changed in the latest policy?" required>{{ old('question') }}</textarea>
+                <textarea name="question" id="question" rows="5" maxlength="1000" placeholder="For example: What changed in the latest policy?" required>{{ old('question', request()->query('question')) }}</textarea>
                 @error('question') <p class="field-error">{{ $message }}</p> @enderror
                 <div class="form-footer"><span>Only your own ready documents are searched.</span><button type="submit" class="button button-blue">Find an answer <span aria-hidden="true">↗</span></button></div>
             </form>

@@ -5,8 +5,6 @@
             :description="__('This is a secure area of the application. Please confirm your password before continuing.')"
         />
 
-        <x-auth-session-status class="text-center" :status="session('status')" />
-
         <x-passkey-verify
             options-route="passkey.confirm-options"
             submit-route="passkey.confirm"
@@ -28,7 +26,7 @@
                 viewable
             />
 
-            <flux:button variant="primary" type="submit" class="w-full" data-test="confirm-password-button">
+            <flux:button variant="primary" type="submit" class="w-full auth-submit" data-test="confirm-password-button">
                 {{ __('Confirm') }}
             </flux:button>
         </form>

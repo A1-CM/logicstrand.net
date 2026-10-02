@@ -1,9 +1,6 @@
 <x-layouts::auth :title="__('Register')">
     <div class="flex flex-col gap-6">
-        <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
-
-        <!-- Session Status -->
-        <x-auth-session-status class="text-center" :status="session('status')" />
+        <x-auth-header :title="__('Create your workspace.')" :description="__('A clearer way to work with knowledge starts here.')" />
 
         <form method="POST" action="{{ route('register.store') }}" class="flex flex-col gap-6">
             @csrf
@@ -55,7 +52,7 @@
             />
 
             <div class="flex items-center justify-end">
-                <flux:button type="submit" variant="primary" class="w-full" data-test="register-user-button">
+                <flux:button type="submit" variant="primary" class="w-full auth-submit" data-test="register-user-button">
                     {{ __('Create account') }}
                 </flux:button>
             </div>

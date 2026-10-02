@@ -3,7 +3,8 @@
     'description',
 ])
 
-<div class="flex w-full flex-col text-center">
-    <flux:heading size="xl" level="1">{{ $title }}</flux:heading>
-    <flux:subheading>{{ $description }}</flux:subheading>
+<div class="auth-intro">
+    <span class="auth-intro-kicker">WELCOME TO LOGICSTRAND</span>
+    <h1>{{ $title }}</h1>
+    <p>{{ $description }}</p>
 </div>

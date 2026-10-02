@@ -36,8 +36,10 @@ class AnswerController extends Controller
 
         $user = $request->user();
 
-        if (Answer::where('user_id', $user->id)->whereDate('created_at', today())->count() >= config('logicstrand.daily_question_limit')) {
-            return back()->withInput()->withErrors(['question' => 'You have reached today’s 30 question limit. Please return tomorrow.']);
+        $limit = config('plans.'.$user->planAccess->plan.'.daily_question_limit');
+
+        if (Answer::where('user_id', $user->id)->whereDate('created_at', today())->count() >= $limit) {
+            return back()->withInput()->withErrors(['question' => "You have reached today’s $limit question limit. Please return tomorrow."]);
         }
 
         $question = trim($validated['question']);
@@ -82,7 +84,10 @@ class AnswerController extends Controller
             return $answer;
         });
 
-        return redirect()->route('answers.show', $answer);
+        return redirect()->route('answers.show', $answer)->with('toast', [
+            'type' => $citationIds === [] ? 'info' : 'success',
+            'message' => $citationIds === [] ? 'No supporting passage found. Try a more specific question.' : 'Answer ready. Review the supporting passages below.',
+        ]);
     }
 
     public function show(Request $request, Answer $answer): View

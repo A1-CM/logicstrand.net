@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Ai\Agents\KnowledgeAnswerAgent;
 use App\Models\Answer;
 use App\Models\KnowledgeDocument;
+use App\Models\PlanAccess;
 use App\Models\User;
 use App\Services\DocumentSearch;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -20,24 +21,46 @@ class LogicStrandTest extends TestCase
 
     public function test_public_pages_and_workspace_render(): void
     {
-        $this->get('/')->assertOk()->assertSee('Make every answer')->assertSee('Groq');
-        $this->get('/register')->assertOk();
+        $this->get('/')->assertOk()
+            ->assertSee('Make every answer')
+            ->assertSee('When the details matter')
+            ->assertSee('A line of sight')
+            ->assertSee('What can I add to my workspace?')
+            ->assertSee('Groq');
 
-        $user = User::factory()->create();
+        $this->get('/login')->assertOk()->assertSee('Welcome back.')->assertSee('Find the thread');
+        $this->get('/register')->assertOk()->assertSee('Create your workspace.');
+
+        $user = $this->workspaceUser();
         $this->actingAs($user)->get('/dashboard')->assertOk()->assertSee('Good to see you');
         $this->actingAs($user)->get('/documents')->assertOk()->assertSee('Bring a source into focus');
         $this->actingAs($user)->get('/ask')->assertOk()->assertSee('Ask what matters');
     }
 
+    public function test_flash_notifications_render_in_the_shared_toast_stack(): void
+    {
+        $this->withSession(['toast' => ['type' => 'success', 'message' => 'Workspace updated.']])
+            ->get('/login')
+            ->assertOk()
+            ->assertSee('data-logicstrand-toasts')
+            ->assertSee('Workspace updated.');
+
+        $this->withSession(['toast' => null, 'status' => 'verification-link-sent'])
+            ->get('/login')
+            ->assertOk()
+            ->assertSee('Verification email sent. Please check your inbox.');
+    }
+
     public function test_text_document_is_indexed_and_other_user_cannot_retrieve_it(): void
     {
         Storage::fake('local');
-        $owner = User::factory()->create();
-        $other = User::factory()->create();
+        $owner = $this->workspaceUser();
+        $other = $this->workspaceUser();
 
         $this->actingAs($owner)->post(route('documents.store'), [
             'document' => UploadedFile::fake()->createWithContent('policy.txt', 'Renewals require two approvals before the contract date.'),
-        ])->assertRedirect(route('documents.index'));
+        ])->assertRedirect(route('documents.index'))
+            ->assertSessionHas('toast', ['type' => 'success', 'message' => 'Your document is being prepared.']);
 
         $document = KnowledgeDocument::firstOrFail();
         $this->assertSame('ready', $document->status);
@@ -52,7 +75,7 @@ class LogicStrandTest extends TestCase
     public function test_text_based_pdf_is_indexed_and_blank_pdf_shows_extraction_error(): void
     {
         Storage::fake('local');
-        $user = User::factory()->create();
+        $user = $this->workspaceUser();
         $this->actingAs($user)->post(route('documents.store'), [
             'document' => UploadedFile::fake()->createWithContent('guide.pdf', $this->pdf('Renewals require two approvals')),
         ])->assertRedirect();
@@ -73,7 +96,7 @@ class LogicStrandTest extends TestCase
     {
         Storage::fake('local');
         config()->set('ai.providers.groq.key', 'test-key');
-        $user = User::factory()->create();
+        $user = $this->workspaceUser();
         $this->actingAs($user)->post(route('documents.store'), [
             'document' => UploadedFile::fake()->createWithContent('policy.txt', 'Renewals require two approvals before the contract date.'),
         ]);
@@ -97,7 +120,7 @@ class LogicStrandTest extends TestCase
     public function test_no_matching_source_needs_no_api_key_and_provider_errors_do_not_create_answers(): void
     {
         Storage::fake('local');
-        $user = User::factory()->create();
+        $user = $this->workspaceUser();
         $this->actingAs($user)->post(route('documents.store'), [
             'document' => UploadedFile::fake()->createWithContent('policy.txt', 'Renewals require two approvals before the contract date.'),
         ]);
@@ -115,7 +138,7 @@ class LogicStrandTest extends TestCase
     {
         Storage::fake('local');
         config()->set('ai.providers.groq.key', 'test-key');
-        $user = User::factory()->create();
+        $user = $this->workspaceUser();
         $this->actingAs($user)->post(route('documents.store'), [
             'document' => UploadedFile::fake()->createWithContent('policy.txt', 'Renewals require two approvals before the contract date.'),
         ]);
@@ -135,7 +158,7 @@ class LogicStrandTest extends TestCase
     public function test_limits_and_invalid_uploads_are_enforced(): void
     {
         Storage::fake('local');
-        $user = User::factory()->create();
+        $user = $this->workspaceUser();
 
         $this->actingAs($user)->post(route('documents.store'), [
             'document' => UploadedFile::fake()->createWithContent('script.php', '<?php echo 1;'),
@@ -169,7 +192,7 @@ class LogicStrandTest extends TestCase
     public function test_account_deletion_purges_files_and_search_index(): void
     {
         Storage::fake('local');
-        $user = User::factory()->create();
+        $user = $this->workspaceUser();
         $this->actingAs($user)->post(route('documents.store'), [
             'document' => UploadedFile::fake()->createWithContent('policy.txt', 'Renewals require two approvals before the contract date.'),
         ]);
@@ -181,6 +204,22 @@ class LogicStrandTest extends TestCase
         Storage::disk('local')->assertMissing($document->path);
         $this->assertDatabaseCount('knowledge_documents', 0);
         $this->assertSame(0, DB::table('document_chunks_fts')->count());
+    }
+
+    private function workspaceUser(): User
+    {
+        $user = User::factory()->create();
+
+        PlanAccess::create([
+            'user_id' => $user->id,
+            'plan' => 'sandbox',
+            'trial_started_at' => now(),
+            'trial_ends_at' => now()->addDays(7),
+            'access_ends_at' => now()->addDays(7),
+            'card_last_four' => '4242',
+        ]);
+
+        return $user;
     }
 
     private function pdf(string $text): string

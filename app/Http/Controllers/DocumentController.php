@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\ProcessDocument;
 use App\Models\Answer;
 use App\Models\KnowledgeDocument;
+use App\Models\PlanAccess;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -17,9 +18,11 @@ class DocumentController extends Controller
 {
     public function index(Request $request): View
     {
+        $access = PlanAccess::where('user_id', $request->user()->id)->first();
+
         return view('documents.index', [
             'documents' => KnowledgeDocument::where('user_id', $request->user()->id)->latest()->get(),
-            'limit' => config('logicstrand.document_limit'),
+            'limit' => config('plans.'.($access ? $access->plan : 'sandbox').'.document_limit'),
         ]);
     }
 
@@ -29,8 +32,10 @@ class DocumentController extends Controller
             'document' => ['required', File::types(['txt', 'pdf'])->max('10mb')],
         ]);
 
-        if (KnowledgeDocument::where('user_id', $request->user()->id)->count() >= config('logicstrand.document_limit')) {
-            return back()->withErrors(['document' => 'Your workspace has reached the 20 document limit.']);
+        $limit = config('plans.'.$request->user()->planAccess->plan.'.document_limit');
+
+        if (KnowledgeDocument::where('user_id', $request->user()->id)->count() >= $limit) {
+            return back()->withErrors(['document' => "Your workspace has reached its $limit document limit."]);
         }
 
         $file = $validated['document'];
@@ -47,7 +52,7 @@ class DocumentController extends Controller
 
         ProcessDocument::dispatch($document->id);
 
-        return redirect()->route('documents.index')->with('status', 'Your document is being prepared.');
+        return redirect()->route('documents.index')->with('toast', ['type' => 'success', 'message' => 'Your document is being prepared.']);
     }
 
     public function download(Request $request, KnowledgeDocument $document): StreamedResponse
@@ -74,6 +79,6 @@ class DocumentController extends Controller
 
         Storage::disk('local')->delete($document->path);
 
-        return redirect()->route('documents.index')->with('status', 'Document and related answers removed.');
+        return redirect()->route('documents.index')->with('toast', ['type' => 'success', 'message' => 'Document and related answers removed.']);
     }
 }
