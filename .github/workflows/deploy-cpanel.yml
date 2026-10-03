@@ -19,10 +19,10 @@ permissions:
 
 jobs:
   deploy:
-    uses: A1-CM/.github/.github/workflows/laravel-cpanel-reusable.yml@v1.0.4
+    uses: A1-CM/.github/.github/workflows/laravel-cpanel-reusable.yml@v1.0.5
     with:
       toolkit_repository: A1-CM/.github
-      toolkit_ref: v1.0.4
+      toolkit_ref: v1.0.5
       project_slug: logicstrand
       project_name: LogicStrand
       app_url: ${{ vars.APP_URL }}
