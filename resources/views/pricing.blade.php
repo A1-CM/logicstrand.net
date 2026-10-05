@@ -20,7 +20,7 @@
                 @else
                     <a class="site-login" href="{{ route('login') }}">Sign in</a>
                 @endauth
-                <a class="button button-dark button-small" href="{{ route('checkout.show', 'sandbox') }}">Start Sandbox <span aria-hidden="true">↗</span></a>
+                <a class="button button-dark button-small" href="{{ route('checkout.show', 'sandbox') }}">Start Sandbox <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
             </div>
         </header>
 
@@ -47,7 +47,7 @@
                             <h2>{{ $plan['name'] }}</h2>
                             <p class="pricing-description">{{ $plan['description'] }}</p>
                             <div class="pricing-amount"><strong>&#36;{{ $plan['price'] }}</strong><span>/ {{ $plan['period'] }}</span></div>
-                            <a href="{{ route('checkout.show', $slug) }}" class="button {{ $slug === 'sandbox' ? 'button-blue' : 'button-dark' }} pricing-action">{{ $plan['action'] }} <span aria-hidden="true">↗</span></a>
+                            <a href="{{ route('checkout.show', $slug) }}" class="button {{ $slug === 'sandbox' ? 'button-blue' : 'button-dark' }} pricing-action">{{ $plan['action'] }} <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
                             <div class="pricing-rule"></div>
                             <span class="pricing-includes">WHAT'S INCLUDED</span>
                             <ul>
@@ -62,7 +62,7 @@
             </section>
 
             <section class="pricing-detail site-container">
-                <div><span class="section-kicker">02 / MORE THAN AN ANSWER</span><h2>Make the source<br><em>part of the story.</em></h2><p>Upload what matters, ask a question in plain language, and inspect the passages that informed the response.</p><a href="{{ route('home') }}#evidence" class="text-link">See the evidence path <span aria-hidden="true">↗</span></a></div>
+                <div><span class="section-kicker">02 / MORE THAN AN ANSWER</span><h2>Make the source<br><em>part of the story.</em></h2><p>Upload what matters, ask a question in plain language, and inspect the passages that informed the response.</p><a href="{{ route('home') }}#evidence" class="text-link">See the evidence path <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
                 <img src="{{ asset('images/strand-worktable.webp') }}" alt="An open research binder with a blue strand crossing the workspace" width="1400" height="933" loading="lazy">
             </section>
 

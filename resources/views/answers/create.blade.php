@@ -11,7 +11,7 @@
                 <label for="question">Your question</label>
                 <textarea name="question" id="question" rows="5" maxlength="1000" placeholder="For example: What changed in the latest policy?" required>{{ old('question', request()->query('question')) }}</textarea>
                 @error('question') <p class="field-error">{{ $message }}</p> @enderror
-                <div class="form-footer"><span>Only your own ready documents are searched.</span><button type="submit" class="button button-blue">Find an answer <span aria-hidden="true">↗</span></button></div>
+                <div class="form-footer"><span>Only your own ready documents are searched.</span><button type="submit" class="button button-blue">Find an answer <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></button></div>
             </form>
         </div>
         <div class="ask-tip"><span aria-hidden="true"><i class="fa-solid fa-file-circle-plus"></i></span><p><strong>New here?</strong> <a href="{{ route('documents.index') }}">Add a document</a> first so your answers can point back to a source.</p></div>

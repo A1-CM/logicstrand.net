@@ -8,16 +8,16 @@
                 @csrf
                 <label for="document" class="file-drop"><span class="file-icon" aria-hidden="true"><i class="fa-solid fa-file-arrow-up"></i></span><strong>Choose a document</strong><span>PDF or TXT · maximum 10 MB</span><input id="document" type="file" name="document" accept=".pdf,.txt,application/pdf,text/plain" required></label>
                 @error('document') <p class="field-error">{{ $message }}</p> @enderror
-                <button type="submit" class="button button-blue">Upload document <span aria-hidden="true">↗</span></button>
+                <button type="submit" class="button button-blue">Upload document <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></button>
             </form>
             @else
-                <div class="upload-form"><p>Choose a plan to add more sources to your library.</p><a href="{{ route('pricing') }}" class="button button-blue">Explore plans <span aria-hidden="true">↗</span></a></div>
+                <div class="upload-form"><p>Choose a plan to add more sources to your library.</p><a href="{{ route('pricing') }}" class="button button-blue">Explore plans <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
             @endif
         </div>
         <p class="privacy-note"><span>✳</span> When you ask a question, relevant passages from your documents are sent to Groq to compose the answer.</p>
         <section class="content-card library-card"><div class="card-heading"><div><span class="page-eyebrow">SOURCES</span><h2>Your library</h2></div></div>
             @forelse($documents as $document)
-                <div class="document-row"><span class="row-icon">≡</span><div class="row-main"><strong>{{ $document->name }}</strong><small>{{ number_format($document->size / 1024, 1) }} KB · Added {{ $document->created_at->format('M j, Y') }}</small>@if($document->error)<small class="field-error">{{ $document->error }}</small>@endif</div><span class="status-pill status-{{ $document->status }}">{{ ucfirst($document->status) }}</span><a href="{{ route('documents.download', $document) }}" class="row-action">Download</a><form method="POST" action="{{ route('documents.destroy', $document) }}" onsubmit="return confirm('Remove this document and answers that cite it?')">@csrf @method('DELETE')<button type="submit" class="row-action danger">Remove</button></form></div>
+                <div class="document-row"><span class="row-icon" aria-hidden="true"><i class="fa-solid fa-file-lines"></i></span><div class="row-main"><strong>{{ $document->name }}</strong><small>{{ number_format($document->size / 1024, 1) }} KB · Added {{ $document->created_at->format('M j, Y') }}</small>@if($document->error)<small class="field-error">{{ $document->error }}</small>@endif</div><span class="status-pill status-{{ $document->status }}">{{ ucfirst($document->status) }}</span><a href="{{ route('documents.download', $document) }}" class="row-action">Download</a><form method="POST" action="{{ route('documents.destroy', $document) }}" onsubmit="return confirm('Remove this document and answers that cite it?')">@csrf @method('DELETE')<button type="submit" class="row-action danger">Remove</button></form></div>
             @empty
                 <div class="empty-small"><strong>No documents yet</strong><p>Add a source above to start building your knowledge library.</p></div>
             @endforelse

@@ -5,11 +5,11 @@
         <article class="answer-card"><div class="answer-card-top"><span class="answer-badge">✳ &nbsp; LOGICSTRAND ANSWER</span><span>{{ $answer->citations->count() }} {{ Str::plural('source', $answer->citations->count()) }}</span></div><div class="answer-body">{{ $answer->answer }}</div></article>
         <section class="source-section"><div class="card-heading"><div><span class="page-eyebrow">FOLLOW THE EVIDENCE</span><h2>Source passages</h2></div></div>
             @forelse($answer->citations as $citation)
-                <article class="source-card"><div class="source-card-top"><span class="source-number">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span><div><strong>{{ $citation->chunk->document->name }}</strong><small>{{ $citation->chunk->page ? 'Page '.$citation->chunk->page : 'Text document' }}</small></div><a href="{{ route('documents.download', $citation->chunk->document) }}">Download ↗</a></div><p>{{ $citation->chunk->body }}</p></article>
+                <article class="source-card"><div class="source-card-top"><span class="source-number">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</span><div><strong>{{ $citation->chunk->document->name }}</strong><small>{{ $citation->chunk->page ? 'Page '.$citation->chunk->page : 'Text document' }}</small></div><a href="{{ route('documents.download', $citation->chunk->document) }}">Download <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a></div><p>{{ $citation->chunk->body }}</p></article>
             @empty
                 <div class="empty-small"><strong>No supporting passage found.</strong><p>Try a more specific question or add another document.</p></div>
             @endforelse
         </section>
-        <a href="{{ route('answers.create') }}" class="button button-dark">Ask another question <span aria-hidden="true">↗</span></a>
+        <a href="{{ route('answers.create') }}" class="button button-dark">Ask another question <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
     </div>
 </x-layouts::app>

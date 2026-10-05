@@ -23,7 +23,7 @@
                     <a class="site-login" href="{{ route('dashboard') }}">Dashboard</a>
                 @else
                     <a class="site-login" href="{{ route('login') }}">Sign in</a>
-                    <a class="button button-dark button-small" href="{{ route('pricing') }}">Get started <span aria-hidden="true">↗</span></a>
+                    <a class="button button-dark button-small" href="{{ route('pricing') }}">Get started <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
                 @endauth
             </div>
         </header>
@@ -35,7 +35,7 @@
                     <h1>Make every answer <em>traceable.</em></h1>
                     <p class="hero-lede">For the people making sense of policies, processes, and research: bring your documents together, ask the important questions, and see where each answer comes from.</p>
                     <div class="hero-actions">
-                        <a href="{{ route('pricing') }}" class="button button-blue">Start your workspace <span aria-hidden="true">↗</span></a>
+                        <a href="{{ route('pricing') }}" class="button button-blue">Start your workspace <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
                         <a href="#how-it-works" class="text-link">See how it works <span aria-hidden="true">↓</span></a>
                     </div>
                     <div class="hero-note"><span class="note-line"></span> Your documents. Your questions. A clearer way forward.</div>
@@ -115,7 +115,7 @@
                         <div class="usecase-prompt"><span>TRY ASKING</span><strong>“Which findings support this direction?”</strong></div>
                     </article>
                 </div>
-                <div class="usecase-outro"><span class="usecase-outro-mark" aria-hidden="true"><i class="fa-solid fa-eye"></i></span><p><strong>Your own lens, your own sources.</strong> LogicStrand works with the documents you choose to add.</p><a href="{{ route('pricing') }}">Start exploring <span aria-hidden="true">↗</span></a></div>
+                <div class="usecase-outro"><span class="usecase-outro-mark" aria-hidden="true"><i class="fa-solid fa-eye"></i></span><p><strong>Your own lens, your own sources.</strong> LogicStrand works with the documents you choose to add.</p><a href="{{ route('pricing') }}">Start exploring <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
             </section>
 
             <section id="how-it-works" class="section workflow-section">
@@ -124,7 +124,7 @@
                     <div class="workflow-photo"><img src="{{ asset('images/strand-library.webp') }}" alt="A blue strand connecting two libraries of source material" width="1400" height="933" loading="lazy"><div><span>FROM SOURCE TO SENSE</span><strong>Connected knowledge,<br>made useful.</strong></div></div>
                     <div class="steps-grid">
                         <article class="step-card"><span class="step-number">01</span><div class="step-icon" aria-hidden="true"><i class="fa-solid fa-file-arrow-up"></i></div><h3>Bring your knowledge</h3><p>Add text files and text-based PDFs to your private workspace. LogicStrand prepares them for search.</p></article>
-                        <article class="step-card"><span class="step-number">02</span><div class="step-icon">⌕</div><h3>Ask what matters</h3><p>Put a question in plain language. Relevant passages are found before an answer is composed.</p></article>
+                        <article class="step-card"><span class="step-number">02</span><div class="step-icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></div><h3>Ask what matters</h3><p>Put a question in plain language. Relevant passages are found before an answer is composed.</p></article>
                         <article class="step-card"><span class="step-number">03</span><div class="step-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></div><h3>Follow the evidence</h3><p>Read a concise answer alongside its source passages, then revisit it in your history.</p></article>
                     </div>
                 </div>
@@ -138,20 +138,29 @@
                 </div>
                 <div class="evidence-map">
                     <div class="evidence-map-grid" aria-hidden="true"></div>
+                    <div class="evidence-map-header">
+                        <span><i class="fa-solid fa-circle-nodes" aria-hidden="true"></i> THE EVIDENCE PATH</span>
+                        <span>AN EXAMPLE, STEP BY STEP</span>
+                    </div>
                     <div class="evidence-map-line" aria-hidden="true"></div>
                     <div class="evidence-step evidence-source">
-                        <span class="evidence-step-num">01 / YOUR MATERIAL</span>
-                        <div class="evidence-file"><span>≡</span><div><strong>Renewal policy.pdf</strong><small>Page 4 · approval process</small></div></div>
-                        <div class="evidence-file"><span>≡</span><div><strong>Process notes.txt</strong><small>Internal reference</small></div></div>
+                        <div class="evidence-step-heading"><span class="evidence-step-index">01</span><div><span>YOUR MATERIAL</span><strong>Start with your sources.</strong></div></div>
+                        <div class="evidence-file"><span class="evidence-file-icon" aria-hidden="true"><i class="fa-solid fa-file-pdf"></i></span><div><strong>Renewal policy.pdf</strong><small>Page 4 · approval process</small></div><span class="evidence-file-type">PDF</span></div>
+                        <div class="evidence-file"><span class="evidence-file-icon" aria-hidden="true"><i class="fa-solid fa-file-lines"></i></span><div><strong>Process notes.txt</strong><small>Internal reference</small></div><span class="evidence-file-type">TXT</span></div>
+                        <p class="evidence-step-caption">Your documents become a searchable library.</p>
                     </div>
                     <div class="evidence-step evidence-question">
-                        <span class="evidence-step-num">02 / YOUR QUESTION</span>
-                        <div class="evidence-question-bubble">What needs approval before a renewal?</div>
-                        <span class="evidence-signal">✳ &nbsp; Relevant passages selected</span>
+                        <div class="evidence-step-heading"><span class="evidence-step-index">02</span><div><span>YOUR QUESTION</span><strong>Ask what matters.</strong></div></div>
+                        <div class="evidence-question-bubble"><span>QUESTION</span><p>What needs approval before a renewal?</p></div>
+                        <div class="evidence-signal"><i class="fa-solid fa-circle-check" aria-hidden="true"></i><span>Relevant passages selected</span></div>
                     </div>
                     <div class="evidence-step evidence-result">
-                        <span class="evidence-step-num">03 / A REVIEWABLE ANSWER</span>
-                        <div class="evidence-result-card"><span>LOGICSTRAND ANSWER</span><p>The documented process requires two approvals before renewal.</p><small>↳ Renewal policy · p. 4</small></div>
+                        <div class="evidence-step-heading"><span class="evidence-step-index">03</span><div><span>REVIEWABLE ANSWER</span><strong>See the connection.</strong></div></div>
+                        <div class="evidence-result-card">
+                            <span class="evidence-result-label"><i class="fa-solid fa-circle-nodes" aria-hidden="true"></i> LOGICSTRAND ANSWER</span>
+                            <p>The documented process requires two approvals before renewal.</p>
+                            <div class="evidence-citation"><i class="fa-solid fa-link" aria-hidden="true"></i><span>Renewal policy <small>p. 4 · approval process</small></span></div>
+                        </div>
                     </div>
                     <div class="evidence-map-foot">Illustrative workflow · your workspace uses your own documents</div>
                 </div>
@@ -175,12 +184,12 @@
             <section id="principles" class="section site-container principle-section">
                 <div class="principle-panel">
                     <div class="principle-symbol" aria-hidden="true">✳</div>
-                    <div><span class="section-kicker light-kicker">06 / OUR APPROACH</span><h2>Confidence starts<br>with context.</h2><p>LogicStrand is designed to make sources visible and gaps obvious. When your documents cannot support an answer, the workspace says so. The passages selected for a question are sent to Groq to generate the response.</p><a href="{{ route('pricing') }}" class="button button-light">Create your workspace <span aria-hidden="true">↗</span></a></div>
+                    <div><span class="section-kicker light-kicker">06 / OUR APPROACH</span><h2>Confidence starts<br>with context.</h2><p>LogicStrand is designed to make sources visible and gaps obvious. When your documents cannot support an answer, the workspace says so. The passages selected for a question are sent to Groq to generate the response.</p><a href="{{ route('pricing') }}" class="button button-light">Create your workspace <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
                 </div>
             </section>
 
             <section id="faq" class="section site-container faq-section">
-                <div class="faq-intro"><span class="section-kicker">07 / GOOD QUESTIONS</span><h2>A little more<br><em>clarity.</em></h2><p>Before you begin, here is how LogicStrand handles the most important parts of the workflow.</p><a href="{{ route('pricing') }}" class="text-link">Create a workspace <span aria-hidden="true">↗</span></a></div>
+                <div class="faq-intro"><span class="section-kicker">07 / GOOD QUESTIONS</span><h2>A little more<br><em>clarity.</em></h2><p>Before you begin, here is how LogicStrand handles the most important parts of the workflow.</p><a href="{{ route('pricing') }}" class="text-link">Create a workspace <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
                 <div class="faq-list">
                     <details><summary><span>01</span> What can I add to my workspace?<b aria-hidden="true">+</b></summary><p>Upload UTF-8 text files and text-based PDFs, up to 10 MB each. Scanned PDFs need OCR and are not supported in this version.</p></details>
                     <details><summary><span>02</span> How does an answer connect to a source?<b aria-hidden="true">+</b></summary><p>LogicStrand searches your ready documents, sends relevant passages to Groq, and shows the passages cited by the answer so you can review them.</p></details>
@@ -192,7 +201,7 @@
             <section class="closing-section site-container">
                 <span class="section-kicker">A BETTER THREAD TO FOLLOW</span>
                 <h2>Your next answer<br>should have a <em>source.</em></h2>
-                <a href="{{ route('pricing') }}" class="button button-blue">Get started with LogicStrand <span aria-hidden="true">↗</span></a>
+                <a href="{{ route('pricing') }}" class="button button-blue">Get started with LogicStrand <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
             </section>
         </main>
 

@@ -2,7 +2,7 @@
     <div class="page-shell">
         <div class="page-heading">
             <div><span class="page-eyebrow">YOUR WORKSPACE / OVERVIEW</span><h1>Good to see you, {{ Str::before(auth()->user()->name, ' ') }}.</h1><p>Your knowledge is ready when you are.</p></div>
-            <a href="{{ route('answers.create') }}" class="button button-blue">Ask a question <span aria-hidden="true">↗</span></a>
+            <a href="{{ route('answers.create') }}" class="button button-blue">Ask a question <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
         </div>
         <section class="plan-status-card">
             <div class="plan-status-icon">✳</div>
@@ -19,10 +19,10 @@
                     <p>Choose a plan to add sources, ask questions, and trace each answer to its evidence.</p>
                 @endif
             </div>
-            <a href="{{ $access?->isActive() ? route('sandbox.index') : route('pricing') }}" class="plan-status-link">{{ $access?->isActive() ? 'Open Sandbox' : 'Explore plans' }} <span aria-hidden="true">↗</span></a>
+            <a href="{{ $access?->isActive() ? route('sandbox.index') : route('pricing') }}" class="plan-status-link">{{ $access?->isActive() ? 'Open Sandbox' : 'Explore plans' }} <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
         </section>
         <div class="dashboard-hero">
-            <div><span class="dashboard-hero-kicker">WORK WITH CLARITY</span><h2>One place for the answers<br>behind your next move.</h2><p>Add sources, ask questions, and see the evidence that connects them.</p><div class="hero-mini-actions"><a href="{{ route('documents.index') }}">Add a document <span>↗</span></a><a href="{{ route('answers.create') }}">Explore a question <span>↗</span></a></div></div>
+            <div><span class="dashboard-hero-kicker">WORK WITH CLARITY</span><h2>One place for the answers<br>behind your next move.</h2><p>Add sources, ask questions, and see the evidence that connects them.</p><div class="hero-mini-actions"><a href="{{ route('documents.index') }}">Add a document <span><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a><a href="{{ route('answers.create') }}">Explore a question <span><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div></div>
             <div class="dashboard-art" aria-hidden="true"><span class="art-line a"></span><span class="art-line b"></span><span class="art-line c"></span><i class="art-node n1"></i><i class="art-node n2"></i><i class="art-node n3"></i></div>
         </div>
         <div class="metric-grid">
@@ -31,18 +31,18 @@
             <div class="metric-card"><span>Saved answers</span><strong>{{ $answerCount }}</strong><small>Questions explored so far</small></div>
         </div>
         <div class="dashboard-columns">
-            <section class="content-card"><div class="card-heading"><div><span class="page-eyebrow">RECENT ACTIVITY</span><h2>Questions & answers</h2></div><a href="{{ route('answers.index') }}">View all ↗</a></div>
+            <section class="content-card"><div class="card-heading"><div><span class="page-eyebrow">RECENT ACTIVITY</span><h2>Questions & answers</h2></div><a href="{{ route('answers.index') }}">View all <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a></div>
                 @forelse($recentAnswers as $answer)
-                    <a href="{{ route('answers.show', $answer) }}" class="list-row"><span class="row-icon">?</span><span class="row-main"><strong>{{ $answer->question }}</strong><small>{{ $answer->created_at->diffForHumans() }}</small></span><span class="row-arrow">↗</span></a>
+                    <a href="{{ route('answers.show', $answer) }}" class="list-row"><span class="row-icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></span><span class="row-main"><strong>{{ $answer->question }}</strong><small>{{ $answer->created_at->diffForHumans() }}</small></span><span class="row-arrow"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
                 @empty
-                    <div class="empty-small"><strong>No questions yet</strong><p>Your saved answers will appear here.</p><a href="{{ route('answers.create') }}">Ask your first question ↗</a></div>
+                    <div class="empty-small"><strong>No questions yet</strong><p>Your saved answers will appear here.</p><a href="{{ route('answers.create') }}">Ask your first question <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a></div>
                 @endforelse
             </section>
-            <section class="content-card"><div class="card-heading"><div><span class="page-eyebrow">YOUR LIBRARY</span><h2>Recent documents</h2></div><a href="{{ route('documents.index') }}">View all ↗</a></div>
+            <section class="content-card"><div class="card-heading"><div><span class="page-eyebrow">YOUR LIBRARY</span><h2>Recent documents</h2></div><a href="{{ route('documents.index') }}">View all <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a></div>
                 @forelse($recentDocuments as $document)
-                    <div class="list-row"><span class="row-icon">≡</span><span class="row-main"><strong>{{ $document->name }}</strong><small>{{ ucfirst($document->status) }} · {{ $document->created_at->diffForHumans() }}</small></span></div>
+                    <div class="list-row"><span class="row-icon" aria-hidden="true"><i class="fa-solid fa-file-lines"></i></span><span class="row-main"><strong>{{ $document->name }}</strong><small>{{ ucfirst($document->status) }} · {{ $document->created_at->diffForHumans() }}</small></span></div>
                 @empty
-                    <div class="empty-small"><strong>Your library starts here</strong><p>Upload a document to ground your first answer.</p><a href="{{ route('documents.index') }}">Add a document ↗</a></div>
+                    <div class="empty-small"><strong>Your library starts here</strong><p>Upload a document to ground your first answer.</p><a href="{{ route('documents.index') }}">Add a document <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a></div>
                 @endforelse
             </section>
         </div>

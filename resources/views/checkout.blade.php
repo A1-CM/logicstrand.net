@@ -34,7 +34,7 @@
 
                 <div class="checkout-form-heading checkout-agreement"><span>02</span><div><h2>Confirm access</h2><p>Your {{ $selected['name'] }} access begins as soon as you continue.</p></div></div>
                 <div class="checkout-total"><span>{{ $selected['name'] }} · {{ $plan === 'sandbox' ? '7 days' : 'one month' }}</span><strong>&#36;{{ $selected['price'] }}</strong></div>
-                <button type="submit" class="button button-blue checkout-submit">Activate {{ $selected['name'] }} <span aria-hidden="true">↗</span></button>
+                <button type="submit" class="button button-blue checkout-submit">Activate {{ $selected['name'] }} <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></button>
                 <p class="checkout-footnote">No automatic renewal. Your access end date will appear in the dashboard.</p>
             </form>
         </div>

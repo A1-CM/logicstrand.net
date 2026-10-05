@@ -2,7 +2,7 @@
     <div class="page-shell sandbox-page">
         <div class="page-heading">
             <div><span class="page-eyebrow">YOUR WORKSPACE / SANDBOX</span><h1>A place to find the thread.</h1><p>Try the path from source to question to a reviewable answer.</p></div>
-            <a href="{{ route('pricing') }}" class="button button-dark">Explore plans <span aria-hidden="true">↗</span></a>
+            <a href="{{ route('pricing') }}" class="button button-dark">Explore plans <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
         </div>
 
         <section class="sandbox-hero">
@@ -13,7 +13,7 @@
                 @if($access?->isActive())
                     <div class="sandbox-time"><strong>{{ $access->daysRemaining() }}</strong><span>days remaining<br>until {{ $access->access_ends_at->format('M j, Y') }}</span></div>
                 @else
-                    <a href="{{ $access ? route('pricing') : route('checkout.show', 'sandbox') }}" class="button button-light">{{ $access ? 'Explore plans' : 'Start Sandbox' }} <span aria-hidden="true">↗</span></a>
+                    <a href="{{ $access ? route('pricing') : route('checkout.show', 'sandbox') }}" class="button button-light">{{ $access ? 'Explore plans' : 'Start Sandbox' }} <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
                 @endif
             </div>
             <img src="{{ asset('images/strand-hero.webp') }}" alt="Cobalt strands weaving through paper" width="1400" height="933">
@@ -29,17 +29,17 @@
 
         <div class="sandbox-section-head"><span class="page-eyebrow">THE FIRST THREE MOVES</span><h2>From source to insight.</h2><p>Follow the sequence, or jump straight to the step you need.</p></div>
         <section class="sandbox-steps">
-            <article class="sandbox-step"><span class="sandbox-step-number">01</span><div class="sandbox-step-icon">≡</div><h3>Begin with a source.</h3><p>Use our starter renewal policy, or add a text file or text-based PDF from your own library.</p>
+            <article class="sandbox-step"><span class="sandbox-step-number">01</span><div class="sandbox-step-icon" aria-hidden="true"><i class="fa-solid fa-file-lines"></i></div><h3>Begin with a source.</h3><p>Use our starter renewal policy, or add a text file or text-based PDF from your own library.</p>
                 @if($access?->isActive() && ! $hasSample)
-                    <form method="POST" action="{{ route('sandbox.source') }}">@csrf<button type="submit" class="sandbox-step-link">Add starter source ↗</button></form>
+                    <form method="POST" action="{{ route('sandbox.source') }}">@csrf<button type="submit" class="sandbox-step-link">Add starter source <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></button></form>
                 @elseif($hasSample)
                     <a href="{{ route('documents.index') }}" class="sandbox-step-link">Starter source added ✓</a>
                 @else
-                    <a href="{{ route('pricing') }}" class="sandbox-step-link">Choose a plan ↗</a>
+                    <a href="{{ route('pricing') }}" class="sandbox-step-link">Choose a plan <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a>
                 @endif
             </article>
-            <article class="sandbox-step"><span class="sandbox-step-number">02</span><div class="sandbox-step-icon">?</div><h3>Ask what matters.</h3><p>Try a practical question: “What approvals are required before renewal?”</p><a href="{{ $access?->isActive() ? route('answers.create', ['question' => 'What approvals are required before renewal?']) : route('pricing') }}" class="sandbox-step-link">Ask this question ↗</a></article>
-            <article class="sandbox-step"><span class="sandbox-step-number">03</span><div class="sandbox-step-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></div><h3>Follow the evidence.</h3><p>Open an answer and inspect the exact passages it cites. Your answers stay in your history.</p><a href="{{ route('answers.index') }}" class="sandbox-step-link">View answer history ↗</a></article>
+            <article class="sandbox-step"><span class="sandbox-step-number">02</span><div class="sandbox-step-icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></div><h3>Ask what matters.</h3><p>Try a practical question: “What approvals are required before renewal?”</p><a href="{{ $access?->isActive() ? route('answers.create', ['question' => 'What approvals are required before renewal?']) : route('pricing') }}" class="sandbox-step-link">Ask this question <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a></article>
+            <article class="sandbox-step"><span class="sandbox-step-number">03</span><div class="sandbox-step-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></div><h3>Follow the evidence.</h3><p>Open an answer and inspect the exact passages it cites. Your answers stay in your history.</p><a href="{{ route('answers.index') }}" class="sandbox-step-link">View answer history <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a></article>
         </section>
         <p class="sandbox-note">The starter source is illustrative. Questions about your ready documents use Groq, and relevant passages are sent to generate the response.</p>
     </div>
