@@ -115,7 +115,7 @@
                         <div class="usecase-prompt"><span>TRY ASKING</span><strong>“Which findings support this direction?”</strong></div>
                     </article>
                 </div>
-                <div class="usecase-outro"><span class="usecase-outro-mark">↗</span><p><strong>Your own lens, your own sources.</strong> LogicStrand works with the documents you choose to add.</p><a href="{{ route('pricing') }}">Start exploring <span aria-hidden="true">↗</span></a></div>
+                <div class="usecase-outro"><span class="usecase-outro-mark" aria-hidden="true"><i class="fa-solid fa-eye"></i></span><p><strong>Your own lens, your own sources.</strong> LogicStrand works with the documents you choose to add.</p><a href="{{ route('pricing') }}">Start exploring <span aria-hidden="true">↗</span></a></div>
             </section>
 
             <section id="how-it-works" class="section workflow-section">
@@ -123,9 +123,9 @@
                     <div class="workflow-heading"><div><span class="section-kicker">03 / HOW IT WORKS</span><h2>From information<br>to understanding.</h2></div><p>A focused workflow that keeps the source of every useful answer within reach.</p></div>
                     <div class="workflow-photo"><img src="{{ asset('images/strand-library.webp') }}" alt="A blue strand connecting two libraries of source material" width="1400" height="933" loading="lazy"><div><span>FROM SOURCE TO SENSE</span><strong>Connected knowledge,<br>made useful.</strong></div></div>
                     <div class="steps-grid">
-                        <article class="step-card"><span class="step-number">01</span><div class="step-icon">↥</div><h3>Bring your knowledge</h3><p>Add text files and text-based PDFs to your private workspace. LogicStrand prepares them for search.</p></article>
+                        <article class="step-card"><span class="step-number">01</span><div class="step-icon" aria-hidden="true"><i class="fa-solid fa-file-arrow-up"></i></div><h3>Bring your knowledge</h3><p>Add text files and text-based PDFs to your private workspace. LogicStrand prepares them for search.</p></article>
                         <article class="step-card"><span class="step-number">02</span><div class="step-icon">⌕</div><h3>Ask what matters</h3><p>Put a question in plain language. Relevant passages are found before an answer is composed.</p></article>
-                        <article class="step-card"><span class="step-number">03</span><div class="step-icon">↗</div><h3>Follow the evidence</h3><p>Read a concise answer alongside its source passages, then revisit it in your history.</p></article>
+                        <article class="step-card"><span class="step-number">03</span><div class="step-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></div><h3>Follow the evidence</h3><p>Read a concise answer alongside its source passages, then revisit it in your history.</p></article>
                     </div>
                 </div>
             </section>

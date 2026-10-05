@@ -6,7 +6,7 @@
             @if(auth()->user()->planAccess?->isActive())
             <form method="POST" action="{{ route('documents.store') }}" enctype="multipart/form-data" class="upload-form">
                 @csrf
-                <label for="document" class="file-drop"><span class="file-icon">↥</span><strong>Choose a document</strong><span>PDF or TXT · maximum 10 MB</span><input id="document" type="file" name="document" accept=".pdf,.txt,application/pdf,text/plain" required></label>
+                <label for="document" class="file-drop"><span class="file-icon" aria-hidden="true"><i class="fa-solid fa-file-arrow-up"></i></span><strong>Choose a document</strong><span>PDF or TXT · maximum 10 MB</span><input id="document" type="file" name="document" accept=".pdf,.txt,application/pdf,text/plain" required></label>
                 @error('document') <p class="field-error">{{ $message }}</p> @enderror
                 <button type="submit" class="button button-blue">Upload document <span aria-hidden="true">↗</span></button>
             </form>

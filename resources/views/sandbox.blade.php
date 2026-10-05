@@ -39,7 +39,7 @@
                 @endif
             </article>
             <article class="sandbox-step"><span class="sandbox-step-number">02</span><div class="sandbox-step-icon">?</div><h3>Ask what matters.</h3><p>Try a practical question: “What approvals are required before renewal?”</p><a href="{{ $access?->isActive() ? route('answers.create', ['question' => 'What approvals are required before renewal?']) : route('pricing') }}" class="sandbox-step-link">Ask this question ↗</a></article>
-            <article class="sandbox-step"><span class="sandbox-step-number">03</span><div class="sandbox-step-icon">↗</div><h3>Follow the evidence.</h3><p>Open an answer and inspect the exact passages it cites. Your answers stay in your history.</p><a href="{{ route('answers.index') }}" class="sandbox-step-link">View answer history ↗</a></article>
+            <article class="sandbox-step"><span class="sandbox-step-number">03</span><div class="sandbox-step-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></div><h3>Follow the evidence.</h3><p>Open an answer and inspect the exact passages it cites. Your answers stay in your history.</p><a href="{{ route('answers.index') }}" class="sandbox-step-link">View answer history ↗</a></article>
         </section>
         <p class="sandbox-note">The starter source is illustrative. Questions about your ready documents use Groq, and relevant passages are sent to generate the response.</p>
     </div>

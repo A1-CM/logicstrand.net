@@ -14,6 +14,6 @@
                 <div class="form-footer"><span>Only your own ready documents are searched.</span><button type="submit" class="button button-blue">Find an answer <span aria-hidden="true">↗</span></button></div>
             </form>
         </div>
-        <div class="ask-tip"><span>↗</span><p><strong>New here?</strong> <a href="{{ route('documents.index') }}">Add a document</a> first so your answers can point back to a source.</p></div>
+        <div class="ask-tip"><span aria-hidden="true"><i class="fa-solid fa-file-circle-plus"></i></span><p><strong>New here?</strong> <a href="{{ route('documents.index') }}">Add a document</a> first so your answers can point back to a source.</p></div>
     </div>
 </x-layouts::app>

@@ -38,3 +38,6 @@ yarn-error.log
 /opencode.json
 /opencode.jsonc
 /docs
+
+# Separate local checkout of the shared cPanel toolkit
+/deployment-toolkit
