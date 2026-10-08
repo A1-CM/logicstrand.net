@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\SandboxController;
@@ -9,6 +10,7 @@ use App\Http\Middleware\EnsurePlanActive;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
+Route::post('contact', [ContactController::class, 'store'])->middleware('throttle:contact')->name('contact.store');
 Route::view('pricing', 'pricing', ['plans' => config('plans')])->name('pricing');
 Route::get('checkout/{plan}', [CheckoutController::class, 'show'])->name('checkout.show');
 Route::post('checkout/{plan}', [CheckoutController::class, 'complete'])

@@ -17,6 +17,7 @@
                 <a href="#how-it-works">How it works</a>
                 <a href="#voices">Perspectives</a>
                 <a href="{{ route('pricing') }}">Pricing</a>
+                <a href="#contact">Contact</a>
             </nav>
             <div class="site-header-actions">
                 @auth
@@ -198,6 +199,65 @@
                 </div>
             </section>
 
+            <section id="contact" class="section site-container contact-section" aria-labelledby="contact-title">
+                <div class="contact-info">
+                    <span class="section-kicker">08 / GET IN TOUCH</span>
+                    <h2 id="contact-title">Let's start<br><em>a conversation.</em></h2>
+                    <p>Questions about LogicStrand, a source-backed workflow, or where to begin? Tell us what you have in mind.</p>
+                    <a class="contact-email" href="mailto:support@logicstrand.net">
+                        <span class="contact-email-icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></span>
+                        <span><small>EMAIL OUR TEAM</small><strong>support@logicstrand.net</strong></span>
+                    </a>
+                    <div class="contact-offices">
+                        <div class="contact-office">
+                            <span class="contact-office-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+                            <div><div class="contact-office-heading"><span class="contact-office-label">SRI LANKA</span><a class="contact-map-link" href="https://www.google.com/maps/search/?api=1&query=No%2018%20Lakeview%20Crescent%20Rajagiriya%20Sri%20Lanka" target="_blank" rel="noopener noreferrer" aria-label="View Sri Lanka office on Google Maps"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Map</a></div><address>No. 18, Lakeview Crescent<br>Rajagiriya, Sri Lanka</address><a href="tel:+94770001201"><i class="fa-solid fa-phone" aria-hidden="true"></i> +94 77 000 1201</a></div>
+                        </div>
+                        <div class="contact-office">
+                            <span class="contact-office-icon" aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span>
+                            <div><div class="contact-office-heading"><span class="contact-office-label">UNITED STATES</span><a class="contact-map-link" href="https://www.google.com/maps/search/?api=1&query=455%20Market%20Street%20San%20Francisco%20CA%2094105%20USA" target="_blank" rel="noopener noreferrer" aria-label="View United States office on Google Maps"><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Map</a></div><address>455 Market Street<br>San Francisco, CA 94105, USA</address><a href="tel:+14155550101"><i class="fa-solid fa-phone" aria-hidden="true"></i> +1 415-555-0101</a></div>
+                        </div>
+                    </div>
+                    <p class="contact-legal"><strong>LogicStrand</strong> was founded on 18 September 2023.<br>Sri Lanka: LogicStrand Technologies (Pvt) Ltd<br>United States: LogicStrand Technologies Inc.</p>
+                </div>
+                <div class="contact-panel">
+                    <div class="contact-panel-heading">
+                        <span>DIRECT LINE / CONTACT</span>
+                        <h3>Send us a note.</h3>
+                        <p>Share a little context and our team will get back to you by email.</p>
+                    </div>
+                    <div class="contact-panel-grid">
+                        <div class="contact-form-wrap">
+                            @if(filled(config('services.turnstile.site_key')) && filled(config('services.turnstile.secret_key')))
+                                <form class="contact-form" method="POST" action="{{ route('contact.store') }}">
+                                    @csrf
+                                    <div class="contact-honeypot" aria-hidden="true"><label for="contact-website">Leave this field empty</label><input id="contact-website" type="text" name="website" tabindex="-1" autocomplete="off"></div>
+                                    @error('delivery')<p class="contact-form-alert" role="alert">{{ $message }}</p>@enderror
+                                    @if($errors->any() && ! $errors->has('delivery'))<p class="contact-form-alert" role="alert">Please check the highlighted fields and try again.</p>@endif
+                                    <div class="contact-field"><label for="contact-name">Your name <span aria-hidden="true">*</span></label><input id="contact-name" name="name" type="text" value="{{ old('name') }}" autocomplete="name" maxlength="120" required aria-invalid="{{ $errors->has('name') ? 'true' : 'false' }}">@error('name')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
+                                    <div class="contact-field"><label for="contact-email">Email address <span aria-hidden="true">*</span></label><input id="contact-email" name="email" type="email" value="{{ old('email') }}" autocomplete="email" maxlength="254" required aria-invalid="{{ $errors->has('email') ? 'true' : 'false' }}">@error('email')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
+                                    <div class="contact-field"><label for="contact-organization">Organization <small>Optional</small></label><input id="contact-organization" name="organization" type="text" value="{{ old('organization') }}" autocomplete="organization" maxlength="120" aria-invalid="{{ $errors->has('organization') ? 'true' : 'false' }}">@error('organization')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
+                                    <div class="contact-field"><label for="contact-subject">Subject <span aria-hidden="true">*</span></label><input id="contact-subject" name="subject" type="text" value="{{ old('subject') }}" maxlength="150" required aria-invalid="{{ $errors->has('subject') ? 'true' : 'false' }}">@error('subject')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
+                                    <div class="contact-field"><label for="contact-message">Message <span aria-hidden="true">*</span></label><textarea id="contact-message" name="message" rows="5" minlength="10" maxlength="5000" required aria-invalid="{{ $errors->has('message') ? 'true' : 'false' }}">{{ old('message') }}</textarea>@error('message')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
+                                    <div class="contact-turnstile"><div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.site_key') }}" data-action="contact" data-size="flexible" data-theme="light"></div>@error('turnstile')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
+                                    <button class="button button-blue contact-submit" type="submit">Send message</button>
+                                </form>
+                            @else
+                                <div class="contact-unavailable" role="status"><i class="fa-solid fa-envelope" aria-hidden="true"></i><strong>The form is temporarily unavailable.</strong><p>You can still reach us at <a href="mailto:support@logicstrand.net">support@logicstrand.net</a>.</p></div>
+                            @endif
+                        </div>
+                        <aside class="contact-social" aria-label="LogicStrand social profiles">
+                            <span class="contact-social-kicker">FOLLOW US ON</span>
+                            <div class="contact-social-links">
+                                <a href="https://medium.com/@LogicStrand" target="_blank" rel="noopener noreferrer" aria-label="Follow LogicStrand on Medium" data-tooltip="Medium"><i class="fa-brands fa-medium" aria-hidden="true"></i></a>
+                                <a href="https://www.youtube.com/@LogicStrand-d4t" target="_blank" rel="noopener noreferrer" aria-label="Follow LogicStrand on YouTube" data-tooltip="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+                                <a href="https://www.facebook.com/LogicStrand/" target="_blank" rel="noopener noreferrer" aria-label="Follow LogicStrand on Facebook" data-tooltip="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+
             <section class="closing-section site-container">
                 <span class="section-kicker">A BETTER THREAD TO FOLLOW</span>
                 <h2>Your next answer<br>should have a <em>source.</em></h2>
@@ -207,6 +267,9 @@
 
         <footer class="site-footer"><div class="site-container footer-inner"><a href="{{ route('home') }}" class="site-brand"><x-app-logo-icon class="brand-mark" /><span>LogicStrand<span class="brand-period">.</span></span></a><span>Knowledge, connected with clarity.</span><span>© {{ date('Y') }} LogicStrand</span></div></footer>
     </div>
+    @if(filled(config('services.turnstile.site_key')) && filled(config('services.turnstile.secret_key')))
+        <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    @endif
     <x-toast-stack />
 </body>
 </html>

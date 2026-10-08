@@ -41,6 +41,19 @@ Open http://localhost:8000. Uploaded documents stay in private local storage. Th
 
 Email verification is enabled. The default MAIL_MAILER=log writes local verification links to storage/logs/laravel.log; configure a real mail service before inviting people to a hosted instance. The application is delivered as a runnable repository and has not been deployed.
 
+## Contact form
+
+The landing page includes a contact form that sends mail to the existing `support@logicstrand.net` inbox. Set `MAIL_MAILER=smtp` and the normal `MAIL_*` values in production. The sender stays `MAIL_FROM_ADDRESS`; a visitor's email is used only as the reply-to address. Messages are not saved in the database.
+
+Create a **Non-Interactive** Cloudflare Turnstile widget for the hostname in `APP_URL` and add its keys to `.env`:
+
+~~~dotenv
+TURNSTILE_SITE_KEY=your_public_site_key
+TURNSTILE_SECRET_KEY=your_private_secret_key
+~~~
+
+For cPanel deployment, add both lines to the LogicStrand repository's `APP_ENV_EXTRA` GitHub Actions secret alongside any existing application settings. The shared deployer writes them into the private release `.env`. Without both keys, the page displays the support address and an unavailable form state. The server checks Turnstile's response, action, and hostname before sending. A honeypot and an IP-based limit of five submissions per minute add protection. Keep the secret key out of browser code and Git.
+
 ## Plans and checkout
 
 - Sandbox starts a one-time seven day trial. It includes 20 documents and 30 questions per day.
