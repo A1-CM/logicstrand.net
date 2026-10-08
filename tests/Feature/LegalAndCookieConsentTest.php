@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -35,7 +36,7 @@ class LegalAndCookieConsentTest extends TestCase
                 ->assertSee('Allow optional');
         }
 
-        $user = \App\Models\User::factory()->create(['email_verified_at' => now()]);
+        $user = User::factory()->create(['email_verified_at' => now()]);
         $this->actingAs($user)->get(route('checkout.show', 'sandbox'))->assertOk()
             ->assertSee(route('privacy'), false)
             ->assertSee(route('terms'), false)
