@@ -4,6 +4,8 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Mail\Markdown;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\URL;
@@ -59,6 +61,65 @@ class EmailVerificationTest extends TestCase
         $response->assertRedirect(route('dashboard', absolute: false).'?verified=1');
     }
 
+    public function test_guest_is_redirected_to_sign_in_before_verifying(): void
+    {
+        $user = User::factory()->unverified()->create();
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $user->id, 'hash' => sha1($user->email)],
+        );
+
+        $this->get($verificationUrl)->assertRedirect(route('login'));
+    }
+
+    public function test_verification_link_for_another_signed_in_account_is_forbidden(): void
+    {
+        $recipient = User::factory()->unverified()->create();
+        $otherUser = User::factory()->create();
+        $verificationUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $recipient->id, 'hash' => sha1($recipient->email)],
+        );
+
+        $this->actingAs($otherUser)->get($verificationUrl)->assertForbidden();
+        $this->assertFalse($recipient->fresh()->hasVerifiedEmail());
+    }
+
+    public function test_expired_and_modified_verification_links_are_forbidden(): void
+    {
+        $user = User::factory()->unverified()->create();
+        $expiredUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->subMinute(),
+            ['id' => $user->id, 'hash' => sha1($user->email)],
+        );
+        $validUrl = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $user->id, 'hash' => sha1($user->email)],
+        );
+
+        $this->actingAs($user)->get($expiredUrl)->assertForbidden();
+        $this->get($validUrl.'&copied=1')->assertForbidden();
+        $this->assertFalse($user->fresh()->hasVerifiedEmail());
+    }
+
+    public function test_verification_notification_contains_a_signed_url_and_html_escapes_query_delimiters(): void
+    {
+        $user = User::factory()->unverified()->create();
+        $message = (new VerifyEmail)->toMail($user);
+        $html = (string) $message->render();
+        $text = app(Markdown::class)->renderText($message->markdown, $message->data());
+
+        $this->assertStringContainsString('&signature=', $message->actionUrl);
+        $this->assertStringContainsString('&amp;signature=', $html);
+        $this->assertStringNotContainsString('&amp;amp;signature=', $html);
+        $this->assertStringContainsString($message->actionUrl, $text);
+        $this->assertStringNotContainsString('&amp;signature=', $text);
+    }
+
     public function test_email_is_not_verified_with_invalid_hash(): void
     {
         $user = User::factory()->unverified()->create();
@@ -69,7 +130,7 @@ class EmailVerificationTest extends TestCase
             ['id' => $user->id, 'hash' => sha1('wrong-email')],
         );
 
-        $this->actingAs($user)->get($verificationUrl);
+        $this->actingAs($user)->get($verificationUrl)->assertForbidden();
 
         $this->assertFalse($user->fresh()->hasVerifiedEmail());
     }

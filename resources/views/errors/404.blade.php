@@ -1,0 +1,1 @@
+@include('errors.page', ['code' => '404', 'title' => 'We could not find that page.', 'message' => 'The link may be old, or the page may have moved. Let’s get you back to the right place.', 'primaryText' => 'Return home', 'primaryUrl' => route('home')])

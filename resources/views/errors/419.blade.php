@@ -1,0 +1,1 @@
+@include('errors.page', ['code' => '419', 'title' => 'This page has expired.', 'message' => 'For your security, this form is no longer active. Return to the previous page and try again.', 'primaryText' => 'Return home', 'primaryUrl' => route('home')])

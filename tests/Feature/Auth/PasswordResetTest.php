@@ -55,6 +55,21 @@ class PasswordResetTest extends TestCase
         });
     }
 
+    public function test_password_reset_rejects_an_invalid_token(): void
+    {
+        $user = User::factory()->create();
+        $originalPassword = $user->password;
+
+        $this->post(route('password.update'), [
+            'token' => 'invalid-reset-token',
+            'email' => $user->email,
+            'password' => 'new-password',
+            'password_confirmation' => 'new-password',
+        ])->assertSessionHasErrors(['email']);
+
+        $this->assertSame($originalPassword, $user->fresh()->password);
+    }
+
     public function test_password_can_be_reset_with_valid_token(): void
     {
         Notification::fake();

@@ -1,0 +1,1 @@
+@include('errors.page', ['code' => '503', 'title' => 'We’ll be right back.', 'message' => 'LogicStrand is temporarily unavailable. Please try again shortly.', 'primaryText' => 'Return home', 'primaryUrl' => route('home')])

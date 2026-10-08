@@ -1,0 +1,1 @@
+@include('errors.page', ['code' => '429', 'title' => 'A short pause.', 'message' => 'There have been too many requests in a short time. Wait a moment, then try again.', 'primaryText' => 'Return home', 'primaryUrl' => route('home')])

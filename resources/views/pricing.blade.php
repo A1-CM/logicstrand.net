@@ -12,7 +12,9 @@
                 <a href="{{ route('home') }}#platform">Platform</a>
                 <a href="{{ route('home') }}#use-cases">Who it helps</a>
                 <a href="{{ route('home') }}#how-it-works">How it works</a>
+                <a href="{{ route('home') }}#voices">Perspectives</a>
                 <a href="{{ route('pricing') }}" aria-current="page">Pricing</a>
+                <a href="{{ route('home') }}#contact">Contact</a>
             </nav>
             <div class="site-header-actions">
                 @auth

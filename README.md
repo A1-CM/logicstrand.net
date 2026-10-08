@@ -39,7 +39,7 @@ php artisan queue:work --tries=1 --timeout=120
 
 Open http://localhost:8000. Uploaded documents stay in private local storage. The queue worker must be running for uploads to change from **Processing** to **Ready** or **Failed**.
 
-Email verification is enabled. The default MAIL_MAILER=log writes local verification links to storage/logs/laravel.log; configure a real mail service before inviting people to a hosted instance. The application is delivered as a runnable repository and has not been deployed.
+Email verification is enabled. The default MAIL_MAILER=log writes local verification links to storage/logs/laravel.log; configure a real mail service before inviting people to a hosted instance. To test a logged verification email, prefer the plain-text URL. If copying the URL from the HTML part, replace the HTML entity `&amp;` between query parameters with a literal `&` before pasting it into the browser. Do not otherwise edit the URL: its temporary signature is tied to the exact query string and expires after the configured interval. The account that received the link must be signed in in that browser. The application is delivered as a runnable repository and has not been deployed.
 
 ## Contact form
 

@@ -1,0 +1,1 @@
+@include('errors.page', ['code' => '401', 'title' => 'Sign in to continue.', 'message' => 'This page needs an active LogicStrand session. Sign in to continue where you left off.', 'primaryText' => 'Sign in', 'primaryUrl' => route('login')])

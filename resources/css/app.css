@@ -585,17 +585,40 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible 
 .contact-office > div { flex:1; min-width:0; }
 .contact-office-heading { width:100%; }
 .contact-map-link { margin-left:auto; padding-left:16px; }
-.contact-social { justify-self:stretch; align-self:end; width:auto; min-height:0; margin:0; padding:16px 12px; border-radius:12px 0 14px 0; }
-.contact-social-kicker { text-align:center; }
-.contact-social-links { display:grid; width:max-content; gap:9px; margin:14px auto 0; }
-.contact-social-links a { width:44px; height:44px; min-height:44px; font-size:17px; }
-.contact-social-links a > i { font-family:"Font Awesome 7 Brands"; font-weight:400; color:#fff; font-size:23px; line-height:1; }
+.contact-social { justify-self:stretch; align-self:stretch; position:relative; width:auto; min-height:100%; margin:0; padding:20px 12px 24px; border-radius:0 0 14px 0; display:flex; flex-direction:column; justify-content:flex-end; }
+.contact-social::before { display:block; content:""; position:absolute; top:17%; left:50%; width:78px; height:78px; transform:translateX(-50%); border:1px solid #b7c8f255; border-radius:50%; background:radial-gradient(circle at 50% 0%,#c9d6ff 0 3px,transparent 4px),radial-gradient(circle at 100% 50%,#c9d6ff 0 3px,transparent 4px),radial-gradient(circle at 50% 100%,#c9d6ff 0 3px,transparent 4px),radial-gradient(circle at 0% 50%,#c9d6ff 0 3px,transparent 4px); box-shadow:0 0 0 12px #ffffff08,0 0 0 24px #ffffff05; pointer-events:none; }
+.contact-social-kicker { position:relative; z-index:1; margin-top:auto; text-align:center; }
+.contact-social-links { display:grid; width:max-content; gap:10px; margin:15px auto 0; }
+.contact-social-links a { width:46px; height:46px; min-height:46px; font-size:17px; display:flex; align-items:center; justify-content:center; }
+.contact-social-links a > i { display:flex; flex:0 0 1.25em; align-items:center; justify-content:center; width:1.25em; height:1.25em; margin:0; color:#fff; font-size:25px; line-height:1; text-align:center; }
+.contact-social-links a > i::before { display:block; width:100%; text-align:center; }
 .contact-social-links a::after { left:calc(100% + 8px); }
 @media (max-width:680px) {
     .contact-panel-grid { grid-template-columns:1fr; }
-    .contact-social { justify-self:end; width:132px; margin:0; padding:16px 12px; border-radius:12px 0 14px 0; }
+    .contact-social { justify-self:end; align-self:end; width:132px; min-height:340px; margin:0; padding:18px 12px; border-radius:0 0 14px 0; }
+    .contact-social::before { top:12%; }
     .contact-social-links { margin:14px auto 0; }
 }
 @media (max-width:360px) {
     .contact-turnstile .cf-turnstile { width:300px; transform:scale(.8); transform-origin:top left; margin-bottom:-13px; }
 }
+
+
+/* Branded HTTP error pages */
+.error-body { min-height:100vh; background:radial-gradient(circle at 78% 24%,#eef2ff 0,transparent 34%),#fbfbfa; }
+.error-shell { display:flex; min-height:100vh; flex-direction:column; }
+.error-header { height:88px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #e6e9ef; }
+.error-header-link,.error-support { color:#425477; font-size:12px; font-weight:700; }
+.error-header-link span,.error-support span { margin-left:5px; color:var(--blue); }
+.error-main { position:relative; display:grid; flex:1; place-items:center; min-height:540px; padding:60px 20px; overflow:hidden; }
+.error-orbit { position:absolute; inset:0; display:grid; place-items:center; color:#aebce8; opacity:.5; pointer-events:none; }
+.error-orbit svg { width:min(80%,620px); }
+.error-card { position:relative; z-index:1; width:min(100%,620px); padding:48px; border:1px solid #dfe5f0; border-radius:16px; background:#ffffffed; box-shadow:0 24px 70px #1b366614; text-align:center; }
+.error-card h1 { margin:18px 0 12px; color:#182541; font-size:clamp(36px,6vw,58px); line-height:1.04; letter-spacing:-.065em; }
+.error-card > p { color:#65738c; font-size:15px; line-height:1.75; }
+.error-card .error-detail { margin-top:12px; color:#77849a; font-size:12px; }
+.error-actions { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-top:28px; }
+.error-actions .button { min-height:46px; }
+.error-support { display:inline-block; margin-top:27px; font-size:11px; }
+.error-footer { display:flex; justify-content:space-between; gap:20px; padding:22px 0; border-top:1px solid #e6e9ef; color:#8792a4; font-size:11px; }
+@media (max-width:600px) { .error-header { height:72px; }.error-header .site-brand { font-size:20px; }.error-header .brand-mark { width:32px; height:32px; }.error-header-link { font-size:10px; }.error-main { min-height:460px; padding:38px 0; }.error-card { padding:33px 23px; }.error-card > p { font-size:13px; }.error-actions { flex-direction:column; }.error-actions .button { width:100%; }.error-footer { flex-direction:column; gap:5px; } }
