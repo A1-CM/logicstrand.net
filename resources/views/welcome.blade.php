@@ -265,11 +265,12 @@
             </section>
         </main>
 
-        <footer class="site-footer"><div class="site-container footer-inner"><a href="{{ route('home') }}" class="site-brand"><x-app-logo-icon class="brand-mark" /><span>LogicStrand<span class="brand-period">.</span></span></a><span>Knowledge, connected with clarity.</span><span>© {{ date('Y') }} LogicStrand</span></div></footer>
+        @include('partials.site-footer')
     </div>
     @if(filled(config('services.turnstile.site_key')) && filled(config('services.turnstile.secret_key')))
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     @endif
+    @include('partials.cookie-consent')
     <x-toast-stack />
 </body>
 </html>

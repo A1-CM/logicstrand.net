@@ -46,5 +46,6 @@
         @endpersist
 
         @fluxScripts
-    </body>
+        @include('partials.cookie-consent')
+</body>
 </html>

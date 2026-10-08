@@ -44,6 +44,8 @@
             <div class="checkout-side-bottom"><span>✳</span><p><strong>{{ $selected['name'] }} access</strong><br>{{ $selected['features'][1] }} · {{ $selected['features'][2] }}</p></div>
         </aside>
     </main>
+    @include('partials.site-footer')
     <x-toast-stack />
+    @include('partials.cookie-consent')
 </body>
 </html>

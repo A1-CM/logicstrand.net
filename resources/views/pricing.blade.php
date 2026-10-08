@@ -80,8 +80,9 @@
             </section>
         </main>
 
-        <footer class="site-footer"><div class="site-container footer-inner"><a href="{{ route('home') }}" class="site-brand"><x-app-logo-icon class="brand-mark" /><span>LogicStrand<span class="brand-period">.</span></span></a><span>Knowledge, connected with clarity.</span><span>© {{ date('Y') }} LogicStrand</span></div></footer>
+        @include('partials.site-footer')
     </div>
+    @include('partials.cookie-consent')
     <x-toast-stack />
 </body>
 </html>

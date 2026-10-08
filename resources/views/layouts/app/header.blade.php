@@ -76,5 +76,6 @@
         <x-toast-stack />
 
         @fluxScripts
-    </body>
+        @include('partials.cookie-consent')
+</body>
 </html>

@@ -44,5 +44,6 @@
     {{ $slot }}
     <x-toast-stack />
     @fluxScripts
+    @include('partials.cookie-consent')
 </body>
 </html>
