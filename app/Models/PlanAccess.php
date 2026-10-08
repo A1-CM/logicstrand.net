@@ -22,6 +22,7 @@ class PlanAccess extends Model
         'trial_started_at',
         'trial_ends_at',
         'access_ends_at',
+        'period_started_at',
         'card_last_four',
     ];
 
@@ -31,6 +32,7 @@ class PlanAccess extends Model
             'trial_started_at' => 'datetime',
             'trial_ends_at' => 'datetime',
             'access_ends_at' => 'datetime',
+            'period_started_at' => 'datetime',
         ];
     }
 

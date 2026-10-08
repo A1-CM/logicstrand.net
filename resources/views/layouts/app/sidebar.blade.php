@@ -12,18 +12,26 @@
         <flux:sidebar.nav>
             <flux:sidebar.group :heading="__('WORKSPACE')" class="grid">
                 <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Overview</flux:sidebar.item>
-                <flux:sidebar.item icon="squares-2x2" :href="route('sandbox.index')" :current="request()->routeIs('sandbox.*')" wire:navigate>Sandbox</flux:sidebar.item>
                 <flux:sidebar.item icon="document-text" :href="route('documents.index')" :current="request()->routeIs('documents.*')" wire:navigate>Documents</flux:sidebar.item>
                 <flux:sidebar.item icon="sparkles" :href="route('answers.create')" :current="request()->routeIs('answers.create')" wire:navigate>Ask a question</flux:sidebar.item>
                 <flux:sidebar.item icon="clock" :href="route('answers.index')" :current="request()->routeIs('answers.index', 'answers.show')" wire:navigate>Answer history</flux:sidebar.item>
             </flux:sidebar.group>
+            @if(auth()->user()->planAccess?->plan === 'sandbox' || ! auth()->user()->planAccess)
+                <flux:sidebar.group :heading="__('GET STARTED')" class="grid">
+                    <flux:sidebar.item icon="squares-2x2" :href="route('sandbox.index')" :current="request()->routeIs('sandbox.*')" wire:navigate>Sandbox guide</flux:sidebar.item>
+                </flux:sidebar.group>
+            @endif
         </flux:sidebar.nav>
         <flux:spacer />
-        <div class="sidebar-note"><span>✳</span><p><strong>Think with your sources.</strong><br>Clear answers begin with the right context.</p></div>
+        <div class="workspace-sidebar-foot">
+            <span class="workspace-sidebar-foot-icon" aria-hidden="true"><i class="fa-solid fa-link"></i></span>
+            <div><strong>Follow the evidence.</strong><small>Every answer starts with your sources.</small></div>
+        </div>
         <x-desktop-user-menu class="hidden lg:block" :name="auth()->user()->name" />
     </flux:sidebar>
     <flux:header class="lg:hidden">
         <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
+        <span class="workspace-mobile-title">LogicStrand <span>/ Workspace</span></span>
         <flux:spacer />
         <flux:dropdown position="top" align="end">
             <flux:profile :initials="auth()->user()->initials()" icon-trailing="chevron-down" />

@@ -43,6 +43,8 @@ class DocumentIngestor
             throw new RuntimeException('No readable text found. Scanned PDFs are not supported yet.');
         }
 
+        $document->update(['processing_stage' => 'indexing', 'stage_updated_at' => now()]);
+
         DB::transaction(function () use ($document, $passages): void {
             $document->chunks()->delete();
 
@@ -55,7 +57,7 @@ class DocumentIngestor
 
             }
 
-            $document->update(['status' => 'ready', 'error' => null]);
+            $document->update(['status' => 'ready', 'processing_stage' => 'ready', 'stage_updated_at' => now(), 'error' => null]);
         });
     }
 

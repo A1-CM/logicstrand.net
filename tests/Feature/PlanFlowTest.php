@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Answer;
+use App\Models\DailyAnswerUsage;
 use App\Models\KnowledgeDocument;
 use App\Models\PlanAccess;
 use App\Models\User;
@@ -122,7 +123,7 @@ class PlanFlowTest extends TestCase
         $this->actingAs($user)->post(route('answers.store'), ['question' => 'What changed?'])->assertRedirect(route('pricing'));
 
         $this->actingAs($user)->post(route('checkout.complete', 'individual'), $this->card())
-            ->assertRedirect(route('sandbox.index'));
+            ->assertRedirect(route('dashboard'));
 
         $access = $user->fresh()->planAccess;
         $this->assertSame('individual', $access->plan);
@@ -137,7 +138,7 @@ class PlanFlowTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)->post(route('checkout.complete', 'individual'), $this->card())
-            ->assertRedirect(route('sandbox.index'));
+            ->assertRedirect(route('dashboard'));
 
         for ($i = 0; $i < 20; $i++) {
             KnowledgeDocument::create([
@@ -160,6 +161,7 @@ class PlanFlowTest extends TestCase
         for ($i = 0; $i < 30; $i++) {
             Answer::create(['user_id' => $user->id, 'question' => "Question $i", 'answer' => 'Saved answer']);
         }
+        DailyAnswerUsage::create(['user_id' => $user->id, 'usage_date' => today(), 'answer_count' => 30]);
 
         $this->actingAs($user)->post(route('answers.store'), [
             'question' => 'Where is the lunar base?',

@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Ai\Agents\KnowledgeAnswerAgent;
 use App\Models\Answer;
+use App\Models\DailyAnswerUsage;
 use App\Models\KnowledgeDocument;
 use App\Models\PlanAccess;
 use App\Models\User;
@@ -132,6 +133,7 @@ class LogicStrandTest extends TestCase
         KnowledgeAnswerAgent::fake(fn () => throw new RuntimeException('Provider failed'));
         $this->actingAs($user)->post(route('answers.store'), ['question' => 'What do renewals require?'])->assertSessionHasErrors('question');
         $this->assertSame(1, Answer::count());
+        $this->assertSame(1, DailyAnswerUsage::where('user_id', $user->id)->whereDate('usage_date', today())->value('answer_count'));
     }
 
     public function test_document_deletion_removes_index_and_citing_answers(): void
@@ -151,6 +153,7 @@ class LogicStrandTest extends TestCase
 
         $this->actingAs($user)->delete(route('documents.destroy', $document))->assertRedirect();
         $this->assertSame(0, Answer::count());
+        $this->assertSame(1, DailyAnswerUsage::where('user_id', $user->id)->whereDate('usage_date', today())->value('answer_count'));
         $this->assertCount(0, app(DocumentSearch::class)->search($user->id, 'renewals approvals'));
         Storage::disk('local')->assertMissing($document->path);
     }
@@ -185,6 +188,7 @@ class LogicStrandTest extends TestCase
         for ($i = 0; $i < 30; $i++) {
             Answer::create(['user_id' => $user->id, 'question' => "Question $i", 'answer' => 'Answer']);
         }
+        DailyAnswerUsage::create(['user_id' => $user->id, 'usage_date' => today(), 'answer_count' => 30]);
         $this->actingAs($user)->post(route('answers.store'), ['question' => 'Another question'])->assertSessionHasErrors('question');
         $this->assertSame(30, Answer::count());
     }

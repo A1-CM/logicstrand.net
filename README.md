@@ -29,15 +29,14 @@ GROQ_MODEL=openai/gpt-oss-120b
 
 The model ID is a model served through Groq. Change GROQ_MODEL if your Groq account uses another supported structured-output model. Keep the key only in the server environment.
 
-Run these in separate terminals:
+Run the app and asset watcher in separate terminals:
 
 ~~~bash
 php artisan serve
 npm run dev
-php artisan queue:work --tries=1 --timeout=120
 ~~~
 
-Open http://localhost:8000. Uploaded documents stay in private local storage. The queue worker must be running for uploads to change from **Processing** to **Ready** or **Failed**.
+Open http://localhost:8000. Uploaded documents stay in private local storage. With the default synchronous queue, the browser starts extraction in a separate request and shows its current stage. If you change `QUEUE_CONNECTION` to `database`, also run `php artisan queue:work --tries=1 --timeout=120`. The cPanel deployment keeps the synchronous queue and needs no worker or cron job.
 
 Email verification is enabled. The default MAIL_MAILER=log writes local verification links to storage/logs/laravel.log; configure a real mail service before inviting people to a hosted instance. To test a logged verification email, prefer the plain-text URL. If copying the URL from the HTML part, replace the HTML entity `&amp;` between query parameters with a literal `&` before pasting it into the browser. Do not otherwise edit the URL: its temporary signature is tied to the exact query string and expires after the configured interval. The account that received the link must be signed in in that browser. The application is delivered as a runnable repository and has not been deployed.
 
@@ -65,7 +64,8 @@ For cPanel deployment, add both lines to the LogicStrand repository's `APP_ENV_E
 ## Limits and behavior
 
 - Personal workspaces; each account can access only its own documents and answers.
-- Files may be up to 10 MB each. Document and daily question limits depend on the selected plan.
+- The dashboard guides users through upload, evidence review, and first-time setup. Documents show queued, extracting, indexing, ready, or failed stages; after a long wait, the owner can safely resume a stale attempt. Answer history supports search, evidence filters, and favorites. Answers can have owner-only private notes and be exported as PDFs with cited passages; notes are excluded unless the user explicitly includes them.
+- Files may be up to 10 MB each. Document and daily saved-answer limits depend on the selected plan. Saved answers, including insufficient-evidence results, count for the day; provider failures do not. Deleting answers or their source documents does not restore that day’s allowance.
 - UTF-8 text and PDFs with selectable text are supported. Scanned PDFs are marked **Failed** because OCR is not included.
 - Search is lexical: SQLite FTS5 locally and MySQL full-text search on cPanel. A question with no matching passages returns an insufficient-evidence answer without calling Groq.
 - Deleting a document also removes answers that cite it. Deleting an account removes its uploaded files and indexed text.
@@ -131,3 +131,5 @@ jobs:
 ```
 
 Each repository supplies its own `project_slug` and `app_url`; use a slug unique within the cPanel account. The same account-level cPanel variables and token can be shared across repositories through GitHub organization settings. The caller can set `public_dir: public_html` or another relative directory when needed. A project-specific `APP_ENV_EXTRA` secret supplies extra Laravel configuration. The shared workflow runs `php artisan test`, verifies the deployer, builds assets if a `package.json` exists, and installs production dependencies before deployment. When the toolkit changes, update the workflow and checkout references in both caller workflows to the same tested tag. A manual rollback is available through the [rollback workflow](.github/workflows/rollback-cpanel.yml) with `steps_back` from 1 to 7. It checks `/up` (or `CPANEL_HEALTH_PATH`) and restores the previous live files automatically if health fails. Database migrations remain forward-only; retained code must be compatible with the current schema. See [rollout and rollback details](CPANEL-ROLLBACK.md).
+
+The dashboard's proposed browser-based scanned-PDF OCR flow is documented in [OCR_DRAFT.md](OCR_DRAFT.md). OCR is a future phase and is not enabled in this release.

@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Answer extends Model
 {
-    protected $fillable = ['user_id', 'question', 'answer'];
+    protected $fillable = ['user_id', 'question', 'answer', 'is_favorite', 'private_note', 'viewed_at'];
+
+    protected function casts(): array
+    {
+        return ['is_favorite' => 'boolean', 'viewed_at' => 'datetime'];
+    }
 
     /** @return BelongsTo<User, $this> */
     public function user(): BelongsTo

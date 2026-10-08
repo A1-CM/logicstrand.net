@@ -95,6 +95,7 @@ class CheckoutController extends Controller
                 PlanAccess::updateOrCreate(['user_id' => $user->id], [
                     'plan' => 'sandbox',
                     'trial_started_at' => $now,
+                    'period_started_at' => $now,
                     'trial_ends_at' => $trialEndsAt,
                     'access_ends_at' => $trialEndsAt,
                     'card_last_four' => '4242',
@@ -109,6 +110,7 @@ class CheckoutController extends Controller
 
             PlanAccess::updateOrCreate(['user_id' => $user->id], [
                 'plan' => $plan,
+                'period_started_at' => $periodStart,
                 'trial_started_at' => $access?->trial_started_at,
                 'trial_ends_at' => $access?->trial_ends_at,
                 'access_ends_at' => $periodStart->addMonth(),
@@ -128,7 +130,7 @@ class CheckoutController extends Controller
         $request->user()->unsetRelation('planAccess');
         $request->session()->forget('checkout.plan');
 
-        return redirect()->route('sandbox.index')->with('toast', [
+        return redirect()->route($plan === 'sandbox' ? 'sandbox.index' : 'dashboard')->with('toast', [
             'type' => 'success',
             'message' => $plan === 'sandbox' ? 'Your seven day Sandbox trial is ready.' : $selected['name'].' access is ready.',
         ]);

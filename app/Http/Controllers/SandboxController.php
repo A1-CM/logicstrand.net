@@ -18,8 +18,12 @@ class SandboxController extends Controller
 Renewal process: A renewal request must be reviewed by the account owner and the finance approver before the contract renewal date. Both approvals must be recorded in the renewal log. The account owner confirms the customer requirements and proposed scope. The finance approver confirms pricing and billing terms. If either approval is missing, the renewal must pause until the required review is complete.
 TEXT;
 
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
+        if ($request->user()->planAccess && $request->user()->planAccess->plan !== 'sandbox') {
+            return redirect()->route('dashboard');
+        }
+
         $userId = $request->user()->id;
 
         return view('sandbox', [
@@ -61,6 +65,8 @@ TEXT;
             'mime_type' => 'text/plain',
             'size' => strlen(self::SAMPLE_TEXT),
             'status' => 'processing',
+            'processing_stage' => 'queued',
+            'stage_updated_at' => now(),
         ]);
 
         ProcessDocument::dispatchSync($document->id);
