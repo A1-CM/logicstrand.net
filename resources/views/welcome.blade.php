@@ -134,7 +134,7 @@
                 <div class="evidence-heading">
                     <span class="section-kicker">04 / THE EVIDENCE PATH</span>
                     <h2>A line of sight<br>from question to source.</h2>
-                    <p>Useful AI should make it easier to inspect the information behind a response. LogicStrand keeps the connection visible.</p>
+                    <p>Smart tech should make it easier to inspect the information behind an answer.</p>
                 </div>
                 <div class="evidence-map">
                     <div class="evidence-map-grid" aria-hidden="true"></div>
