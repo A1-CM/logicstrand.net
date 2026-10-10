@@ -75,7 +75,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible 
 .site-container { width:min(100% - 64px, 1220px); margin-inline:auto; }
 .site-header { height:90px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #e8e9ed; }
 .site-brand { display:inline-flex; align-items:center; gap:10px; font-weight:750; letter-spacing:-.055em; font-size:25px; color:#151d2e; white-space:nowrap; }
-.brand-mark { width:39px; height:39px; color:var(--blue); }
+.brand-mark { width:39px; height:39px; color:var(--blue); object-fit:contain; }
 .brand-period { color:var(--blue); }
 .site-nav,.site-header-actions { display:flex; align-items:center; gap:32px; }
 .site-nav a,.site-login { color:#485266; font-size:14px; font-weight:600; }
@@ -864,4 +864,31 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible 
     .cookie-consent { inset:auto 12px 12px; align-items:stretch; flex-direction:column; gap:14px; padding:15px; border-radius:15px; }
     .cookie-consent-actions { display:grid; grid-template-columns:1fr 1fr; }
     .cookie-button { width:100%; }
+}
+
+/* Supplied LogicStrand image and wordmark set */
+.site-brand { gap:0; }
+.brand-lockup { display:block; width:156px; max-width:100%; height:auto; object-fit:contain; mix-blend-mode:multiply; }
+.preview-logo { gap:0; }
+.preview-logo img { display:block; width:100px; max-height:30px; height:auto; object-fit:contain; mix-blend-mode:multiply; }
+.step-icon { display:flex; align-items:center; justify-content:flex-start; width:74px; height:74px; font-size:0; }
+.step-illustration { display:block; width:74px; height:74px; object-fit:contain; }
+.app-brand-slot { height:32px!important; width:auto!important; min-width:0!important; padding:0!important; overflow:hidden; }
+.app-brand-lockup { display:block; width:auto; height:25px; max-width:132px; object-fit:contain; mix-blend-mode:multiply; }
+.app-brand-mark { width:36px; height:auto; max-width:38px; object-fit:contain; }
+.auth-full-lockup { display:block; width:158px; max-width:100%; height:auto; object-fit:contain; mix-blend-mode:multiply; }
+.auth-story-brand { padding:5px 8px; border-radius:8px; background:#fff; }
+.auth-mobile-brand { width:max-content; }
+.auth-card-brand { margin:0 auto; }
+.auth-split-brand { padding:5px 8px; border-radius:8px; background:#fff; }
+.auth-split-mobile-brand { margin-bottom:16px; }
+.pricing-hero > img { object-position:center 50%; }
+.pricing-detail img { object-position:center 48%; }
+.checkout-side > img { object-position:center 42%; }
+@media (max-width:760px) {
+    .brand-lockup { width:132px; }
+    .preview-logo img { width:90px; }
+    .step-icon,.step-illustration { width:64px; height:64px; }
+    .auth-full-lockup { width:145px; }
+    .app-brand-lockup { height:23px; }
 }

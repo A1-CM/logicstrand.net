@@ -6,9 +6,8 @@
 <body class="logic-auth-body">
     <div class="auth-layout">
         <aside class="auth-story" aria-label="About LogicStrand">
-            <a href="{{ route('home') }}" class="auth-story-brand">
-                <span class="auth-story-logo"><x-app-logo-icon class="size-7" /></span>
-                <span>LogicStrand<span class="auth-brand-period">.</span></span>
+            <a href="{{ route('home') }}" class="auth-story-brand" aria-label="LogicStrand home">
+                <img class="auth-full-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899">
             </a>
 
             <div class="auth-story-content">
@@ -37,7 +36,7 @@
                 <span class="auth-topline-note">YOUR KNOWLEDGE WORKSPACE</span>
             </div>
             <div class="auth-form-wrap">
-                <a href="{{ route('home') }}" class="auth-mobile-brand" aria-label="LogicStrand home"><x-app-logo-icon class="size-8" /><span>LogicStrand.</span></a>
+                <a href="{{ route('home') }}" class="auth-mobile-brand" aria-label="LogicStrand home"><img class="auth-full-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899"></a>
                 <div class="auth-card">
                     {{ $slot }}
                 </div>

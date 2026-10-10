@@ -41,3 +41,4 @@ yarn-error.log
 
 # Separate local checkout of the shared cPanel toolkit
 /deployment-toolkit
+public/equifidy 2.zip

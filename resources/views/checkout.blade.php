@@ -6,7 +6,7 @@
 </head>
 <body class="site-body checkout-body">
     <header class="checkout-header site-container">
-        <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home"><x-app-logo-icon class="brand-mark" /><span>LogicStrand<span class="brand-period">.</span></span></a>
+        <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home"><img class="brand-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899"></a>
         <a href="{{ route('pricing') }}" class="auth-back">← <span>Back to pricing</span></a>
     </header>
     <main class="checkout-layout site-container">
@@ -39,7 +39,7 @@
             </form>
         </div>
         <aside class="checkout-side">
-            <img src="{{ asset('images/strand-voices.webp') }}" alt="A cobalt strand finding its way through a paper maze" width="1122" height="1402">
+            <img src="{{ asset('images/logicstrand/checkout-workspace.webp') }}" alt="A person using a laptop while reviewing documents" width="1774" height="1680">
             <div class="checkout-side-copy"><span>THE LOGICSTRAND WAY</span><h2>Every answer<br>has a thread.</h2><p>Bring your sources together. Explore what they say. Keep the evidence close enough to inspect.</p></div>
             <div class="checkout-side-bottom"><span>✳</span><p><strong>{{ $selected['name'] }} access</strong><br>{{ $selected['features'][1] }} · {{ $selected['features'][2] }}</p></div>
         </aside>

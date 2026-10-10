@@ -8,8 +8,7 @@
     <div class="site-shell">
         <header class="site-header site-container">
             <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home">
-                <x-app-logo-icon class="brand-mark" />
-                <span>LogicStrand<span class="brand-period">.</span></span>
+                <img class="brand-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899">
             </a>
             <nav class="site-nav" aria-label="Primary navigation">
                 <a href="#platform">Platform</a>
@@ -42,7 +41,7 @@
                     <div class="hero-note"><span class="note-line"></span> Your documents. Your questions. A clearer way forward.</div>
                 </div>
                 <div class="hero-visual" aria-label="Illustration of connected knowledge strands">
-                    <img class="hero-photo" src="{{ asset('images/strand-hero.webp') }}" alt="" width="1400" height="933" fetchpriority="high">
+                    <img class="hero-photo" src="{{ asset('images/logicstrand/hero.webp') }}" alt="" width="1774" height="1680" fetchpriority="high">
                     <div class="visual-orbit orbit-one"></div>
                     <div class="visual-orbit orbit-two"></div>
                     <div class="visual-grid"></div>
@@ -80,10 +79,10 @@
                     <span class="section-kicker">01 / THE PLATFORM</span>
                     <h2>Intelligence that<br><em>shows its work.</em></h2>
                     <p>Important knowledge lives across files, policies, and notes. LogicStrand gives it a more useful shape: a private space to explore questions and keep the evidence close.</p>
-                    <figure class="platform-photo"><img src="{{ asset('images/strand-worktable.webp') }}" alt="An open binder and blue strand across a knowledge workspace" width="1400" height="933" loading="lazy"><figcaption>THE WORK BEHIND THE ANSWER</figcaption></figure>
+                    <figure class="platform-photo"><img src="{{ asset('images/logicstrand/platform-approach.webp') }}" alt="A focused workspace with a document library open on a monitor" width="1096" height="905" loading="lazy"><figcaption>THE WORK BEHIND THE ANSWER</figcaption></figure>
                 </div>
                 <div class="preview-card">
-                    <div class="preview-top"><span class="preview-logo"><x-app-logo-icon class="preview-icon" /> LogicStrand</span><span class="preview-label">ANSWER PREVIEW</span></div>
+                    <div class="preview-top"><span class="preview-logo"><img src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899"></span><span class="preview-label">ANSWER PREVIEW</span></div>
                     <div class="preview-question"><span class="preview-question-label">YOUR QUESTION</span><strong>What should we know before updating our renewal process?</strong></div>
                     <div class="preview-answer"><span class="preview-spark">✳</span><div><span class="preview-answer-label">A CLEARER ANSWER</span><p>Start with the documented approval steps and timing requirements. The sources below show the relevant passages, so you can review the basis for the answer.</p></div></div>
                     <div class="preview-sources"><span>↳ &nbsp; Example policy · p. 2</span><span>↳ &nbsp; Process notes · p. 4</span></div>
@@ -98,19 +97,19 @@
                 </div>
                 <div class="usecase-grid">
                     <article class="usecase-card">
-                        <span class="usecase-index">01 / OPERATIONS</span><img class="usecase-image" src="{{ asset('images/strand-worktable.webp') }}" alt="Open process binder on a sunlit desk" width="1400" height="933" loading="lazy">
+                        <span class="usecase-index">01 / OPERATIONS</span><img class="usecase-image" src="{{ asset('images/logicstrand/operations-process.webp') }}" alt="Colleagues reviewing process documents at a desk" width="1055" height="461" loading="lazy">
                         <h3>Find the process behind the decision.</h3>
                         <p>Bring process notes and internal guides into one place. Ask where a step is documented and see the passage behind the answer.</p>
                         <div class="usecase-prompt"><span>TRY ASKING</span><strong>“What approvals are required before renewal?”</strong></div>
                     </article>
                     <article class="usecase-card">
-                        <span class="usecase-index">02 / POLICY</span><img class="usecase-image" src="{{ asset('images/strand-policy.webp') }}" alt="Marked policy pages with a cobalt strand" width="1100" height="733" loading="lazy">
+                        <span class="usecase-index">02 / POLICY</span><img class="usecase-image" src="{{ asset('images/logicstrand/policy-review.webp') }}" alt="A person reviewing policy pages beside a laptop" width="1055" height="461" loading="lazy">
                         <h3>Keep policy context close.</h3>
                         <p>Explore dense policy documents in plain language, with source excerpts you can inspect before taking action.</p>
                         <div class="usecase-prompt"><span>TRY ASKING</span><strong>“Where is this requirement defined?”</strong></div>
                     </article>
                     <article class="usecase-card">
-                        <span class="usecase-index">03 / RESEARCH</span><img class="usecase-image" src="{{ asset('images/strand-research.webp') }}" alt="Layered research folios connected by blue lines" width="1100" height="733" loading="lazy">
+                        <span class="usecase-index">03 / RESEARCH</span><img class="usecase-image" src="{{ asset('images/logicstrand/research-review.webp') }}" alt="Research notes and a laptop arranged for review" width="1055" height="461" loading="lazy">
                         <h3>Turn reading into a clearer view.</h3>
                         <p>Ask across your research notes and reports. Keep useful answers together with the evidence that informed them.</p>
                         <div class="usecase-prompt"><span>TRY ASKING</span><strong>“Which findings support this direction?”</strong></div>
@@ -122,11 +121,11 @@
             <section id="how-it-works" class="section workflow-section">
                 <div class="site-container">
                     <div class="workflow-heading"><div><span class="section-kicker">03 / HOW IT WORKS</span><h2>From information<br>to understanding.</h2></div><p>A focused workflow that keeps the source of every useful answer within reach.</p></div>
-                    <div class="workflow-photo"><img src="{{ asset('images/strand-library.webp') }}" alt="A blue strand connecting two libraries of source material" width="1400" height="933" loading="lazy"><div><span>FROM SOURCE TO SENSE</span><strong>Connected knowledge,<br>made useful.</strong></div></div>
+                    <div class="workflow-photo"><img src="{{ asset('images/logicstrand/workflow-team.webp') }}" alt="A team working together around documents and a laptop" width="3812" height="999" loading="lazy"><div><span>FROM SOURCE TO SENSE</span><strong>Connected knowledge,<br>made useful.</strong></div></div>
                     <div class="steps-grid">
-                        <article class="step-card"><span class="step-number">01</span><div class="step-icon" aria-hidden="true"><i class="fa-solid fa-file-arrow-up"></i></div><h3>Bring your knowledge</h3><p>Add text files and text-based PDFs to your private workspace. LogicStrand prepares them for search.</p></article>
-                        <article class="step-card"><span class="step-number">02</span><div class="step-icon" aria-hidden="true"><i class="fa-solid fa-comment-dots"></i></div><h3>Ask what matters</h3><p>Put a question in plain language. Relevant passages are found before an answer is composed.</p></article>
-                        <article class="step-card"><span class="step-number">03</span><div class="step-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></div><h3>Follow the evidence</h3><p>Read a concise answer alongside its source passages, then revisit it in your history.</p></article>
+                        <article class="step-card"><span class="step-number">01</span><div class="step-icon" aria-hidden="true"><img class="step-illustration" src="{{ asset('images/logicstrand/step-sources.webp') }}" alt="" width="1562" height="1562" loading="lazy"></div><h3>Bring your knowledge</h3><p>Add text files and text-based PDFs to your private workspace. LogicStrand prepares them for search.</p></article>
+                        <article class="step-card"><span class="step-number">02</span><div class="step-icon" aria-hidden="true"><img class="step-illustration" src="{{ asset('images/logicstrand/step-question.webp') }}" alt="" width="1562" height="1562" loading="lazy"></div><h3>Ask what matters</h3><p>Put a question in plain language. Relevant passages are found before an answer is composed.</p></article>
+                        <article class="step-card"><span class="step-number">03</span><div class="step-icon" aria-hidden="true"><img class="step-illustration" src="{{ asset('images/logicstrand/step-evidence.webp') }}" alt="" width="1562" height="1562" loading="lazy"></div><h3>Follow the evidence</h3><p>Read a concise answer alongside its source passages, then revisit it in your history.</p></article>
                     </div>
                 </div>
             </section>
@@ -171,7 +170,7 @@
             <section id="voices" class="section site-container voices-section">
                 <div class="voices-heading"><div><span class="section-kicker">05 / THE HUMAN SIDE OF CLARITY</span><h2>The questions behind<br><em>the work.</em></h2></div><p>Illustrative perspectives from the kinds of work LogicStrand is built to support.</p></div>
                 <div class="voices-grid">
-                    <div class="voices-feature"><img src="{{ asset('images/strand-voices.webp') }}" alt="A blue thread making its way through a paper maze" width="1122" height="1402" loading="lazy"><span>ONE THREAD / MANY WAYS FORWARD</span></div>
+                    <div class="voices-feature"><img src="{{ asset('images/logicstrand/human-perspective.webp') }}" alt="A professional reflecting while reviewing material on a tablet" width="1352" height="1689" loading="lazy"><span>ONE THREAD / MANY WAYS FORWARD</span></div>
                     <div class="voices-quotes">
                         <blockquote class="voices-primary"><span class="voices-mark">“</span><p>I need the answer, and the exact paragraph that supports it.</p><footer><span>01</span> Operations perspective</footer></blockquote>
                         <div class="voices-small-grid">

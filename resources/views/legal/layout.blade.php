@@ -7,7 +7,7 @@
 <body class="site-body legal-body">
     <div class="site-shell">
         <header class="site-header site-container">
-            <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home"><x-app-logo-icon class="brand-mark" /><span>LogicStrand<span class="brand-period">.</span></span></a>
+            <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home"><img class="brand-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899"></a>
             <nav class="site-nav" aria-label="Primary navigation">
                 <a href="{{ route('home') }}#platform">Platform</a>
                 <a href="{{ route('pricing') }}">Pricing</a>

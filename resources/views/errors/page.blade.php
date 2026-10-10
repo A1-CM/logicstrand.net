@@ -8,8 +8,7 @@
     <div class="error-shell site-container">
         <header class="error-header">
             <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home">
-                <x-app-logo-icon class="brand-mark" />
-                <span>LogicStrand<span class="brand-period">.</span></span>
+                <img class="brand-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899">
             </a>
             <a class="error-header-link" href="{{ route('pricing') }}">Explore LogicStrand <span aria-hidden="true">↗</span></a>
         </header>

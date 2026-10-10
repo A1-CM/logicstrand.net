@@ -7,7 +7,7 @@
 <body class="site-body">
     <div class="site-shell">
         <header class="site-header site-container">
-            <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home"><x-app-logo-icon class="brand-mark" /><span>LogicStrand<span class="brand-period">.</span></span></a>
+            <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home"><img class="brand-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899"></a>
             <nav class="site-nav" aria-label="Primary navigation">
                 <a href="{{ route('home') }}#platform">Platform</a>
                 <a href="{{ route('home') }}#use-cases">Who it helps</a>
@@ -34,7 +34,7 @@
                     <p>Start with seven days in Sandbox. When your questions grow, choose more room for documents and answers.</p>
                     <div class="pricing-hero-note"><span>✳</span> Every plan keeps the evidence in view.</div>
                 </div>
-                <img src="{{ asset('images/strand-library.webp') }}" alt="A cobalt strand connecting two stacks of research pages" width="1400" height="933" fetchpriority="high">
+                <img src="{{ asset('images/logicstrand/pricing-hero.webp') }}" alt="A person reviewing notes and information at a desk" width="1546" height="549" fetchpriority="high">
             </section>
 
             <section class="site-container pricing-section" aria-label="Plans">
@@ -65,7 +65,7 @@
 
             <section class="pricing-detail site-container">
                 <div><span class="section-kicker">02 / MORE THAN AN ANSWER</span><h2>Make the source<br><em>part of the story.</em></h2><p>Upload what matters, ask a question in plain language, and inspect the passages that informed the response.</p><a href="{{ route('home') }}#evidence" class="text-link">See the evidence path <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
-                <img src="{{ asset('images/strand-worktable.webp') }}" alt="An open research binder with a blue strand crossing the workspace" width="1400" height="933" loading="lazy">
+                <img src="{{ asset('images/logicstrand/platform-approach.webp') }}" alt="A digital workspace displayed in a focused work setting" width="1096" height="905" loading="lazy">
             </section>
 
             <section class="pricing-questions site-container">
