@@ -95,7 +95,7 @@ class DashboardUpgradeTest extends TestCase
 
         $this->actingAs($user)->get(route('answers.create'))->assertOk()
             ->assertSee('No ready documents yet')
-            ->assertSee('30');
+            ->assertSee('100');
 
         $this->actingAs($user)->post(route('answers.store'), ['question' => 'What is the policy?'])
             ->assertRedirect(route('documents.index'));

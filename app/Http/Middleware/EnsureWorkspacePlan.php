@@ -25,7 +25,7 @@ class EnsureWorkspacePlan
             ]);
         }
 
-        if ($access->plan === 'sandbox' && $access->isActive() && ! $request->routeIs('dashboard', 'sandbox.index', 'sandbox.source')) {
+        if ($access->plan === 'sandbox' && ! $request->routeIs('dashboard', 'sandbox.index', 'sandbox.source')) {
             return response()->view('workspace.plan-required');
         }
 
