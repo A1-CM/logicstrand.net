@@ -175,7 +175,7 @@ class LogicStrandTest extends TestCase
             'question' => '    ',
         ])->assertSessionHasErrors('question');
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             KnowledgeDocument::create([
                 'user_id' => $user->id, 'name' => "file$i.txt", 'path' => "file$i.txt",
                 'mime_type' => 'text/plain', 'size' => 10, 'status' => 'ready',
@@ -185,12 +185,12 @@ class LogicStrandTest extends TestCase
             'document' => UploadedFile::fake()->createWithContent('extra.txt', 'Extra content'),
         ])->assertSessionHasErrors('document');
 
-        for ($i = 0; $i < 30; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             Answer::create(['user_id' => $user->id, 'question' => "Question $i", 'answer' => 'Answer']);
         }
-        DailyAnswerUsage::create(['user_id' => $user->id, 'usage_date' => today(), 'answer_count' => 30]);
+        DailyAnswerUsage::create(['user_id' => $user->id, 'usage_date' => today(), 'answer_count' => 100]);
         $this->actingAs($user)->post(route('answers.store'), ['question' => 'Another question'])->assertSessionHasErrors('question');
-        $this->assertSame(30, Answer::count());
+        $this->assertSame(100, Answer::count());
     }
 
     public function test_account_deletion_purges_files_and_search_index(): void
@@ -216,9 +216,8 @@ class LogicStrandTest extends TestCase
 
         PlanAccess::create([
             'user_id' => $user->id,
-            'plan' => 'sandbox',
-            'trial_started_at' => now(),
-            'trial_ends_at' => now()->addDays(7),
+            'plan' => 'individual',
+            'period_started_at' => now(),
             'access_ends_at' => now()->addDays(7),
             'card_last_four' => '4242',
         ]);

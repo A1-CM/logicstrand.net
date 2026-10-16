@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $userId = $request->user()->id;
 
         $access = $request->user()->planAccess;
-        $plan = $access ? $access->plan : 'sandbox';
+        $plan = $access->plan;
         $dailyLimit = (int) config("plans.$plan.daily_question_limit");
         $documentLimit = (int) config("plans.$plan.document_limit");
 

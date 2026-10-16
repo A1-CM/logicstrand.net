@@ -68,7 +68,7 @@ class PlanFlowTest extends TestCase
             ->assertOk()->assertSee('4242 4242 4242 4242');
 
         $this->actingAs($user)->post(route('checkout.complete', 'sandbox'), $this->card())
-            ->assertRedirect(route('sandbox.index'));
+            ->assertRedirect(route('dashboard'));
 
         $access = PlanAccess::firstOrFail();
         $this->assertSame('sandbox', $access->plan);
@@ -76,7 +76,7 @@ class PlanFlowTest extends TestCase
         $this->assertSame('4242', $access->card_last_four);
         $this->assertSame(now()->addDays(7)->toDateTimeString(), $access->trial_ends_at->toDateTimeString());
 
-        $this->actingAs($user)->get(route('dashboard'))->assertOk()->assertSee('7 days remaining');
+        $this->actingAs($user)->get(route('dashboard'))->assertOk()->assertSee('Your Sandbox is ready to explore')->assertSee('Open Sandbox')->assertSee('Explore plans');
         $this->actingAs($user)->get(route('sandbox.index'))->assertOk()->assertSee('Add starter source');
 
         $this->actingAs($user)->post(route('sandbox.source'))->assertRedirect(route('sandbox.index'));
@@ -109,7 +109,7 @@ class PlanFlowTest extends TestCase
             ->assertRedirect(route('pricing'));
     }
 
-    public function test_expired_trial_preserves_read_access_and_paid_checkout_restores_workflow(): void
+    public function test_expired_trial_is_sent_to_pricing_and_paid_checkout_restores_workflow(): void
     {
         $user = User::factory()->create();
         $this->actingAs($user)->post(route('checkout.complete', 'sandbox'), $this->card());
@@ -117,8 +117,8 @@ class PlanFlowTest extends TestCase
 
         $this->travel(8)->days();
 
-        $this->actingAs($user)->get(route('dashboard'))->assertOk()->assertSee('access period has ended');
-        $this->actingAs($user)->get(route('documents.index'))->assertOk()->assertSee('Choose a plan to add more sources');
+        $this->actingAs($user)->get(route('dashboard'))->assertRedirect(route('pricing'));
+        $this->actingAs($user)->get(route('documents.index'))->assertRedirect(route('pricing'));
         $this->actingAs($user)->get(route('answers.create'))->assertRedirect(route('pricing'));
         $this->actingAs($user)->post(route('answers.store'), ['question' => 'What changed?'])->assertRedirect(route('pricing'));
 
@@ -170,6 +170,50 @@ class PlanFlowTest extends TestCase
 
         $this->actingAs($user)->post(route('checkout.complete', 'sandbox'), $this->card())
             ->assertRedirect(route('pricing'));
+    }
+
+    public function test_workspace_without_plan_is_redirected_to_pricing(): void
+    {
+        $user = User::factory()->create();
+
+        $this->actingAs($user)->get(route('dashboard'))
+            ->assertRedirect(route('pricing'));
+        $this->actingAs($user)->get(route('documents.index'))
+            ->assertRedirect(route('pricing'));
+        $this->actingAs($user)->get(route('answers.index'))
+            ->assertRedirect(route('pricing'));
+    }
+
+    public function test_active_sandbox_lands_on_limited_dashboard_and_gates_paid_workspace_pages(): void
+    {
+        $user = User::factory()->create();
+        PlanAccess::create([
+            'user_id' => $user->id,
+            'plan' => 'sandbox',
+            'trial_started_at' => now(),
+            'trial_ends_at' => now()->addDays(7),
+            'access_ends_at' => now()->addDays(7),
+            'period_started_at' => now(),
+            'card_last_four' => '4242',
+        ]);
+
+        $this->actingAs($user)->get(route('dashboard'))
+            ->assertOk()
+            ->assertSee('Your Sandbox is ready to explore')
+            ->assertSee(route('pricing'))
+            ->assertSee(route('sandbox.index'))
+            ->assertDontSee(route('documents.index'));
+
+        $this->actingAs($user)->get(route('sandbox.index'))->assertOk();
+
+        $this->actingAs($user)->get(route('documents.index'))
+            ->assertOk()
+            ->assertSee('Choose a plan')
+            ->assertSee(route('pricing'));
+        $this->actingAs($user)->get(route('answers.index'))
+            ->assertOk()
+            ->assertSee('Choose a plan')
+            ->assertSee(route('pricing'));
     }
 
     /** @param array<string, string> $overrides

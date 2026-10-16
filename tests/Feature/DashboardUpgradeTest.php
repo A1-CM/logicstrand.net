@@ -116,7 +116,7 @@ class DashboardUpgradeTest extends TestCase
         $this->actingAs($user)->get(route('dashboard'))->assertOk()
             ->assertSee('A document needs your attention.')
             ->assertSee('Saved answers today')
-            ->assertSee('29 available today');
+            ->assertSee('99 available today');
     }
 
     public function test_processing_and_expired_states_offer_the_correct_next_action(): void
@@ -134,10 +134,8 @@ class DashboardUpgradeTest extends TestCase
             ->assertSee('Your upload is processing.');
 
         $user->planAccess->update(['access_ends_at' => now()->subDay()]);
-        $this->actingAs($user)->get(route('dashboard'))->assertOk()
-            ->assertSee('Your access period has ended.');
-        $this->actingAs($user)->get(route('documents.index'))->assertOk()
-            ->assertSee('Choose a plan to add more sources');
+        $this->actingAs($user)->get(route('dashboard'))->assertRedirect(route('pricing'));
+        $this->actingAs($user)->get(route('documents.index'))->assertRedirect(route('pricing'));
     }
 
     public function test_full_daily_allowance_disables_question_form_but_keeps_history_accessible(): void
@@ -147,10 +145,10 @@ class DashboardUpgradeTest extends TestCase
             'user_id' => $user->id, 'name' => 'ready.txt', 'path' => 'ready.txt',
             'mime_type' => 'text/plain', 'size' => 10, 'status' => 'ready',
         ]);
-        for ($index = 0; $index < 30; $index++) {
+        for ($index = 0; $index < 100; $index++) {
             Answer::create(['user_id' => $user->id, 'question' => "Question $index", 'answer' => 'Saved answer']);
         }
-        DailyAnswerUsage::create(['user_id' => $user->id, 'usage_date' => today(), 'answer_count' => 30]);
+        DailyAnswerUsage::create(['user_id' => $user->id, 'usage_date' => today(), 'answer_count' => 100]);
 
         $this->actingAs($user)->get(route('answers.create'))->assertOk()
             ->assertSee('saved-answer allowance is full')
@@ -164,9 +162,8 @@ class DashboardUpgradeTest extends TestCase
         $user = User::factory()->create();
         PlanAccess::create([
             'user_id' => $user->id,
-            'plan' => 'sandbox',
-            'trial_started_at' => now(),
-            'trial_ends_at' => now()->addDays(7),
+            'plan' => 'individual',
+            'period_started_at' => now(),
             'access_ends_at' => now()->addDays(7),
             'card_last_four' => '4242',
         ]);

@@ -124,15 +124,14 @@ class DashboardWorkflowTest extends TestCase
         DailyAnswerUsage::create(['user_id' => $user->id, 'usage_date' => today(), 'answer_count' => 1]);
         $answer->delete();
         $this->assertSame(1, DailyAnswerUsage::firstOrFail()->answer_count);
-        $this->actingAs($user)->get(route('answers.create'))->assertOk()->assertSee('29');
+        $this->actingAs($user)->get(route('answers.create'))->assertOk()->assertSee('99');
     }
 
     private function workspaceUser(): User
     {
         $user = User::factory()->create();
         PlanAccess::create([
-            'user_id' => $user->id, 'plan' => 'sandbox', 'trial_started_at' => now(),
-            'trial_ends_at' => now()->addDays(7), 'period_started_at' => now(),
+            'user_id' => $user->id, 'plan' => 'individual', 'period_started_at' => now(),
             'access_ends_at' => now()->addDays(7), 'card_last_four' => '4242',
         ]);
 

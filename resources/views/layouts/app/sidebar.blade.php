@@ -10,13 +10,18 @@
             <flux:sidebar.collapse class="lg:hidden" />
         </flux:sidebar.header>
         <flux:sidebar.nav>
-            <flux:sidebar.group :heading="__('WORKSPACE')" class="grid">
-                <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Overview</flux:sidebar.item>
-                <flux:sidebar.item icon="document-text" :href="route('documents.index')" :current="request()->routeIs('documents.*')" wire:navigate>Documents</flux:sidebar.item>
-                <flux:sidebar.item icon="sparkles" :href="route('answers.create')" :current="request()->routeIs('answers.create')" wire:navigate>Ask a question</flux:sidebar.item>
-                <flux:sidebar.item icon="clock" :href="route('answers.index')" :current="request()->routeIs('answers.index', 'answers.show')" wire:navigate>Answer history</flux:sidebar.item>
-            </flux:sidebar.group>
-            @if(auth()->user()->planAccess?->plan === 'sandbox' || ! auth()->user()->planAccess)
+            @if(auth()->user()->planAccess?->plan === 'sandbox' && auth()->user()->planAccess?->isActive())
+                <flux:sidebar.group :heading="__('SANDBOX')" class="grid">
+                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Overview</flux:sidebar.item>
+                    <flux:sidebar.item icon="squares-2x2" :href="route('sandbox.index')" :current="request()->routeIs('sandbox.index')" wire:navigate>Sandbox guide</flux:sidebar.item>
+                </flux:sidebar.group>
+            @else
+                <flux:sidebar.group :heading="__('WORKSPACE')" class="grid">
+                    <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>Overview</flux:sidebar.item>
+                    <flux:sidebar.item icon="document-text" :href="route('documents.index')" :current="request()->routeIs('documents.*')" wire:navigate>Documents</flux:sidebar.item>
+                    <flux:sidebar.item icon="sparkles" :href="route('answers.create')" :current="request()->routeIs('answers.create')" wire:navigate>Ask a question</flux:sidebar.item>
+                    <flux:sidebar.item icon="clock" :href="route('answers.index')" :current="request()->routeIs('answers.index', 'answers.show')" wire:navigate>Answer history</flux:sidebar.item>
+                </flux:sidebar.group>
                 <flux:sidebar.group :heading="__('GET STARTED')" class="grid">
                     <flux:sidebar.item icon="squares-2x2" :href="route('sandbox.index')" :current="request()->routeIs('sandbox.*')" wire:navigate>Sandbox guide</flux:sidebar.item>
                 </flux:sidebar.group>

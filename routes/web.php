@@ -10,6 +10,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\OnboardingController;
 use App\Http\Controllers\SandboxController;
 use App\Http\Middleware\EnsurePlanActive;
+use App\Http\Middleware\EnsureWorkspacePlan;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
@@ -26,7 +27,7 @@ Route::post('checkout/{plan}', [CheckoutController::class, 'complete'])
     ->middleware(['auth', 'verified', 'throttle:5,1'])
     ->name('checkout.complete');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', EnsureWorkspacePlan::class])->group(function () {
     Route::get('settings/security/google', [GoogleAuthController::class, 'link'])
         ->middleware(['password.confirm', 'throttle:10,1'])->name('auth.google.link');
     Route::get('dashboard', DashboardController::class)->name('dashboard');

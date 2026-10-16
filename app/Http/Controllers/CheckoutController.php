@@ -130,7 +130,7 @@ class CheckoutController extends Controller
         $request->user()->unsetRelation('planAccess');
         $request->session()->forget('checkout.plan');
 
-        return redirect()->route($plan === 'sandbox' ? 'sandbox.index' : 'dashboard')->with('toast', [
+        return redirect()->route('dashboard')->with('toast', [
             'type' => 'success',
             'message' => $plan === 'sandbox' ? 'Your seven day Sandbox trial is ready.' : $selected['name'].' access is ready.',
         ]);

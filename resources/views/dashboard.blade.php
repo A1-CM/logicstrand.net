@@ -1,4 +1,17 @@
 <x-layouts::app :title="'Overview'">
+    @if($access?->plan === 'sandbox' && $access->isActive())
+        <div class="workspace-gate-page workspace-gate-inline">
+            <main class="workspace-gate-card">
+                <span class="page-eyebrow">YOUR 7-DAY SANDBOX</span>
+                <h1>Your Sandbox is ready to explore.</h1>
+                <p>Your guided preview is active through {{ $access->access_ends_at->format('M j, Y') }}. Choose a plan to unlock the complete document and answer workspace.</p>
+                <div class="workspace-gate-actions">
+                    <a class="button button-primary" href="{{ route('sandbox.index') }}">Open Sandbox <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                    <a class="workspace-gate-plan-link" href="{{ route('pricing') }}">Explore plans</a>
+                </div>
+            </main>
+        </div>
+    @else
     <div class="page-shell workspace-page">
         <header class="workspace-heading">
             <div><span class="page-eyebrow">YOUR WORKSPACE / OVERVIEW</span><h1>Good to see you, {{ Str::before(auth()->user()->name, ' ') }}.</h1><p>Pick up where you left off, with your sources close by.</p></div>
@@ -70,4 +83,5 @@
             </section>
         </div>
     </div>
+    @endif
 </x-layouts::app>
