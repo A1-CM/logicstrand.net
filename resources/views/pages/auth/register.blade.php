@@ -2,6 +2,8 @@
     <div class="flex flex-col gap-6">
         <x-auth-header :title="__('Create your workspace.')" :description="__('A clearer way to work with knowledge starts here.')" />
 
+        @include('partials.google-auth', ['label' => 'Sign up with Google'])
+
         <form method="POST" action="{{ route('register.store') }}" class="flex flex-col gap-6">
             @csrf
             <!-- Name -->

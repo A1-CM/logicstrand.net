@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CookieConsentController;
@@ -17,6 +18,8 @@ Route::view('privacy', 'legal.privacy')->name('privacy');
 Route::view('terms', 'legal.terms')->name('terms');
 Route::post('cookie-consent', CookieConsentController::class)->middleware('throttle:20,1')->name('cookie-consent.store');
 Route::post('contact', [ContactController::class, 'store'])->middleware('throttle:contact')->name('contact.store');
+Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->middleware(['guest', 'throttle:10,1'])->name('auth.google.redirect');
+Route::get('auth/google/callback', [GoogleAuthController::class, 'callback'])->middleware('throttle:20,1')->name('auth.google.callback');
 Route::view('pricing', 'pricing', ['plans' => config('plans')])->name('pricing');
 Route::get('checkout/{plan}', [CheckoutController::class, 'show'])->name('checkout.show');
 Route::post('checkout/{plan}', [CheckoutController::class, 'complete'])
@@ -24,6 +27,8 @@ Route::post('checkout/{plan}', [CheckoutController::class, 'complete'])
     ->name('checkout.complete');
 
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('settings/security/google', [GoogleAuthController::class, 'link'])
+        ->middleware(['password.confirm', 'throttle:10,1'])->name('auth.google.link');
     Route::get('dashboard', DashboardController::class)->name('dashboard');
     Route::get('sandbox', [SandboxController::class, 'index'])->name('sandbox.index');
     Route::post('sandbox/source', [SandboxController::class, 'addSample'])

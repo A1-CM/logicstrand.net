@@ -4,6 +4,8 @@
 
         <x-passkey-verify />
 
+        @include('partials.google-auth', ['label' => 'Continue with Google'])
+
         <form method="POST" action="{{ route('login.store') }}" class="flex flex-col gap-6">
             @csrf
 

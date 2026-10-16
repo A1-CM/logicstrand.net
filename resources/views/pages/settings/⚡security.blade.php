@@ -206,6 +206,27 @@ new #[Title('Security settings')] class extends Component {
             </div>
         </form>
 
+        <section class="mt-12 border-t border-zinc-200 pt-8">
+            <flux:heading>{{ __('Google sign-in') }}</flux:heading>
+            <flux:subheading>{{ __('Connect Google to sign in to this existing account.') }}</flux:subheading>
+
+            @if (session('status') === 'google-linked')
+                <p class="mt-3 text-sm text-green-700" role="status">{{ __('Google sign-in is now connected to this account.') }}</p>
+            @endif
+
+            @if (auth()->user()->google_id)
+                <p class="mt-4 text-sm text-zinc-600">{{ __('A Google account is connected.') }}</p>
+            @elseif (filled(config('services.google.client_id')) && filled(config('services.google.client_secret')))
+                <p class="mt-3 text-sm text-zinc-600">{{ __('You will be asked to confirm your account password before connecting Google.') }}</p>
+                <a href="{{ route('auth.google.link') }}" class="google-auth-button mt-4 max-w-sm">
+                    <i class="fa-brands fa-google" aria-hidden="true"></i>
+                    <span>{{ __('Connect Google account') }}</span>
+                </a>
+            @else
+                <p class="mt-4 text-sm text-zinc-600">{{ __('Google sign-in is not configured yet.') }}</p>
+            @endif
+        </section>
+
         @if ($canManageTwoFactor)
             <section class="mt-12">
                 <flux:heading>{{ __('Two-factor authentication') }}</flux:heading>

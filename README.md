@@ -80,6 +80,14 @@ npm run build
 
 The tests fake Groq responses. To verify live generation, supply GROQ_API_KEY, upload a document, wait for it to be ready, and ask a question about its contents.
 
+## Google sign-in
+
+Google sign-up and sign-in use Laravel Socialite with the OpenID Connect identity scopes only. In Google Cloud Console, create an OAuth client for a web application and add the callback URI `https://logicstrand.net/auth/google/callback` to its authorized redirect URIs. For local development, also add `http://localhost:8000/auth/google/callback`. The OAuth consent screen must be configured and test users added while the app is in testing mode.
+
+Set `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `GOOGLE_REDIRECT_URI` in the server environment. For cPanel, add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` as **LogicStrand repository secrets**, and `GOOGLE_REDIRECT_URI` as a **LogicStrand repository variable**. Keep the client secret private and do not add these credentials to an organization-wide `APP_ENV_EXTRA` secret. The caller workflow inherits the repository secrets and passes the redirect URI to the shared deployer. Leave any existing `APP_ENV_EXTRA` value unchanged; the deployer preserves its other settings and uses these separate Google values when provided.
+
+The Google sign-in button appears when both credentials are configured. New Google accounts require Google's verified email claim; existing accounts are linked from Security settings after password confirmation. Accounts with two-factor authentication still go through the existing Fortify challenge.
+
 ## Deploy through cPanel without shell access
 
 The [LogicStrand caller workflow](.github/workflows/deploy-cpanel.yml) runs on pushes to `main` or manually. It calls the published reusable Laravel deployment workflow in the public `A1-CM/.github` repository. GitHub Actions tests the app, builds browser assets and installs production Composer packages. The deployer uses HTTPS cPanel APIs to create the app's MySQL database, database user, and `no-reply@<domain>` mailbox, upload a private release, run migrations through a temporary protected PHP endpoint, and publish the site. The host needs no SSH, Composer, Node, or queue worker; the generated production configuration uses Laravel's synchronous queue.
@@ -95,7 +103,7 @@ Add these **organization variables** (available to the repositories that deploy)
 | `CPANEL_HOME` | Absolute account home, such as `/home/username` |
 | `APP_URL` | LogicStrand HTTPS origin, such as `https://logicstrand.net` |
 
-Add `CPANEL_API_TOKEN` as an **organization secret** shared with the deploying repositories, or as a repository secret. It must be a cPanel API token with permissions to manage files, MySQL databases and users, and email accounts. Add `GROQ_API_KEY` as a LogicStrand repository secret for document answers. GitHub environment secrets alone are unsuitable unless the called workflow explicitly uses that environment; organization or repository secrets are simplest here.
+Add `CPANEL_API_TOKEN` as an **organization secret** shared with the deploying repositories, or as a repository secret. It must be a cPanel API token with permissions to manage files, MySQL databases and users, and email accounts. Add `GROQ_API_KEY` as a LogicStrand repository secret for document answers. Add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` as LogicStrand repository secrets, and `GOOGLE_REDIRECT_URI` as a LogicStrand repository variable for Google sign-in; keep these Google settings out of organization-wide `APP_ENV_EXTRA`. GitHub environment secrets alone are unsuitable unless the called workflow explicitly uses that environment; organization or repository secrets are simplest here.
 
 You do **not** need to create or store `APP_KEY`, `DB_PASSWORD`, or `MAIL_PASSWORD` in GitHub. On first deployment, the script generates a cryptographically random Laravel key and independent database and mailbox passwords. It saves them in `CPANEL_HOME/<project>-deploy-state.json` with owner-only `0600` permissions, then writes them to the private release `.env`. Later deployments read the same state and reuse the credentials. Back up this state file securely; do not delete or rename it while the deployment exists. If a database, user, or mailbox with the chosen names already exists but the state file does not, deployment stops rather than replacing its password. The deployment does not print generated secrets.
 
