@@ -18,7 +18,7 @@
                     </div>
                 @endif
             </section>
-            <aside class="workspace-help-card"><span class="page-eyebrow">HOW IT WORKS</span><ol><li><b>01</b><span>Upload your source</span></li><li><b>02</b><span>Wait for Ready status</span></li><li><b>03</b><span>Ask a question</span></li></ol><p>When you ask, relevant passages from your documents are sent to Groq to compose the answer.</p></aside>
+            <aside class="workspace-help-card"><span class="page-eyebrow">HOW IT WORKS</span><ol><li><b>01</b><span>Upload your source</span></li><li><b>02</b><span>Wait for Ready status</span></li><li><b>03</b><span>Ask a question</span></li></ol><p>When you ask, the Base V.1 model uses relevant passages from your documents to compose the answer.</p></aside>
         </div>
         <section class="content-card library-card workspace-library">
             <div class="card-heading"><div><span class="page-eyebrow">SOURCE LIBRARY</span><h2>Your documents</h2></div>@if($counts['processing'] > 0)<span class="processing-note" role="status"><i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> {{ $counts['processing'] }} processing · live status</span>@endif</div>

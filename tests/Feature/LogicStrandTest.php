@@ -27,7 +27,7 @@ class LogicStrandTest extends TestCase
             ->assertSee('When the details matter')
             ->assertSee('A line of sight')
             ->assertSee('What can I add to my workspace?')
-            ->assertSee('Groq');
+            ->assertSee('Base V.1 model');
 
         $this->get('/login')->assertOk()->assertSee('Welcome back.')->assertSee('Find the thread');
         $this->get('/register')->assertOk()->assertSee('Create your workspace.');

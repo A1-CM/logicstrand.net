@@ -5,13 +5,13 @@
             <section class="ask-panel workspace-ask-panel">
                 <span class="workspace-kicker"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> SOURCE-BACKED ANSWERS</span>
                 <h2>What would you like to understand?</h2>
-                <p>LogicStrand searches your ready documents, then asks Groq to answer using relevant passages. Answers without enough evidence say so.</p>
+                <p>LogicStrand searches your ready documents, then uses the Base V.1 model to answer with relevant passages. Answers without enough evidence say so.</p>
                 @if($readyCount === 0)
                     <div class="workspace-state-card" role="status"><i class="fa-solid fa-file-circle-plus" aria-hidden="true"></i><div><strong>No ready documents yet</strong><p>{{ $processingCount > 0 ? 'Your upload is processing. Come back when it shows Ready.' : 'Add a text file or text-based PDF before asking a question.' }}</p><a href="{{ route('documents.index') }}">Open documents <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div>
                 @elseif($remaining === 0)
                     <div class="workspace-state-card" role="status"><i class="fa-solid fa-clock" aria-hidden="true"></i><div><strong>Today's saved-answer allowance is full</strong><p>You can explore your previous answers now and ask again tomorrow.</p><a href="{{ route('answers.index') }}">Open answer history <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div>
                 @elseif(! $serviceConfigured)
-                    <div class="workspace-state-card" role="status"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><div><strong>Answer service is unavailable</strong><p>The workspace needs a Groq API key before it can generate source-backed answers. Your documents and saved answers remain available.</p><a href="{{ route('answers.index') }}">Open answer history <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div>
+                    <div class="workspace-state-card" role="status"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><div><strong>Answer service is unavailable</strong><p>The answer model is not configured, so it cannot generate source-backed answers yet. Your documents and saved answers remain available.</p><a href="{{ route('answers.index') }}">Open answer history <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div></div>
                 @else
                     <form method="POST" action="{{ route('answers.store') }}" class="question-form" data-busy-form>
                         @csrf

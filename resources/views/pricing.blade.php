@@ -20,9 +20,8 @@
                 @auth
                     <a class="site-login" href="{{ route('dashboard') }}">Dashboard</a>
                 @else
-                    <a class="site-login" href="{{ route('login') }}">Sign in</a>
+                    <a class="button button-dark button-small" href="{{ route('product') }}">Explore LS Atlas <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
                 @endauth
-                <a class="button button-dark button-small" href="{{ route('checkout.show', 'sandbox') }}">Start Sandbox <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
             </div>
         </header>
 
@@ -75,7 +74,7 @@
                     <div><strong>When does Sandbox begin?</strong><p>Your seven days begin when you complete checkout. Your dashboard shows the end date and days remaining.</p></div>
                     <div><strong>What happens when access ends?</strong><p>Your saved documents and answers remain in your account. Choose a new plan period to keep uploading and asking questions.</p></div>
                     <div><strong>What files can I use?</strong><p>UTF-8 text files and text-based PDFs up to 10 MB each. Scanned PDFs need OCR and are not supported yet.</p></div>
-                    <div><strong>How are answers created?</strong><p>Relevant passages are sent to Groq for an answer. You can inspect cited passages beside the result.</p></div>
+                    <div><strong>How are answers created?</strong><p>The Base V.1 model uses relevant passages to generate an answer. You can inspect cited passages beside the result.</p></div>
                 </div>
             </section>
         </main>

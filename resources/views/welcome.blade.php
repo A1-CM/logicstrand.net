@@ -22,8 +22,7 @@
                 @auth
                     <a class="site-login" href="{{ route('dashboard') }}">Dashboard</a>
                 @else
-                    <a class="site-login" href="{{ route('login') }}">Sign in</a>
-                    <a class="button button-dark button-small" href="{{ route('pricing') }}">Get started <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
+                    <a class="button button-dark button-small" href="{{ route('product') }}">Explore LS Atlas <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
                 @endauth
             </div>
         </header>
@@ -35,7 +34,7 @@
                     <h1>Make every answer <em>traceable.</em></h1>
                     <p class="hero-lede">For the people making sense of policies, processes, and research: bring your documents together, ask the important questions, and see where each answer comes from.</p>
                     <div class="hero-actions">
-                        <a href="{{ route('pricing') }}" class="button button-blue">Start your workspace <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
+                        <a href="{{ route('product') }}" class="button button-blue">Explore LS Atlas <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
                         <a href="#how-it-works" class="text-link">See how it works <span aria-hidden="true">↓</span></a>
                     </div>
                     <div class="hero-note"><span class="note-line"></span> Your documents. Your questions. A clearer way forward.</div>
@@ -184,7 +183,7 @@
             <section id="principles" class="section site-container principle-section">
                 <div class="principle-panel">
                     <img src="{{ asset('images/logicstrand/platform-approach.webp') }}" alt="A person reviewing notes and information at a desk" width="1546" height="549" loading="lazy">
-                    <div><span class="section-kicker light-kicker">06 / OUR APPROACH</span><h2>Confidence starts<br>with context.</h2><p>LogicStrand is designed to make sources visible and gaps obvious. When your documents cannot support an answer, the workspace says so. The passages selected for a question are sent to Groq to generate the response.</p><a href="{{ route('pricing') }}" class="button button-light">Create your workspace <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
+                    <div><span class="section-kicker light-kicker">06 / OUR APPROACH</span><h2>Confidence starts<br>with context.</h2><p>LogicStrand is designed to make sources visible and gaps obvious. When your documents cannot support an answer, the workspace says so. The passages selected for a question are sent to the Base V.1 model to generate the response.</p><a href="{{ route('pricing') }}" class="button button-light">Create your workspace <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
                 </div>
             </section>
 
@@ -192,9 +191,9 @@
                 <div class="faq-intro"><span class="section-kicker">07 / GOOD QUESTIONS</span><h2>A little more<br><em>clarity.</em></h2><p>Before you begin, here is how LogicStrand handles the most important parts of the workflow.</p><a href="{{ route('pricing') }}" class="text-link">Create a workspace <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
                 <div class="faq-list">
                     <details><summary><span>01</span> What can I add to my workspace?<b aria-hidden="true">+</b></summary><p>Upload UTF-8 text files and text-based PDFs, up to 10 MB each. Scanned PDFs need OCR and are not supported in this version.</p></details>
-                    <details><summary><span>02</span> How does an answer connect to a source?<b aria-hidden="true">+</b></summary><p>LogicStrand searches your ready documents, sends relevant passages to Groq, and shows the passages cited by the answer so you can review them.</p></details>
+                    <details><summary><span>02</span> How does an answer connect to a source?<b aria-hidden="true">+</b></summary><p>LogicStrand searches your ready documents, uses relevant passages with the Base V.1 model, and shows the passages cited by the answer so you can review them.</p></details>
                     <details><summary><span>03</span> What if my documents do not have the answer?<b aria-hidden="true">+</b></summary><p>The workspace says it could not find enough evidence. You can refine the question or add another source.</p></details>
-                    <details><summary><span>04</span> Who can see my documents?<b aria-hidden="true">+</b></summary><p>Your account has a private workspace. The passages selected for a question are sent to Groq to compose the answer.</p></details>
+                    <details><summary><span>04</span> Who can see my documents?<b aria-hidden="true">+</b></summary><p>Your account has a private workspace. The passages selected for a question are sent to the Base V.1 model to compose the answer.</p></details>
                 </div>
             </section>
 
@@ -260,7 +259,7 @@
             <section class="closing-section site-container">
                 <span class="section-kicker">A BETTER THREAD TO FOLLOW</span>
                 <h2>Your next answer<br>should have a <em>source.</em></h2>
-                <a href="{{ route('pricing') }}" class="button button-blue">Get started with LogicStrand <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
+                <a href="{{ route('product') }}" class="button button-blue">Explore LS Atlas <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a>
             </section>
         </main>
 

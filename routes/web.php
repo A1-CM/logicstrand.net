@@ -12,6 +12,7 @@ use App\Http\Middleware\EnsurePlanActive;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
+Route::view('product', 'product')->name('product');
 Route::view('privacy', 'legal.privacy')->name('privacy');
 Route::view('terms', 'legal.terms')->name('terms');
 Route::post('cookie-consent', CookieConsentController::class)->middleware('throttle:20,1')->name('cookie-consent.store');
