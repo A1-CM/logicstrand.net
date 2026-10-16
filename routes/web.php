@@ -34,6 +34,8 @@ Route::middleware(['auth', 'verified', EnsureWorkspacePlan::class])->group(funct
     Route::get('sandbox', [SandboxController::class, 'index'])->name('sandbox.index');
     Route::post('sandbox/source', [SandboxController::class, 'addSample'])
         ->middleware(EnsurePlanActive::class)->name('sandbox.source');
+    Route::post('sandbox/ask', [SandboxController::class, 'ask'])
+        ->middleware([EnsurePlanActive::class, 'throttle:10,1'])->name('sandbox.ask');
     Route::get('documents', [DocumentController::class, 'index'])->name('documents.index');
     Route::get('documents/{document}/progress', [DocumentController::class, 'progress'])->middleware(['signed', 'throttle:360,1'])->name('documents.progress');
     Route::post('documents/{document}/process', [DocumentController::class, 'process'])->middleware([EnsurePlanActive::class, 'throttle:30,1'])->name('documents.process');

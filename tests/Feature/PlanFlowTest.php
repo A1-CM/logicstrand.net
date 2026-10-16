@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Ai\Agents\KnowledgeAnswerAgent;
 use App\Models\Answer;
 use App\Models\DailyAnswerUsage;
 use App\Models\KnowledgeDocument;
@@ -89,6 +90,35 @@ class PlanFlowTest extends TestCase
         $this->actingAs($user)->post(route('checkout.complete', 'sandbox'), $this->card())
             ->assertRedirect(route('pricing'));
         $this->assertSame(1, PlanAccess::count());
+    }
+
+    public function test_sandbox_can_ask_and_review_a_cited_answer_without_opening_paid_pages(): void
+    {
+        Storage::fake('local');
+        config()->set('ai.providers.groq.key', 'test-key');
+        $user = User::factory()->create();
+        $this->actingAs($user)->post(route('checkout.complete', 'sandbox'), $this->card());
+        $this->actingAs($user)->post(route('sandbox.source'))->assertRedirect(route('sandbox.index'));
+        $chunkId = KnowledgeDocument::firstOrFail()->chunks()->firstOrFail()->id;
+        KnowledgeAnswerAgent::fake([[
+            'supported' => true,
+            'answer' => 'Two approvals are required before renewal.',
+            'citation_ids' => [$chunkId],
+        ]]);
+
+        $this->actingAs($user)->post(route('sandbox.ask'), [
+            'question' => 'What approvals are required before renewal?',
+        ])->assertRedirect(route('sandbox.index').'#answer-1');
+
+        $this->actingAs($user)->get(route('sandbox.index'))->assertOk()
+            ->assertSee('Two approvals are required before renewal.')
+            ->assertSee('Both approvals must be recorded in the renewal log.');
+        $this->assertDatabaseHas('daily_answer_usages', [
+            'user_id' => $user->id,
+            'answer_count' => 1,
+        ]);
+        $this->actingAs($user)->get(route('answers.index'))->assertOk()
+            ->assertSee('Choose a plan');
     }
 
     public function test_invalid_card_details_do_not_start_access_or_flash_sensitive_input(): void
