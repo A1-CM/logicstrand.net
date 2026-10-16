@@ -34,7 +34,7 @@
                     <p>Start with seven days in Sandbox. When your questions grow, choose more room for documents and answers.</p>
                     <div class="pricing-hero-note"><span>✳</span> Every plan keeps the evidence in view.</div>
                 </div>
-                <img src="{{ asset('images/logicstrand/pricing-hero.webp') }}" alt="A person reviewing notes and information at a desk" width="1546" height="549" fetchpriority="high">
+                <img src="{{ asset('images/logicstrand/the-platform.webp') }}" alt="A person reviewing notes and information at a desk" width="1546" height="549" fetchpriority="high">
             </section>
 
             <section class="site-container pricing-section" aria-label="Plans">

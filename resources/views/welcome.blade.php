@@ -79,7 +79,7 @@
                     <span class="section-kicker">01 / THE PLATFORM</span>
                     <h2>Intelligence that<br><em>shows its work.</em></h2>
                     <p>Important knowledge lives across files, policies, and notes. LogicStrand gives it a more useful shape: a private space to explore questions and keep the evidence close.</p>
-                    <figure class="platform-photo"><img src="{{ asset('images/logicstrand/platform-approach.webp') }}" alt="A focused workspace with a document library open on a monitor" width="1096" height="905" loading="lazy"><figcaption>THE WORK BEHIND THE ANSWER</figcaption></figure>
+                    <figure class="platform-photo"><img src="{{ asset('images/logicstrand/the-platform.webp') }}" alt="A focused workspace with a document library open on a monitor" width="1096" height="905" loading="lazy"><figcaption>THE WORK BEHIND THE ANSWER</figcaption></figure>
                 </div>
                 <div class="preview-card">
                     <div class="preview-top"><span class="preview-logo"><img src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899"></span><span class="preview-label">ANSWER PREVIEW</span></div>
@@ -183,7 +183,7 @@
 
             <section id="principles" class="section site-container principle-section">
                 <div class="principle-panel">
-                    <div class="principle-symbol" aria-hidden="true">✳</div>
+                    <img src="{{ asset('images/logicstrand/platform-approach.webp') }}" alt="A person reviewing notes and information at a desk" width="1546" height="549" loading="lazy">
                     <div><span class="section-kicker light-kicker">06 / OUR APPROACH</span><h2>Confidence starts<br>with context.</h2><p>LogicStrand is designed to make sources visible and gaps obvious. When your documents cannot support an answer, the workspace says so. The passages selected for a question are sent to Groq to generate the response.</p><a href="{{ route('pricing') }}" class="button button-light">Create your workspace <span aria-hidden="true"><i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></span></a></div>
                 </div>
             </section>
