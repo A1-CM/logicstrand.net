@@ -245,7 +245,11 @@
                                     <div class="contact-field"><label for="contact-organization">Organization <small>Optional</small></label><input id="contact-organization" name="organization" type="text" value="{{ old('organization') }}" autocomplete="organization" maxlength="120" aria-invalid="{{ $errors->has('organization') ? 'true' : 'false' }}">@error('organization')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
                                     <div class="contact-field"><label for="contact-subject">Subject <span aria-hidden="true">*</span></label><input id="contact-subject" name="subject" type="text" value="{{ old('subject') }}" maxlength="150" required aria-invalid="{{ $errors->has('subject') ? 'true' : 'false' }}">@error('subject')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
                                     <div class="contact-field"><label for="contact-message">Message <span aria-hidden="true">*</span></label><textarea id="contact-message" name="message" rows="5" minlength="10" maxlength="5000" required aria-invalid="{{ $errors->has('message') ? 'true' : 'false' }}">{{ old('message') }}</textarea>@error('message')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
-                                    <div class="contact-turnstile"><div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.site_key') }}" data-action="contact" data-size="normal" data-theme="light"></div>@error('turnstile')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
+                                    <div class="contact-turnstile">
+                                        <div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.site_key') }}" data-action="contact" data-size="normal" data-theme="light" data-error-callback="logicStrandTurnstileError" data-callback="logicStrandTurnstileSuccess"></div>
+                                        <small class="contact-field-error" data-turnstile-message role="status" aria-live="polite" hidden></small>
+                                        @error('turnstile')<small class="contact-field-error">{{ $message }}</small>@enderror
+                                    </div>
                                     <button class="button button-blue contact-submit" type="submit">Send message</button>
                                 </form>
                             @else
@@ -260,8 +264,8 @@
                                 <a href="https://www.facebook.com/LogicStrand/" target="_blank" rel="noopener noreferrer" aria-label="Follow LogicStrand on Facebook" data-tooltip="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
                                 <a href="https://www.linkedin.com/company/logicstrand/" target="_blank" rel="noopener noreferrer" aria-label="Visit LogicStrand on LinkedIn" data-tooltip="LinkedIn · Company"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
                                 <a href="https://www.linkedin.com/in/kavinithra-sutharsan-2851b3442/" target="_blank" rel="noopener noreferrer" aria-label="Visit the LogicStrand founder on LinkedIn" data-tooltip="LinkedIn · Founder"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
-                                <a href="https://www.f6s.com/logicstrand" target="_blank" rel="noopener noreferrer" aria-label="Visit LogicStrand on F6S" data-tooltip="F6S"><i class="fa-solid fa-people-group" aria-hidden="true"></i></a>
-                                <a href="https://www.crunchbase.com/organization/logicstrand" target="_blank" rel="noopener noreferrer" aria-label="Visit LogicStrand on Crunchbase" data-tooltip="Crunchbase"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></a>
+                                <a href="https://www.f6s.com/logicstrand" target="_blank" rel="noopener noreferrer" aria-label="Visit LogicStrand on F6S" data-tooltip="F6S"><img class="contact-social-favicon" src="https://www.f6s.com/favicon.ico" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"></a>
+                                <a href="https://www.crunchbase.com/organization/logicstrand" target="_blank" rel="noopener noreferrer" aria-label="Visit LogicStrand on Crunchbase" data-tooltip="Crunchbase"><img class="contact-social-favicon" src="https://www.crunchbase.com/favicon.ico" alt="" width="24" height="24" loading="lazy" referrerpolicy="no-referrer"></a>
                             </div>
                         </aside>
                     </div>

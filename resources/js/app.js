@@ -85,6 +85,26 @@ function consumeFlashToast() {
 
 window.LogicStrandToast = { show: showToast };
 window.addEventListener('logicstrand:toast', (event) => showToast(event.detail || {}));
+
+window.logicStrandTurnstileError = (errorCode) => {
+    const status = document.querySelector('[data-turnstile-message]');
+    if (status) {
+        const code = String(errorCode ?? '').replace(/[^\d]/g, '').slice(0, 12);
+        status.textContent = `Cloudflare's security check could not finish${code ? ` (code ${code})` : ''}. Please refresh the page or try another browser or network.`;
+        status.hidden = false;
+    }
+
+    return false;
+};
+
+window.logicStrandTurnstileSuccess = () => {
+    const status = document.querySelector('[data-turnstile-message]');
+    if (status) {
+        status.textContent = '';
+        status.hidden = true;
+    }
+};
+
 document.addEventListener('livewire:navigated', consumeFlashToast);
 
 if (document.readyState === 'loading') {

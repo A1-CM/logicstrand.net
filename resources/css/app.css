@@ -604,6 +604,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible 
 .contact-social-links a { width:46px; height:46px; min-height:46px; font-size:17px; display:flex; align-items:center; justify-content:center; }
 .contact-social-links a > i { display:flex; flex:0 0 1.25em; align-items:center; justify-content:center; width:1.25em; height:1.25em; margin:0; color:#fff; font-size:25px; line-height:1; text-align:center; }
 .contact-social-links a > i::before { display:block; width:100%; text-align:center; }
+.contact-social-links a > .contact-social-favicon { width:24px; height:24px; padding:2px; border-radius:4px; background:#fff; object-fit:contain; }
 .contact-social-links a::after { left:calc(100% + 8px); }
 @media (max-width:680px) {
     .contact-panel-grid { grid-template-columns:1fr; }

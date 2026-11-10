@@ -36,10 +36,12 @@ class ContactFormTest extends TestCase
             ->assertSee('https://www.linkedin.com/in/kavinithra-sutharsan-2851b3442/', false)
             ->assertSee('https://www.f6s.com/logicstrand', false)
             ->assertSee('https://www.crunchbase.com/organization/logicstrand', false)
+            ->assertSee('src="https://www.f6s.com/favicon.ico"', false)
+            ->assertSee('src="https://www.crunchbase.com/favicon.ico"', false)
             ->assertSee('fa-linkedin-in', false)
-            ->assertSee('fa-people-group', false)
-            ->assertSee('fa-chart-line', false)
-            ->assertSee('data-action="contact"', false);
+            ->assertSee('data-action="contact"', false)
+            ->assertSee('data-error-callback="logicStrandTurnstileError"', false)
+            ->assertSee('data-turnstile-message', false);
     }
 
     public function test_valid_message_is_emailed_with_visitor_as_reply_to(): void
