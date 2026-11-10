@@ -16,12 +16,22 @@ class LegalAndCookieConsentTest extends TestCase
             ->assertSee('Privacy Policy')
             ->assertSee('Groq')
             ->assertSee('Cloudflare Turnstile')
+            ->assertSee('No. 18, Lakeview Crescent, Rajagiriya, Sri Lanka')
+            ->assertSee('455 Market Street, San Francisco, CA 94105, USA')
+            ->assertSee('+94 77 000 1201')
+            ->assertSee('+1 415-555-0101')
+            ->assertSee('support@sensorsae.net')
             ->assertSee(route('cookie-consent.store'), false)
             ->assertSee(route('terms'), false);
 
         $this->get(route('terms'))->assertOk()
             ->assertSee('Terms & Conditions')
             ->assertSee('not connected to a payment processor')
+            ->assertSee('No. 18, Lakeview Crescent, Rajagiriya, Sri Lanka')
+            ->assertSee('455 Market Street, San Francisco, CA 94105, USA')
+            ->assertSee('+94 77 000 1201')
+            ->assertSee('+1 415-555-0101')
+            ->assertSee('support@sensorsae.net')
             ->assertSee(route('privacy'), false);
     }
 

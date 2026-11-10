@@ -31,5 +31,7 @@ class DashboardTest extends TestCase
 
         $response = $this->get(route('dashboard'));
         $response->assertOk();
+        $response->assertSee('href="'.route('home').'"', false)
+            ->assertSee('Go to LogicStrand homepage');
     }
 }

@@ -35,6 +35,21 @@ class ProductShowcaseTest extends TestCase
         $this->get(route('home'))->assertSee('href="'.route('product').'" class="button button-blue"', false);
     }
 
+    public function test_homepage_includes_clearly_labeled_illustrative_testimonials_with_profile_images(): void
+    {
+        $this->get(route('home'))->assertOk()
+            ->assertSee('Illustrative testimonials')
+            ->assertSee('Maya Chen')
+            ->assertSee('Operations Director')
+            ->assertSee('Daniel Perera')
+            ->assertSee('Policy Lead')
+            ->assertSee('Amara Silva')
+            ->assertSee('Research Analyst')
+            ->assertSee('images/logicstrand/operations-process.webp')
+            ->assertSee('images/logicstrand/policy-review.webp')
+            ->assertSee('images/logicstrand/research-review.webp');
+    }
+
     public function test_signed_in_visitors_keep_the_dashboard_navigation_action(): void
     {
         $user = User::factory()->create(['email_verified_at' => now()]);

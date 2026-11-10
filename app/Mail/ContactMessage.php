@@ -24,7 +24,7 @@ class ContactMessage extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New LogicStrand contact message',
+            subject: $this->subjectLine,
             replyTo: [new Address($this->email, $this->name)],
         );
     }

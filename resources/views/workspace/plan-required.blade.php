@@ -8,7 +8,7 @@
 </head>
 <body class="workspace-gate-page">
     <main class="workspace-gate-card">
-        <a class="workspace-gate-brand" href="{{ route('dashboard') }}" aria-label="LogicStrand home">
+        <a class="workspace-gate-brand" href="{{ route('home') }}" aria-label="LogicStrand homepage">
             <img src="{{ asset('images/logicstrand/logo.webp') }}" alt="LogicStrand" width="3168" height="899">
         </a>
         <span class="page-eyebrow">SANDBOX ACCESS</span>

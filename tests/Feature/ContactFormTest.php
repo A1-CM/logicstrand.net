@@ -25,7 +25,7 @@ class ContactFormTest extends TestCase
     {
         $this->get(route('home'))->assertOk()
             ->assertSee('id="contact"', false)
-            ->assertSee('support@logicstrand.net')
+            ->assertSee('support@sensorsae.net')
             ->assertSee('LogicStrand Technologies (Pvt) Ltd')
             ->assertSee('LogicStrand Technologies Inc.')
             ->assertSee('18 September 2023')
@@ -50,14 +50,26 @@ class ContactFormTest extends TestCase
         Mail::assertSent(ContactMessage::class, function (ContactMessage $mail): bool {
             $replyTo = $mail->envelope()->replyTo[0];
 
-            return $mail->hasTo('support@logicstrand.net')
+            return $mail->hasTo('support@sensorsae.net')
                 && $replyTo->address === 'jane@example.com'
                 && $replyTo->name === 'Jane Smith'
                 && $mail->subjectLine === 'Product question'
+                && $mail->envelope()->subject === 'Product question'
                 && $mail->organization === 'Acme'
                 && $mail->envelope()->from === null
                 && str_contains($mail->render(), 'Could you tell me how the knowledge workspace works?');
         });
+    }
+
+    public function test_contact_inbox_can_be_configured(): void
+    {
+        Mail::fake();
+        config()->set('contact.to', 'help@logicstrand.net');
+        $this->fakeTurnstile();
+
+        $this->post(route('contact.store'), $this->payload())->assertRedirect(route('home').'#contact');
+
+        Mail::assertSent(ContactMessage::class, fn (ContactMessage $mail): bool => $mail->hasTo('help@logicstrand.net'));
     }
 
     public function test_invalid_fields_and_missing_token_do_not_send_mail(): void
@@ -105,7 +117,7 @@ class ContactFormTest extends TestCase
 
         $this->post(route('contact.store'), $this->payload())
             ->assertRedirect(route('home').'#contact')
-            ->assertSessionHas('toast', ['type' => 'error', 'message' => 'The contact form is temporarily unavailable. Please email support@logicstrand.net.']);
+            ->assertSessionHas('toast', ['type' => 'error', 'message' => 'The contact form is temporarily unavailable. Please email support@sensorsae.net.']);
 
         Http::assertNothingSent();
         Mail::assertNothingSent();
@@ -144,7 +156,7 @@ class ContactFormTest extends TestCase
     public function test_smtp_failure_shows_an_error_instead_of_success(): void
     {
         $this->fakeTurnstile();
-        Mail::shouldReceive('to')->once()->with('support@logicstrand.net')
+        Mail::shouldReceive('to')->once()->with('support@sensorsae.net')
             ->andThrow(new RuntimeException('smtp unavailable'));
 
         $this->post(route('contact.store'), $this->payload())

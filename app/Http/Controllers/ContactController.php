@@ -27,7 +27,7 @@ class ContactController extends Controller
         if (! filled(config('services.turnstile.site_key')) || ! filled(config('services.turnstile.secret_key'))) {
             return redirect()->to($redirect)->with('toast', [
                 'type' => 'error',
-                'message' => 'The contact form is temporarily unavailable. Please email support@logicstrand.net.',
+                'message' => 'The contact form is temporarily unavailable. Please email '.config('contact.to').'.',
             ]);
         }
 
@@ -65,7 +65,7 @@ class ContactController extends Controller
         $data = $validator->validated();
 
         try {
-            Mail::to('support@logicstrand.net')->send(new ContactMessage(
+            Mail::to(config('contact.to'))->send(new ContactMessage(
                 $data['name'],
                 $data['email'],
                 $data['organization'] ?? null,
@@ -73,9 +73,16 @@ class ContactController extends Controller
                 $data['message'],
             ));
         } catch (Throwable $exception) {
-            Log::error('Contact email delivery failed', ['exception' => $exception::class]);
+            Log::error('Contact email delivery failed', [
+                'exception' => $exception,
+                'mailer' => config('mail.default'),
+                'smtp_host' => config('mail.mailers.smtp.host'),
+                'smtp_port' => config('mail.mailers.smtp.port'),
+                'from' => config('mail.from.address'),
+                'recipient' => config('contact.to'),
+            ]);
 
-            return $this->withError('delivery', 'Your message could not be sent right now. Please try again or email support@logicstrand.net.', $input);
+            return $this->withError('delivery', 'Your message could not be sent right now. Please try again or email '.config('contact.to').'.', $input);
         }
 
         return redirect()->to($redirect)->with('toast', [

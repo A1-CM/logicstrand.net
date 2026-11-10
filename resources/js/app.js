@@ -246,3 +246,64 @@ if (document.readyState === 'loading') {
 } else {
     watchDocuments();
 }
+
+function setupSiteNavigation() {
+    const navigation = document.querySelector('[data-mobile-nav]');
+    const toggle = document.querySelector('[data-nav-toggle]');
+    if (!navigation || !toggle || navigation.dataset.navReady === 'true') return;
+    navigation.dataset.navReady = 'true';
+
+    const setOpen = (open) => {
+        navigation.dataset.open = open ? 'true' : 'false';
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        toggle.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        const icon = toggle.querySelector('i');
+        if (icon) icon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+    };
+
+    setOpen(false);
+    toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    navigation.addEventListener('click', (event) => {
+        if (event.target.closest('a')) setOpen(false);
+    });
+    document.addEventListener('click', (event) => {
+        if (navigation.dataset.open === 'true' && !navigation.contains(event.target) && !toggle.contains(event.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && navigation.dataset.open === 'true') {
+            setOpen(false);
+            toggle.focus();
+        }
+    });
+    window.addEventListener('resize', () => {
+        if (window.matchMedia('(min-width: 1051px)').matches) setOpen(false);
+    }, { passive: true });
+
+    const sectionLinks = [...navigation.querySelectorAll('a[href*="#"]')].map((link) => {
+        let url;
+        try { url = new URL(link.href, window.location.href); } catch { return null; }
+        if (url.origin !== window.location.origin || url.pathname !== window.location.pathname || !url.hash) return null;
+        const section = document.getElementById(decodeURIComponent(url.hash.slice(1)));
+        return section ? { link, section } : null;
+    }).filter(Boolean);
+
+    if (!sectionLinks.length) return;
+    const updateActiveSection = () => {
+        const marker = Math.min(window.innerHeight * 0.38, 280);
+        const visible = sectionLinks
+            .map((item) => ({ ...item, top: item.section.getBoundingClientRect().top, bottom: item.section.getBoundingClientRect().bottom }))
+            .filter((item) => item.top <= marker && item.bottom > marker)
+            .sort((a, b) => b.top - a.top)[0];
+        sectionLinks.forEach(({ link }) => {
+            if (visible?.link === link) link.setAttribute('aria-current', 'location');
+            else if (link.getAttribute('aria-current') === 'location') link.removeAttribute('aria-current');
+        });
+    };
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    window.addEventListener('resize', updateActiveSection, { passive: true });
+    window.addEventListener('hashchange', updateActiveSection);
+    updateActiveSection();
+}
+
+document.addEventListener('DOMContentLoaded', setupSiteNavigation, { once: true });
+document.addEventListener('livewire:navigated', setupSiteNavigation);

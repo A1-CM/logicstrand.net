@@ -4,7 +4,7 @@
 <p>This policy explains how LogicStrand handles information when you visit the site, create an account, use a personal workspace, or contact us. It describes the current product and may change as the service changes.</p>
 
 <h2>Who operates LogicStrand</h2>
-<p>LogicStrand is operated by LogicStrand Technologies (Pvt) Ltd in Sri Lanka and LogicStrand Technologies Inc. in the United States. For privacy questions or requests, contact <a href="mailto:support@logicstrand.net">support@logicstrand.net</a>.</p>
+<p>LogicStrand is operated by LogicStrand Technologies (Pvt) Ltd in Sri Lanka and LogicStrand Technologies Inc. in the United States. For privacy questions or requests, contact <a href="mailto:support@sensorsae.net">support@sensorsae.net</a>.</p>
 
 <h2>Information we handle</h2>
 <ul>
@@ -33,8 +33,16 @@
 <p>LogicStrand has operating entities in Sri Lanka and the United States, and service providers may process information in other locations. As a result, information may be handled in countries with privacy rules different from those where you live.</p>
 
 <h2>Your choices and requests</h2>
-<p>You can update account details, delete documents and answers, or request account deletion through the product controls. You may also contact <a href="mailto:support@logicstrand.net">support@logicstrand.net</a> with questions or privacy requests. The rights available to you depend on where you live and the laws that apply.</p>
+<p>You can update account details, delete documents and answers, or request account deletion through the product controls. You may also contact <a href="mailto:support@sensorsae.net">support@sensorsae.net</a> with questions or privacy requests. The rights available to you depend on where you live and the laws that apply.</p>
 
 <h2>Changes to this policy</h2>
-<p>We may update this policy as the service changes. We will post the current version here and update the date above. Contact us at <a href="mailto:support@logicstrand.net">support@logicstrand.net</a> if you have questions.</p>
+<p>We may update this policy as the service changes. We will post the current version here and update the date above. Contact us at <a href="mailto:support@sensorsae.net">support@sensorsae.net</a> if you have questions.</p>
+
+
+<h2>Contact details</h2>
+<ul class="legal-contact-details">
+    <li><strong>Sri Lanka:</strong> No. 18, Lakeview Crescent, Rajagiriya, Sri Lanka · <a href="tel:+94770001201">+94 77 000 1201</a></li>
+    <li><strong>United States:</strong> 455 Market Street, San Francisco, CA 94105, USA · <a href="tel:+14155550101">+1 415-555-0101</a></li>
+    <li><strong>Webmail:</strong> <a href="mailto:support@sensorsae.net">support@sensorsae.net</a></li>
+</ul>
 @endsection

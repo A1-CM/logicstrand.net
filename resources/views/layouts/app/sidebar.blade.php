@@ -6,7 +6,7 @@
 <body class="logic-app-body">
     <flux:sidebar sticky collapsible="mobile" class="logic-sidebar border-e border-zinc-200">
         <flux:sidebar.header>
-            <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
+            <x-app-logo :sidebar="true" href="{{ route('home') }}" aria-label="Go to LogicStrand homepage" />
             <flux:sidebar.collapse class="lg:hidden" />
         </flux:sidebar.header>
         <flux:sidebar.nav>

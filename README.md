@@ -42,7 +42,7 @@ Email verification is enabled. The default MAIL_MAILER=log writes local verifica
 
 ## Contact form
 
-The landing page includes a contact form that sends mail to the existing `support@logicstrand.net` inbox. Set `MAIL_MAILER=smtp` and the normal `MAIL_*` values in production. The sender stays `MAIL_FROM_ADDRESS`; a visitor's email is used only as the reply-to address. Messages are not saved in the database.
+The landing page includes a contact form that sends mail to `CONTACT_TO_ADDRESS` (defaults to `support@sensorsae.net`). Set `CONTACT_TO_ADDRESS` in the application environment or `APP_ENV_EXTRA` if the receiving inbox differs. Set `MAIL_MAILER=smtp` and the normal `MAIL_*` values in production. The sender stays `MAIL_FROM_ADDRESS`; a visitor's email is used only as the reply-to address. Messages are not saved in the database.
 
 Create a **Non-Interactive** Cloudflare Turnstile widget for the hostname in `APP_URL` and add its keys to `.env`:
 

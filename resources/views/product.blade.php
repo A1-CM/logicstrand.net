@@ -8,7 +8,10 @@
     <div class="site-shell">
         <header class="site-header site-container">
             <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home"><img class="brand-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899"></a>
-            <nav class="site-nav" aria-label="Primary navigation">
+            <button class="site-nav-toggle" type="button" aria-label="Open navigation menu" aria-controls="site-primary-navigation" aria-expanded="false" data-nav-toggle>
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
+            <nav class="site-nav" id="site-primary-navigation" aria-label="Primary navigation" data-mobile-nav>
                 <a href="#capabilities">Capabilities</a>
                 <a href="#workspace">Workspace</a>
                 <a href="#roadmap">Roadmap</a>

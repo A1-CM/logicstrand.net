@@ -10,7 +10,10 @@
             <a href="{{ route('home') }}" class="site-brand" aria-label="LogicStrand home">
                 <img class="brand-lockup" src="{{ asset('images/logicstrand/logo.webp') }}" alt="strand" width="3168" height="899">
             </a>
-            <nav class="site-nav" aria-label="Primary navigation">
+            <button class="site-nav-toggle" type="button" aria-label="Open navigation menu" aria-controls="site-primary-navigation" aria-expanded="false" data-nav-toggle>
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
+            <nav class="site-nav" id="site-primary-navigation" aria-label="Primary navigation" data-mobile-nav>
                 <a href="#platform">Platform</a>
                 <a href="#use-cases">Who it helps</a>
                 <a href="#how-it-works">How it works</a>
@@ -167,14 +170,14 @@
             </section>
 
             <section id="voices" class="section site-container voices-section">
-                <div class="voices-heading"><div><span class="section-kicker">05 / THE HUMAN SIDE OF CLARITY</span><h2>The questions behind<br><em>the work.</em></h2></div><p>Illustrative perspectives from the kinds of work LogicStrand is built to support.</p></div>
-                <div class="voices-grid">
-                    <div class="voices-feature"><img src="{{ asset('images/logicstrand/human-perspective.webp') }}" alt="A professional reflecting while reviewing material on a tablet" width="1352" height="1689" loading="lazy"><span>ONE THREAD / MANY WAYS FORWARD</span></div>
+                    <div class="voices-heading"><div><span class="section-kicker">05 / CUSTOMER PERSPECTIVES</span><h2>Clearer answers,<br><em>closer to the source.</em></h2></div><p>Illustrative testimonials that reflect the kinds of work LogicStrand is designed to support.</p></div>
+                    <div class="voices-grid">
+                    <div class="voices-feature"><img src="{{ asset('images/logicstrand/human-perspective.webp') }}" alt="A professional reflecting while reviewing material on a tablet" width="1352" height="1689" loading="lazy"><span>ILLUSTRATIVE CUSTOMER PERSPECTIVES</span></div>
                     <div class="voices-quotes">
-                        <blockquote class="voices-primary"><span class="voices-mark">“</span><p>I need the answer, and the exact paragraph that supports it.</p><footer><span>01</span> Operations perspective</footer></blockquote>
+                        <blockquote class="voices-primary"><span class="voices-mark">“</span><p>I need the answer, and the exact paragraph that supports it.</p><footer><img src="{{ asset('images/logicstrand/operations-process.webp') }}" alt="" width="1055" height="461" loading="lazy"><span><strong>Maya Chen</strong><small>Operations Director · Illustrative profile</small></span></footer></blockquote>
                         <div class="voices-small-grid">
-                            <blockquote><p>“A short answer helps. Seeing where it came from helps me act.”</p><footer>Policy perspective</footer></blockquote>
-                            <blockquote><p>“The useful part is knowing which source deserves a closer look.”</p><footer>Research perspective</footer></blockquote>
+                            <blockquote><p>“A short answer helps. Seeing where it came from helps me act.”</p><footer><img src="{{ asset('images/logicstrand/policy-review.webp') }}" alt="" width="1055" height="461" loading="lazy"><span><strong>Daniel Perera</strong><small>Policy Lead · Illustrative profile</small></span></footer></blockquote>
+                            <blockquote><p>“The useful part is knowing which source deserves a closer look.”</p><footer><img src="{{ asset('images/logicstrand/research-review.webp') }}" alt="" width="1055" height="461" loading="lazy"><span><strong>Amara Silva</strong><small>Research Analyst · Illustrative profile</small></span></footer></blockquote>
                         </div>
                     </div>
                 </div>
@@ -202,9 +205,9 @@
                     <span class="section-kicker">08 / GET IN TOUCH</span>
                     <h2 id="contact-title">Let's start<br><em>a conversation.</em></h2>
                     <p>Questions about LogicStrand, a source-backed workflow, or where to begin? Tell us what you have in mind.</p>
-                    <a class="contact-email" href="mailto:support@logicstrand.net">
+                    <a class="contact-email" href="mailto:{{ config('contact.to') }}">
                         <span class="contact-email-icon" aria-hidden="true"><i class="fa-solid fa-envelope"></i></span>
-                        <span><small>EMAIL OUR TEAM</small><strong>support@logicstrand.net</strong></span>
+                        <span><small>EMAIL OUR TEAM</small><strong>{{ config('contact.to') }}</strong></span>
                     </a>
                     <div class="contact-offices">
                         <div class="contact-office">
@@ -241,7 +244,7 @@
                                     <button class="button button-blue contact-submit" type="submit">Send message</button>
                                 </form>
                             @else
-                                <div class="contact-unavailable" role="status"><i class="fa-solid fa-envelope" aria-hidden="true"></i><strong>The form is temporarily unavailable.</strong><p>You can still reach us at <a href="mailto:support@logicstrand.net">support@logicstrand.net</a>.</p></div>
+                                <div class="contact-unavailable" role="status"><i class="fa-solid fa-envelope" aria-hidden="true"></i><strong>The form is temporarily unavailable.</strong><p>You can still reach us at <a href="mailto:{{ config('contact.to') }}">{{ config('contact.to') }}</a>.</p></div>
                             @endif
                         </div>
                         <aside class="contact-social" aria-label="LogicStrand social profiles">
