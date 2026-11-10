@@ -17,6 +17,11 @@
                 <a href="#roadmap">Roadmap</a>
                 <a href="{{ route('pricing') }}">Pricing</a>
                 <a href="{{ route('home') }}#contact">Contact</a>
+                @auth
+                    <a class="mobile-nav-cta" href="{{ route('dashboard') }}">Dashboard</a>
+                @else
+                    <a class="mobile-nav-cta button button-dark button-small" href="{{ route('register') }}">Create account <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a>
+                @endauth
             </nav>
             <div class="site-header-actions">
                 @auth

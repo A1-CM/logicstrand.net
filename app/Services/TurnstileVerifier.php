@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
 
 class TurnstileVerifier
@@ -24,11 +25,25 @@ class TurnstileVerifier
         $hostname = $response->json('hostname');
         $expectedHostname = parse_url((string) config('app.url'), PHP_URL_HOST);
 
-        return $response->json('success') === true
+        $verified = $response->json('success') === true
             && $response->json('action') === 'contact'
             && is_string($hostname)
             && is_string($expectedHostname)
             && $expectedHostname !== ''
             && hash_equals(strtolower($expectedHostname), strtolower($hostname));
+
+        if (! $verified) {
+            $errorCodes = $response->json('error-codes', []);
+
+            Log::notice('Turnstile rejected contact form verification', [
+                'success' => $response->json('success'),
+                'action' => $response->json('action'),
+                'hostname' => $hostname,
+                'expected_hostname' => $expectedHostname,
+                'error_codes' => is_array($errorCodes) ? $errorCodes : [],
+            ]);
+        }
+
+        return $verified;
     }
 }

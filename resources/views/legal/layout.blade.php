@@ -15,6 +15,11 @@
                 <a href="{{ route('home') }}#platform">Platform</a>
                 <a href="{{ route('pricing') }}">Pricing</a>
                 <a href="{{ route('home') }}#contact">Contact</a>
+                @auth
+                    <a class="mobile-nav-cta" href="{{ route('dashboard') }}">Dashboard</a>
+                @else
+                    <a class="mobile-nav-cta button button-dark button-small" href="{{ route('register') }}">Get started <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a>
+                @endauth
             </nav>
             <div class="site-header-actions">
                 @auth<a class="site-login" href="{{ route('dashboard') }}">Dashboard</a>@else<a class="site-login" href="{{ route('login') }}">Sign in</a>@endauth

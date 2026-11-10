@@ -20,7 +20,7 @@ class LegalAndCookieConsentTest extends TestCase
             ->assertSee('455 Market Street, San Francisco, CA 94105, USA')
             ->assertSee('+94 77 000 1201')
             ->assertSee('+1 415-555-0101')
-            ->assertSee('support@sensorsae.net')
+            ->assertSee('support@logicstrand.net')
             ->assertSee(route('cookie-consent.store'), false)
             ->assertSee(route('terms'), false);
 
@@ -31,7 +31,7 @@ class LegalAndCookieConsentTest extends TestCase
             ->assertSee('455 Market Street, San Francisco, CA 94105, USA')
             ->assertSee('+94 77 000 1201')
             ->assertSee('+1 415-555-0101')
-            ->assertSee('support@sensorsae.net')
+            ->assertSee('support@logicstrand.net')
             ->assertSee(route('privacy'), false);
     }
 

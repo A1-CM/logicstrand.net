@@ -18,6 +18,11 @@
                 <a href="{{ route('home') }}#voices">Perspectives</a>
                 <a href="{{ route('pricing') }}" aria-current="page">Pricing</a>
                 <a href="{{ route('home') }}#contact">Contact</a>
+                @auth
+                    <a class="mobile-nav-cta" href="{{ route('dashboard') }}">Dashboard</a>
+                @else
+                    <a class="mobile-nav-cta button button-dark button-small" href="{{ route('product') }}">Explore LS Atlas <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a>
+                @endauth
             </nav>
             <div class="site-header-actions">
                 @auth

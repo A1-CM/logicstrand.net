@@ -20,6 +20,11 @@
                 <a href="#voices">Perspectives</a>
                 <a href="{{ route('pricing') }}">Pricing</a>
                 <a href="#contact">Contact</a>
+                @auth
+                    <a class="mobile-nav-cta" href="{{ route('dashboard') }}">Dashboard</a>
+                @else
+                    <a class="mobile-nav-cta button button-dark button-small" href="{{ route('product') }}">Explore LS Atlas <i class="fa-solid fa-arrow-right icon-arrow-up-right" aria-hidden="true"></i></a>
+                @endauth
             </nav>
             <div class="site-header-actions">
                 @auth
@@ -172,12 +177,12 @@
             <section id="voices" class="section site-container voices-section">
                     <div class="voices-heading"><div><span class="section-kicker">05 / CUSTOMER PERSPECTIVES</span><h2>Clearer answers,<br><em>closer to the source.</em></h2></div><p>Illustrative testimonials that reflect the kinds of work LogicStrand is designed to support.</p></div>
                     <div class="voices-grid">
-                    <div class="voices-feature"><img src="{{ asset('images/logicstrand/human-perspective.webp') }}" alt="A professional reflecting while reviewing material on a tablet" width="1352" height="1689" loading="lazy"><span>ILLUSTRATIVE CUSTOMER PERSPECTIVES</span></div>
+                    <div class="voices-feature"><div class="voices-strand-art" aria-hidden="true"><span></span><span></span><span></span><img src="{{ asset('images/logicstrand/logo-mark.webp') }}" alt="" width="1680" height="899"></div><span>ILLUSTRATIVE CUSTOMER PERSPECTIVES</span></div>
                     <div class="voices-quotes">
-                        <blockquote class="voices-primary"><span class="voices-mark">“</span><p>I need the answer, and the exact paragraph that supports it.</p><footer><img src="{{ asset('images/logicstrand/operations-process.webp') }}" alt="" width="1055" height="461" loading="lazy"><span><strong>Maya Chen</strong><small>Operations Director · Illustrative profile</small></span></footer></blockquote>
+                        <blockquote class="voices-primary"><span class="voices-mark">“</span><p>I need the answer, and the exact paragraph that supports it.</p><footer><span class="voices-avatar" aria-hidden="true">SP</span><span><strong>Serena Patel</strong><small>Operations Director · Illustrative profile</small></span></footer></blockquote>
                         <div class="voices-small-grid">
-                            <blockquote><p>“A short answer helps. Seeing where it came from helps me act.”</p><footer><img src="{{ asset('images/logicstrand/policy-review.webp') }}" alt="" width="1055" height="461" loading="lazy"><span><strong>Daniel Perera</strong><small>Policy Lead · Illustrative profile</small></span></footer></blockquote>
-                            <blockquote><p>“The useful part is knowing which source deserves a closer look.”</p><footer><img src="{{ asset('images/logicstrand/research-review.webp') }}" alt="" width="1055" height="461" loading="lazy"><span><strong>Amara Silva</strong><small>Research Analyst · Illustrative profile</small></span></footer></blockquote>
+                            <blockquote><p>“A short answer helps. Seeing where it came from helps me act.”</p><footer><span class="voices-avatar" aria-hidden="true">MT</span><span><strong>Malik Thompson</strong><small>Policy Lead · Illustrative profile</small></span></footer></blockquote>
+                            <blockquote><p>“The useful part is knowing which source deserves a closer look.”</p><footer><span class="voices-avatar" aria-hidden="true">LJ</span><span><strong>Leena Jayawardena</strong><small>Research Analyst · Illustrative profile</small></span></footer></blockquote>
                         </div>
                     </div>
                 </div>
@@ -240,7 +245,7 @@
                                     <div class="contact-field"><label for="contact-organization">Organization <small>Optional</small></label><input id="contact-organization" name="organization" type="text" value="{{ old('organization') }}" autocomplete="organization" maxlength="120" aria-invalid="{{ $errors->has('organization') ? 'true' : 'false' }}">@error('organization')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
                                     <div class="contact-field"><label for="contact-subject">Subject <span aria-hidden="true">*</span></label><input id="contact-subject" name="subject" type="text" value="{{ old('subject') }}" maxlength="150" required aria-invalid="{{ $errors->has('subject') ? 'true' : 'false' }}">@error('subject')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
                                     <div class="contact-field"><label for="contact-message">Message <span aria-hidden="true">*</span></label><textarea id="contact-message" name="message" rows="5" minlength="10" maxlength="5000" required aria-invalid="{{ $errors->has('message') ? 'true' : 'false' }}">{{ old('message') }}</textarea>@error('message')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
-                                    <div class="contact-turnstile"><div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.site_key') }}" data-action="contact" data-size="flexible" data-theme="light"></div>@error('turnstile')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
+                                    <div class="contact-turnstile"><div class="cf-turnstile" data-sitekey="{{ config('services.turnstile.site_key') }}" data-action="contact" data-size="normal" data-theme="light"></div>@error('turnstile')<small class="contact-field-error">{{ $message }}</small>@enderror</div>
                                     <button class="button button-blue contact-submit" type="submit">Send message</button>
                                 </form>
                             @else
@@ -253,6 +258,10 @@
                                 <a href="https://medium.com/@LogicStrand" target="_blank" rel="noopener noreferrer" aria-label="Follow LogicStrand on Medium" data-tooltip="Medium"><i class="fa-brands fa-medium" aria-hidden="true"></i></a>
                                 <a href="https://www.youtube.com/@LogicStrand-d4t" target="_blank" rel="noopener noreferrer" aria-label="Follow LogicStrand on YouTube" data-tooltip="YouTube"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
                                 <a href="https://www.facebook.com/LogicStrand/" target="_blank" rel="noopener noreferrer" aria-label="Follow LogicStrand on Facebook" data-tooltip="Facebook"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></a>
+                                <a href="https://www.linkedin.com/company/logicstrand/" target="_blank" rel="noopener noreferrer" aria-label="Visit LogicStrand on LinkedIn" data-tooltip="LinkedIn · Company"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+                                <a href="https://www.linkedin.com/in/kavinithra-sutharsan-2851b3442/" target="_blank" rel="noopener noreferrer" aria-label="Visit the LogicStrand founder on LinkedIn" data-tooltip="LinkedIn · Founder"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i></a>
+                                <a href="https://www.f6s.com/logicstrand" target="_blank" rel="noopener noreferrer" aria-label="Visit LogicStrand on F6S" data-tooltip="F6S"><i class="fa-solid fa-people-group" aria-hidden="true"></i></a>
+                                <a href="https://www.crunchbase.com/organization/logicstrand" target="_blank" rel="noopener noreferrer" aria-label="Visit LogicStrand on Crunchbase" data-tooltip="Crunchbase"><i class="fa-solid fa-chart-line" aria-hidden="true"></i></a>
                             </div>
                         </aside>
                     </div>

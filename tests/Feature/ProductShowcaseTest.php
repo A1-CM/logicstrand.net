@@ -29,6 +29,7 @@ class ProductShowcaseTest extends TestCase
                 ->assertOk()
                 ->assertSee('Explore LS Atlas')
                 ->assertSee(route('product'), false)
+                ->assertSee('class="mobile-nav-cta button button-dark button-small"', false)
                 ->assertDontSee('>Sign in</a>', false);
         }
 
@@ -39,15 +40,14 @@ class ProductShowcaseTest extends TestCase
     {
         $this->get(route('home'))->assertOk()
             ->assertSee('Illustrative testimonials')
-            ->assertSee('Maya Chen')
+            ->assertSee('Serena Patel')
             ->assertSee('Operations Director')
-            ->assertSee('Daniel Perera')
+            ->assertSee('Malik Thompson')
             ->assertSee('Policy Lead')
-            ->assertSee('Amara Silva')
+            ->assertSee('Leena Jayawardena')
             ->assertSee('Research Analyst')
-            ->assertSee('images/logicstrand/operations-process.webp')
-            ->assertSee('images/logicstrand/policy-review.webp')
-            ->assertSee('images/logicstrand/research-review.webp');
+            ->assertSee('voices-avatar', false)
+            ->assertDontSee('class="voices-feature"><img', false);
     }
 
     public function test_signed_in_visitors_keep_the_dashboard_navigation_action(): void

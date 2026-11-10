@@ -53,7 +53,10 @@ class ContactController extends Controller
         try {
             $verified = $turnstile->verify($token);
         } catch (Throwable $exception) {
-            Log::warning('Contact form verification unavailable', ['exception' => $exception::class]);
+            Log::warning('Contact form verification unavailable', [
+                'exception' => $exception::class,
+                'message' => $exception->getMessage(),
+            ]);
 
             return $this->withError('turnstile', 'Verification is temporarily unavailable. Please try again.', $input);
         }

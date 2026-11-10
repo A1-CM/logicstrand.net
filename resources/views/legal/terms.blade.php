@@ -31,13 +31,13 @@
 <p>To the extent permitted by applicable law, the service is provided as available without warranties that it will meet every need, produce a particular result, or operate without interruption. Nothing in these terms excludes a right or remedy that cannot lawfully be excluded. To the extent permitted by law, LogicStrand will not be liable for indirect or consequential loss arising from use of the service. These terms do not limit liability where such a limitation is prohibited by law.</p>
 
 <h2>Changes and contact</h2>
-<p>We may update these terms as the service changes. The current version and its update date will appear on this page. Continued use after an update takes effect means you accept the updated terms to the extent permitted by law. Questions can be sent to <a href="mailto:support@sensorsae.net">support@sensorsae.net</a>.</p>
+<p>We may update these terms as the service changes. The current version and its update date will appear on this page. Continued use after an update takes effect means you accept the updated terms to the extent permitted by law. Questions can be sent to <a href="mailto:support@logicstrand.net">support@logicstrand.net</a>.</p>
 
 
 <h2>Contact details</h2>
 <ul class="legal-contact-details">
     <li><strong>Sri Lanka:</strong> No. 18, Lakeview Crescent, Rajagiriya, Sri Lanka · <a href="tel:+94770001201">+94 77 000 1201</a></li>
     <li><strong>United States:</strong> 455 Market Street, San Francisco, CA 94105, USA · <a href="tel:+14155550101">+1 415-555-0101</a></li>
-    <li><strong>Webmail:</strong> <a href="mailto:support@sensorsae.net">support@sensorsae.net</a></li>
+    <li><strong>Webmail:</strong> <a href="mailto:support@logicstrand.net">support@logicstrand.net</a></li>
 </ul>
 @endsection

@@ -25,13 +25,20 @@ class ContactFormTest extends TestCase
     {
         $this->get(route('home'))->assertOk()
             ->assertSee('id="contact"', false)
-            ->assertSee('support@sensorsae.net')
+            ->assertSee('support@logicstrand.net')
             ->assertSee('LogicStrand Technologies (Pvt) Ltd')
             ->assertSee('LogicStrand Technologies Inc.')
             ->assertSee('18 September 2023')
             ->assertSee('https://medium.com/@LogicStrand', false)
             ->assertSee('https://www.youtube.com/@LogicStrand-d4t', false)
             ->assertSee('https://www.facebook.com/LogicStrand/', false)
+            ->assertSee('https://www.linkedin.com/company/logicstrand/', false)
+            ->assertSee('https://www.linkedin.com/in/kavinithra-sutharsan-2851b3442/', false)
+            ->assertSee('https://www.f6s.com/logicstrand', false)
+            ->assertSee('https://www.crunchbase.com/organization/logicstrand', false)
+            ->assertSee('fa-linkedin-in', false)
+            ->assertSee('fa-people-group', false)
+            ->assertSee('fa-chart-line', false)
             ->assertSee('data-action="contact"', false);
     }
 
@@ -50,7 +57,7 @@ class ContactFormTest extends TestCase
         Mail::assertSent(ContactMessage::class, function (ContactMessage $mail): bool {
             $replyTo = $mail->envelope()->replyTo[0];
 
-            return $mail->hasTo('support@sensorsae.net')
+            return $mail->hasTo('support@logicstrand.net')
                 && $replyTo->address === 'jane@example.com'
                 && $replyTo->name === 'Jane Smith'
                 && $mail->subjectLine === 'Product question'
@@ -117,7 +124,7 @@ class ContactFormTest extends TestCase
 
         $this->post(route('contact.store'), $this->payload())
             ->assertRedirect(route('home').'#contact')
-            ->assertSessionHas('toast', ['type' => 'error', 'message' => 'The contact form is temporarily unavailable. Please email support@sensorsae.net.']);
+            ->assertSessionHas('toast', ['type' => 'error', 'message' => 'The contact form is temporarily unavailable. Please email support@logicstrand.net.']);
 
         Http::assertNothingSent();
         Mail::assertNothingSent();
@@ -156,7 +163,7 @@ class ContactFormTest extends TestCase
     public function test_smtp_failure_shows_an_error_instead_of_success(): void
     {
         $this->fakeTurnstile();
-        Mail::shouldReceive('to')->once()->with('support@sensorsae.net')
+        Mail::shouldReceive('to')->once()->with('support@logicstrand.net')
             ->andThrow(new RuntimeException('smtp unavailable'));
 
         $this->post(route('contact.store'), $this->payload())
