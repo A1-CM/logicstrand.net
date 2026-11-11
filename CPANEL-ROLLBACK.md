@@ -1,6 +1,6 @@
 # cPanel release cleanup and rollback
 
-This local copy is based on the public `A1-CM/.github` `v1.0.7` toolkit. Publish its changed workflow and `scripts/` files to that repository as a new immutable tag before publishing the LogicStrand caller workflows that reference `v1.0.8`. No remote repository or cPanel account is changed by this workspace.
+LogicStrand uses the public `A1-CM/.github` toolkit at tag `v1.0.9`. Both caller workflows pin their reusable workflow and toolkit checkout to that tag.
 
 ## Deployment behavior
 
@@ -16,11 +16,10 @@ Run the repository's **Roll back LogicStrand on cPanel** action and enter `steps
 
 The reusable rollback workflow needs `CPANEL_HOST`, `CPANEL_USERNAME`, `CPANEL_HOME`, and `APP_URL` variables, plus the `CPANEL_API_TOKEN` secret, with the same access as deployment. `CPANEL_HEALTH_PATH` is optional. It uses the same concurrency group as deployment.
 
-## Publishing order
+## Updating the toolkit
 
-1. Copy the changed `scripts/deploy_cpanel.py`, `scripts/cpanel_release_manager.php`, tests, and both reusable workflow files from this local toolkit to `A1-CM/.github`.
-2. Run its unit tests and a staging cPanel deployment/rollback. Confirm the staging site, retained releases, ZIP cleanup, and preservation of addon-domain files.
-3. Publish immutable toolkit tag `v1.0.8` after staging passes.
-4. Publish this repository's `.github/workflows/deploy-cpanel.yml` and `.github/workflows/rollback-cpanel.yml`, both pinned to `v1.0.8`.
+For future updates, test the shared toolkit, publish a new immutable tag in `A1-CM/.github`, then update both `uses:` and `toolkit_ref` in each LogicStrand caller workflow to the same tag. Run a staging cPanel deployment and rollback before publishing a release when a staging account is available.
 
-The LogicStrand workflow files are prepared locally now but must be published only after the toolkit tag exists. The deployment history is private and file permissions are restricted. A missing or corrupt history file stops rollback rather than guessing a release. The cPanel API token and generated application credentials are never printed in workflow output.
+Deployment history is private and file permissions are restricted. A missing or corrupt history file stops rollback rather than guessing a release. The cPanel API token and generated application credentials are never printed in workflow output.
+
+The deployment workflow requires the organization or repository `MAIL_HOST` Actions secret. Grant each calling repository access to the organization secret. The caller already uses `secrets: inherit`; no separate mail-host entry is needed in its YAML.
