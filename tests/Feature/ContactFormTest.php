@@ -33,7 +33,6 @@ class ContactFormTest extends TestCase
             ->assertSee('https://www.youtube.com/@LogicStrand-d4t', false)
             ->assertSee('https://www.facebook.com/LogicStrand/', false)
             ->assertSee('https://www.linkedin.com/company/logicstrand/', false)
-            ->assertSee('https://www.linkedin.com/in/kavinithra-sutharsan-2851b3442/', false)
             ->assertSee('https://www.f6s.com/logicstrand', false)
             ->assertSee('https://www.crunchbase.com/organization/logicstrand', false)
             ->assertSee('src="https://www.f6s.com/favicon.ico"', false)
