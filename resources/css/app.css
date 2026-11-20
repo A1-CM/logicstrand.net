@@ -71,7 +71,7 @@ body { color:var(--ink); font-family:"Instrument Sans","Avenir Next",Arial,sans-
 a,button,input,textarea { transition:background-color .2s ease,color .2s ease,border-color .2s ease,transform .2s ease; }
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible { outline:3px solid #7892f7; outline-offset:3px; }
 .site-body { background:#fbfbfa; }
-.site-shell { overflow:hidden; }
+.site-shell { overflow:clip; }
 .site-container { width:min(100% - 64px, 1220px); margin-inline:auto; }
 .site-header { height:90px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #e8e9ed; }
 .site-brand { display:inline-flex; align-items:center; gap:10px; font-weight:750; letter-spacing:-.055em; font-size:25px; color:#151d2e; white-space:nowrap; }
@@ -963,9 +963,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible 
 
 
 /* Accessible responsive marketing navigation */
-html{scroll-behavior:smooth;scroll-padding-top:20px}
+html{scroll-behavior:smooth;scroll-padding-top:108px}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}html:focus-within{scroll-behavior:auto}}
-.site-header{position:relative;z-index:50;gap:clamp(10px,2vw,28px)}
+.site-header{position:sticky;top:0;z-index:120;gap:clamp(10px,2vw,28px);background:rgba(251,251,250,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.site-header{box-shadow:0 1px 0 #e8e9ed}
+main [id]{scroll-margin-top:108px}
 .site-nav .mobile-nav-cta{display:none}
 .site-nav a[aria-current="location"],.site-nav a[aria-current="page"]{color:var(--blue);font-weight:750}
 .site-nav a[aria-current="location"]::after{content:"";display:block;height:2px;margin-top:5px;border-radius:2px;background:var(--blue)}
